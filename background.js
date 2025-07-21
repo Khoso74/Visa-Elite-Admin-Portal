@@ -1,33 +1,42 @@
-// Space Background using Three.js
-let scene = new THREE.Scene();
-let camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
-let renderer = new THREE.WebGLRenderer();
+// Set up scene, camera, renderer
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer({ alpha: true }); // Transparent background
 renderer.setSize(window.innerWidth, window.innerHeight);
-document.getElementById("space-background").appendChild(renderer.domElement);
+document.getElementById('space-bg').appendChild(renderer.domElement);
 
-// Create stars
-let starGeometry = new THREE.BufferGeometry();
-let starCount = 10000;
-let positions = [];
+// Add stars
+function addStar() {
+  const geometry = new THREE.SphereGeometry(0.1, 24, 24);
+  const material = new THREE.MeshBasicMaterial({ color: 0xffffff });
+  const star = new THREE.Mesh(geometry, material);
 
-for (let i = 0; i < starCount; i++) {
-  let x = (Math.random() - 0.5) * 2000;
-  let y = (Math.random() - 0.5) * 2000;
-  let z = -Math.random() * 2000;
-  positions.push(x, y, z);
+  const [x, y, z] = Array(3)
+    .fill()
+    .map(() => THREE.MathUtils.randFloatSpread(100));
+
+  star.position.set(x, y, z);
+  scene.add(star);
 }
 
-starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
-let starMaterial = new THREE.PointsMaterial({ color: 0xffffff });
-let stars = new THREE.Points(starGeometry, starMaterial);
-scene.add(stars);
+Array(400).fill().forEach(addStar);
 
-camera.position.z = 1;
+// Camera position
+camera.position.z = 5;
 
+// Animation loop
 function animate() {
   requestAnimationFrame(animate);
-  stars.rotation.x += 0.0005;
-  stars.rotation.y += 0.0005;
+  scene.rotation.x += 0.0005;
+  scene.rotation.y += 0.0005;
   renderer.render(scene, camera);
 }
+
 animate();
+
+// Resize handling
+window.addEventListener("resize", () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
