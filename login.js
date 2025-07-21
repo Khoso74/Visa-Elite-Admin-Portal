@@ -10,7 +10,7 @@ document.getElementById("login-form").addEventListener("submit", async (e) => {
   const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value.trim();
 
-  const response = await fetch("https://script.google.com/macros/s/YOUR_WEB_APP_URL/exec", {
+  const response = await fetch("https://script.google.com/macros/s/AKfycbxIkJL8tNlrZKL2jS2zcfDL3_-XssqRGYWeZvWgbqPTK_pG2FOUSKNYAw-cpgugihdC/exec", {
     method: "POST",
     body: JSON.stringify({ email, password }),
     headers: {
