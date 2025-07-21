@@ -1,17 +1,65 @@
-/* Reset & Body */
-* { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', sans-serif; }
-body, html { width:100%; height:100%; overflow:hidden; background:#000; }
-canvas#bg { position:fixed; top:0; left:0; width:100%; height:100%; z-index:-1; }
+body, html {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: 'Segoe UI', sans-serif;
+}
 
-/* Login Form Centering */
-.login-container { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); background:rgba(255,255,255,0.05); backdrop-filter:blur(10px); padding:30px; border-radius:15px; box-shadow:0 0 20px rgba(0,255,255,0.2); width:300px; text-align:center; color:#fff; }
-.login-container h2 { margin-bottom:20px; }
-.login-container input { width:100%; padding:10px; margin:10px 0; border:none; border-radius:8px; }
-.login-container button { width:100%; padding:12px; margin-top:10px; background:#00e5ff; border:none; border-radius:8px; color:#000; font-size:16px; cursor:pointer; }
-.login-container button:hover { background:#00c4d4; }
-.error { margin-top:10px; color:#ff6b6b; }
+#intro-screen {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  background-color: #000;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  z-index: 10;
+  animation: fadeOut 3s ease 3s forwards;
+}
 
-/* Glass Utility */
-.glass { background:rgba(255,255,255,0.1); backdrop-filter:blur(10px); }
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
 
-/* Dashboard styles will follow same design */
+.login-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255,255,255,0.1);
+  padding: 30px;
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  color: white;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-container input,
+.login-container button {
+  width: 250px;
+  padding: 10px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 5px;
+}
+
+.login-container button {
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+#bg-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
