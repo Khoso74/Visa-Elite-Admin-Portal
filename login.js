@@ -1,33 +1,33 @@
-// login.js
-document.getElementById('loginBtn').addEventListener('click', () => {
-  const email = document.getElementById('email').value.trim();
-  const password = document.getElementById('password').value.trim();
-  const err = document.getElementById('error');
-  err.textContent = '';
+document.addEventListener('DOMContentLoaded', () => {
+  const loginBtn = document.getElementById('login-btn');
+  const errorMsg = document.getElementById('error-msg');
 
-  if (!email || !password) {
-    err.textContent = 'Please fill in both fields.';
-    return;
-  }
+  loginBtn.addEventListener('click', async () => {
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value.trim();
 
-  fetch('YOUR_WEB_APP_URL', {
-    method: 'POST',
-    body: JSON.stringify({ email, password })
-  })
-  .then(r => r.json())
-  .then(data => {
-    if (data.success) {
-      sessionStorage.setItem('loggedIn', '1');
-      window.location.href = 'dashboard.html';
-    } else {
-      err.textContent = data.message || 'Invalid credentials';
+    if (!email || !password) {
+      errorMsg.textContent = "Email and Password required!";
+      return;
     }
-  })
-  .catch(e => {
-    err.textContent = 'Error connecting. Try later.';
-    console.error(e);
+
+    try {
+      const response = await fetch('https://script.google.com/macros/s/AKfycbxIkJL8tNlrZKL2jS2zcfDL3_-XssqRGYWeZvWgbqPTK_pG2FOUSKNYAw-cpgugihdC/exec', {
+        method: 'POST',
+        body: JSON.stringify({ email, password }),
+        headers: { 'Content-Type': 'application/json' }
+      });
+
+      const result = await response.json();
+
+      if (result.status === "success") {
+        window.location.href = "dashboard.html";
+      } else {
+        errorMsg.textContent = result.message || "Login failed!";
+      }
+    } catch (err) {
+      errorMsg.textContent = "Server error!";
+      console.error(err);
+    }
   });
 });
-
-// Redirect if already logged in
-if (sessionStorage.getItem('loggedIn')) window.location.href = 'dashboard.html';
