@@ -3,20 +3,30 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Visa Elite Intro</title>
-  <style>
-    body, html { margin:0; padding:0; height:100%; background:#000; display:flex; align-items:center; justify-content:center; color:#fff; font-family:'Segoe UI', sans-serif; }
-    .intro { text-align:center; animation:fadeOut 4s forwards; }
-    .intro h1 { font-size:3em; color:#00e5ff; }
-    @keyframes fadeOut { 0% { opacity:1 } 80% { opacity:1 } 100% { opacity:0 } }
-  </style>
+  <title>Visa Elite - Login</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="intro">
+
+  <!-- Intro Screen -->
+  <div id="intro-screen">
     <h1>Welcome to Visa Elite</h1>
   </div>
-  <script>
-    setTimeout(() => window.location.href = 'login.html', 4000);
-  </script>
+
+  <!-- Login Container -->
+  <div class="login-container" id="login-container">
+    <h2>Login</h2>
+    <input type="email" id="email" placeholder="Email" required />
+    <input type="password" id="password" placeholder="Password" required />
+    <button id="login-btn">Login</button>
+    <p id="error-msg"></p>
+  </div>
+
+  <!-- 3D Background -->
+  <canvas id="bg-canvas"></canvas>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+  <script src="background_three.js"></script>
+  <script src="login.js"></script>
 </body>
 </html>
