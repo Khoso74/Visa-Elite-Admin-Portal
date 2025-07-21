@@ -1,190 +1,202 @@
+// File: index.html
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Visa Elite - Welcome</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Visa Elite</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="intro" class="intro-container">
+    <h1 class="fade-in">Welcome to <span>Visa Elite</span></h1>
+  </div>
+  <div id="login-container" class="login-container hidden">
+    <div id="vanta-bg"></div>
+    <div class="form-box">
+      <h2>Login</h2>
+      <form id="login-form">
+        <input type="email" id="email" placeholder="Email" required />
+        <input type="password" id="password" placeholder="Password" required />
+        <button type="submit">Login</button>
+      </form>
+      <p id="error-msg" class="error"></p>
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+  <script src="login.js"></script>
+</body>
+</html>
+
+// File: style.css
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow: hidden;
+}
+
+.intro-container {
+  background: linear-gradient(to right, #000428, #004e92);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  flex-direction: column;
+  text-align: center;
+}
+
+.intro-container h1 {
+  font-size: 3em;
+  opacity: 0;
+  animation: fadeIn 2s forwards;
+}
+
+.intro-container span {
+  color: #00d4ff;
+  font-weight: bold;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+.login-container {
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+}
+
+#vanta-bg {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.form-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.1);
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(8px);
+  color: white;
+  min-width: 300px;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: #00d4ff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #008fb3;
+}
+
+.error {
+  color: #ff4d4d;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.hidden {
+  display: none;
+}
+
+// File: login.js
+window.addEventListener('DOMContentLoaded', () => {
+  const intro = document.getElementById('intro');
+  const loginContainer = document.getElementById('login-container');
+
+  setTimeout(() => {
+    intro.classList.add('hidden');
+    loginContainer.classList.remove('hidden');
+    VANTA.NET({
+      el: "#vanta-bg",
+      mouseControls: true,
+      touchControls: true,
+      gyroControls: false,
+      minHeight: 200.00,
+      minWidth: 200.00,
+      scale: 1.00,
+      scaleMobile: 1.00,
+      color: 0x0077ff,
+      backgroundColor: 0x0a0a23
+    });
+  }, 3000);
+
+  const loginForm = document.getElementById('login-form');
+  const errorMsg = document.getElementById('error-msg');
+
+  loginForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value.trim();
+
+    const allowedUsers = [
+      { email: "admin1@gmail.com", password: "12345" },
+      { email: "admin2@gmail.com", password: "password" }
+    ];
+
+    const isValid = allowedUsers.some(user => user.email === email && user.password === password);
+
+    if (isValid) {
+      window.location.href = 'dashboard.html';
+    } else {
+      errorMsg.textContent = "Invalid email or password.";
+    }
+  });
+});
+
+// File: dashboard.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard - Visa Elite</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Poppins', sans-serif;
-    }
-
-    body, html {
-      height: 100vh;
-      overflow: hidden;
-    }
-
-    .intro-container {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      animation: fadeIn 2s ease-in-out;
-      z-index: 10;
-    }
-
-    .intro-container h1 {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-    }
-
-    .intro-container p {
-      font-size: 1.2rem;
-      text-align: center;
-      max-width: 600px;
-    }
-
-    @keyframes fadeIn {
-      0% {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    #login-container {
-      display: none;
-      width: 100%;
-      height: 100vh;
-      background: #000;
-    }
-
-    canvas {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      z-index: 0;
-    }
-
-    .login-box {
-      position: relative;
-      z-index: 1;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 15px;
-      backdrop-filter: blur(10px);
-      padding: 2rem;
-      width: 350px;
-      margin: auto;
-      top: 25%;
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
-    }
-
-    .login-box h2 {
-      text-align: center;
-      color: #fff;
-      margin-bottom: 1.5rem;
-    }
-
-    .login-box input {
-      width: 100%;
-      padding: 0.8rem;
-      margin: 0.5rem 0;
-      border: none;
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.2);
-      color: #fff;
-    }
-
-    .login-box button {
-      width: 100%;
-      padding: 0.8rem;
-      margin-top: 1rem;
-      border: none;
-      border-radius: 8px;
-      background-color: #00bcd4;
+    body {
+      background: #0a0a23;
       color: white;
-      font-weight: bold;
-      cursor: pointer;
+      font-family: sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    h1 {
+      font-size: 2.5rem;
     }
   </style>
 </head>
-
 <body>
-  <div class="intro-container" id="intro">
-    <h1>Welcome to Visa Elite</h1>
-    <p>Professional Visa Consultancy Solutions | US, UK, Turkey & More</p>
-  </div>
-
-  <div id="login-container">
-    <canvas id="bg-canvas"></canvas>
-    <div class="login-box">
-      <h2>Login</h2>
-      <input type="email" id="email" placeholder="Enter your email">
-      <input type="password" id="password" placeholder="Enter your password">
-      <button onclick="handleLogin()">Login</button>
-    </div>
-  </div>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
-  <script>
-    // Space background
-    let scene = new THREE.Scene();
-    let camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
-    let renderer = new THREE.WebGLRenderer();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    document.getElementById("bg-canvas").replaceWith(renderer.domElement);
-
-    let starsGeometry = new THREE.BufferGeometry();
-    let starVertices = [];
-    for (let i = 0; i < 10000; i++) {
-      let x = (Math.random() - 0.5) * 2000;
-      let y = (Math.random() - 0.5) * 2000;
-      let z = (Math.random() - 0.5) * 2000;
-      starVertices.push(x, y, z);
-    }
-    starsGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
-    let starsMaterial = new THREE.PointsMaterial({ color: 0xffffff });
-    let starField = new THREE.Points(starsGeometry, starsMaterial);
-    scene.add(starField);
-    camera.position.z = 1;
-
-    function animateStars() {
-      requestAnimationFrame(animateStars);
-      starField.rotation.y += 0.0005;
-      renderer.render(scene, camera);
-    }
-    animateStars();
-  </script>
-
-  <script>
-    // Show login after intro
-    setTimeout(() => {
-      document.getElementById("intro").style.display = "none";
-      document.getElementById("login-container").style.display = "block";
-    }, 3000);
-
-    function handleLogin() {
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
-
-      if (!email || !password) {
-        alert("Please fill in all fields.");
-        return;
-      }
-
-      // Replace with your own Google Sheet verification later
-      if (email === "admin@visaelite.com" && password === "admin123") {
-        window.location.href = "dashboard.html";
-      } else {
-        alert("Invalid credentials");
-      }
-    }
-  </script>
+  <h1>Welcome to Visa Elite Admin Dashboard</h1>
 </body>
-
 </html>
