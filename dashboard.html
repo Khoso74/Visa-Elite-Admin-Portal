@@ -1,32 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Visa Admin Dashboard</title>
+  <meta charset="UTF-8">
+  <title>Visa Elite Dashboard</title>
   <link rel="stylesheet" href="style.css" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-  <div class="header">
-    <h1>Visa Admin Dashboard</h1>
-    <button onclick="logout()">Logout</button>
-  </div>
+  <h1 style="text-align:center;">Visa Elite Admin Dashboard</h1>
+  <canvas id="visaChart" width="600" height="300" style="display:block;margin:50px auto;"></canvas>
 
-  <div class="summary-boxes">
-    <div class="summary-card">
-      <h3>Total Applications</h3>
-      <p id="totalCount">--</p>
-    </div>
-  </div>
+  <script>
+    async function loadData() {
+      const response = await fetch("https://opensheet.elk.sh/1FJn2u5QRh2fduij-nIn4gH6_uGzxnsa8Ou1y4SLA-SE/Visa Applications");
+      const data = await response.json();
 
-  <div class="charts-grid">
-    <canvas id="visaTypeChart"></canvas>
-    <canvas id="purposeChart"></canvas>
-    <canvas id="locationChart"></canvas>
-  </div>
+      const types = {};
+      data.forEach(row => {
+        types[row["Visa Type"]] = (types[row["Visa Type"]] || 0) + 1;
+      });
 
-  <script src="dashboard.js"></script>
+      const ctx = document.getElementById('visaChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: Object.keys(types),
+          datasets: [{
+            label: 'Visa Type Count',
+            data: Object.values(types),
+            backgroundColor: '#00ffff',
+            borderRadius: 5
+          }]
+        }
+      });
+    }
+    loadData();
+  </script>
 </body>
 </html>
-
