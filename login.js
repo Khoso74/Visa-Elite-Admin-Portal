@@ -13,7 +13,7 @@ function attemptLogin(email, password, loginBtn, loginStatus, loadingSpinner) {
     }),
   })
     .then((res) => {
-      if (!res.ok) throw new Error("Network response was not ok");
+      if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
       return res.json();
     })
     .then((data) => {
@@ -31,14 +31,14 @@ function attemptLogin(email, password, loginBtn, loginStatus, loadingSpinner) {
     .catch((err) => {
       retryCount++;
       if (retryCount < maxRetries) {
-        console.log(`Retry ${retryCount} of ${maxRetries}...`);
+        console.log(`Retry ${retryCount} of ${maxRetries}... Error: ${err.message}`);
         setTimeout(() => attemptLogin(email, password, loginBtn, loginStatus, loadingSpinner), 1000);
       } else {
         loginBtn.disabled = false;
         loginBtn.textContent = "Login";
         loadingSpinner.classList.add("hidden");
-        loginStatus.textContent = "An error occurred. Please check your network or try again later. Error: " + err.message;
-        console.error("Error:", err);
+        loginStatus.textContent = `An error occurred. Please check your network or try again later. Error: ${err.message}`;
+        console.error("Final Error:", err);
       }
     });
 }
