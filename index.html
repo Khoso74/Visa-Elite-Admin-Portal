@@ -3,48 +3,45 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Visa Elite - Admin Login</title>
-  <link rel="stylesheet" href="style.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.space.min.js"></script>
+  <title>Visa Elite Intro</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Poppins', sans-serif;
+      overflow: hidden;
+    }
+
+    .intro {
+      color: #ffffff;
+      font-size: 3em;
+      opacity: 0;
+      animation: fadeIn 2s ease-in-out forwards;
+      text-align: center;
+      letter-spacing: 2px;
+      text-shadow: 2px 2px 8px #00bcd4;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+  </style>
 </head>
 <body>
+  <div class="intro">Welcome to Visa Elite</div>
 
-  <!-- 🔹 Intro Section -->
-  <div id="intro-screen">
-    <h1 class="intro-title">🌍 Visa Elite</h1>
-    <p class="intro-sub">Simplifying Global Travel</p>
-  </div>
-
-  <!-- 🔹 Background + Login Box -->
-  <div id="vanta-bg" style="display:none;">
-    <div class="login-container">
-      <h2>Admin Login</h2>
-      <input type="email" id="email" placeholder="Enter Email" required />
-      <input type="password" id="password" placeholder="Enter Password" required />
-      <button onclick="login()">Login</button>
-      <p id="error" class="error-message"></p>
-    </div>
-  </div>
-
-  <script src="login.js"></script>
   <script>
-    // Show intro first
     setTimeout(() => {
-      document.getElementById("intro-screen").style.display = "none";
-      document.getElementById("vanta-bg").style.display = "block";
-      VANTA.SPACE({
-        el: "#vanta-bg",
-        mouseControls: true,
-        touchControls: true,
-        minHeight: 600.00,
-        minWidth: 600.00,
-        scale: 1.00,
-        scaleMobile: 1.00,
-        backgroundColor: 0x0a0a0a,
-        color: 0xffffff
-      });
-    }, 2500); // 2.5s delay for intro
+      window.location.href = "login.html";
+    }, 4000); // 4 seconds then redirect
   </script>
 </body>
 </html>
