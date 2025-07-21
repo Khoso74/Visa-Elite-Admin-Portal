@@ -1,41 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Login - Visa Elite</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
-  <!-- VANTA.js for 3D Space Animation -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.space.min.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Visa Elite Intro</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: black;
+      color: white;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+    }
+    .intro {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      font-size: 2rem;
+      animation: fadeOut 4s ease-in-out forwards;
+    }
+
+    @keyframes fadeOut {
+      0% {opacity: 1;}
+      100% {opacity: 0;}
+    }
+  </style>
 </head>
 <body>
-  <!-- Animation background wrapper -->
-  <div id="vanta-bg">
-    <div class="login-container">
-      <h2>Login</h2>
-      <input type="email" id="email" placeholder="Enter email" required />
-      <input type="password" id="password" placeholder="Enter password" required />
-      <button onclick="login()">Login</button>
-      <p id="error" class="error"></p>
-    </div>
-  </div>
+  <div class="intro">🚀 Welcome to Visa Elite Admin Portal...</div>
 
-  <script src="login.js"></script>
   <script>
-    // VANTA background animation
-    VANTA.SPACE({
-      el: "#vanta-bg",
-      mouseControls: true,
-      touchControls: true,
-      minHeight: 200.00,
-      minWidth: 200.00,
-      scale: 1.0,
-      scaleMobile: 1.0,
-      backgroundColor: 0x000000,
-      color: 0xffd700,
-      spacing: 20.00
-    });
+    setTimeout(() => {
+      window.location.href = 'login.html';
+    }, 4000);
   </script>
 </body>
 </html>
