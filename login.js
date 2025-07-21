@@ -1,34 +1,26 @@
-window.onload = () => {
+window.onload = function () {
   setTimeout(() => {
-    document.getElementById("login-container").classList.remove("hidden");
-  }, 3000); // Show login after intro
+    document.getElementById("intro").style.display = "none";
+    document.querySelector(".login-container").style.display = "flex";
+  }, 3000); // 3s delay for fade-in intro
 };
 
-document.getElementById("login-form").addEventListener("submit", async (e) => {
-  e.preventDefault();
-
+function login() {
   const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value.trim();
+  const errorBox = document.getElementById("error-msg");
 
-  const response = await fetch("https://script.google.com/macros/s/AKfycbxIkJL8tNlrZKL2jS2zcfDL3_-XssqRGYWeZvWgbqPTK_pG2FOUSKNYAw-cpgugihdC/exec", {
-    method: "POST",
-    body: JSON.stringify({ email, password }),
-    headers: {
-      "Content-Type": "application/json"
-    }
-  });
-
-  try {
-    const result = await response.json();
-
-    if (result.success) {
-      localStorage.setItem("user", JSON.stringify(result.user));
-      window.location.href = "dashboard.html";
-    } else {
-      alert("Invalid login.");
-    }
-  } catch (err) {
-    console.error("Login failed:", err);
-    alert("Login error. Check console.");
-  }
-});
+  fetch('https://script.google.com/macros/s/AKfycbxIkJL8tNlrZKL2jS2zcfDL3_-XssqRGYWeZvWgbqPTK_pG2FOUSKNYAw-cpgugihdC/exec')
+    .then(res => res.json())
+    .then(data => {
+      const match = data.find(user => user.email === email && user.password === password);
+      if (match) {
+        window.location.href = "dashboard.html"; // Load dashboard
+      } else {
+        errorBox.textContent = "Invalid Email or Password.";
+      }
+    })
+    .catch(() => {
+      errorBox.textContent = "Login failed. Try again.";
+    });
+}
