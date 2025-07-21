@@ -1,29 +1,41 @@
-<!-- Updated index.html with animation and dashboard -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <title>Login - Visa Elite</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Visa Dashboard</title>
   <link rel="stylesheet" href="style.css">
+  <!-- VANTA.js for 3D Space Animation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.space.min.js"></script>
 </head>
 <body>
-  <canvas id="bg"></canvas>
-  <main>
-    <section class="dashboard-container">
-      <h1>Welcome to Visa Elite Dashboard</h1>
-      <h3>Admin Panel</h3>
-      <div class="dashboard-cards">
-        <div class="card">Clients</div>
-        <div class="card">Admins</div>
-        <div class="card">Settings</div>
-        <div class="card">Sheets</div>
-      </div>
-      <iframe id="sheet-embed" src="https://docs.google.com/spreadsheets/d/1FJn2u5QRh2fduij-nIn4gH6_uGzxnsa8Ou1y4SLA-SE/edit#gid=0" frameborder="0"></iframe>
-      <button onclick="logout()" class="logout-btn">Logout</button>
-    </section>
-  </main>
-  <script src="dashboard.js"></script>
-  <script src="background.js"></script>
+  <!-- Animation background wrapper -->
+  <div id="vanta-bg">
+    <div class="login-container">
+      <h2>Login</h2>
+      <input type="email" id="email" placeholder="Enter email" required />
+      <input type="password" id="password" placeholder="Enter password" required />
+      <button onclick="login()">Login</button>
+      <p id="error" class="error"></p>
+    </div>
+  </div>
+
+  <script src="login.js"></script>
+  <script>
+    // VANTA background animation
+    VANTA.SPACE({
+      el: "#vanta-bg",
+      mouseControls: true,
+      touchControls: true,
+      minHeight: 200.00,
+      minWidth: 200.00,
+      scale: 1.0,
+      scaleMobile: 1.0,
+      backgroundColor: 0x000000,
+      color: 0xffd700,
+      spacing: 20.00
+    });
+  </script>
 </body>
 </html>
