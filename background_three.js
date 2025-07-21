@@ -1,6 +1,7 @@
 const scene = new THREE.Scene();
 const loginContainer = document.querySelector('.login-container');
-const { width, height } = loginContainer.getBoundingClientRect();
+if (!loginContainer) console.error("Login container not found");
+const { width, height } = loginContainer ? loginContainer.getBoundingClientRect() : { width: window.innerWidth, height: window.innerHeight };
 const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
 const renderer = new THREE.WebGLRenderer({ canvas: document.querySelector('#login-bg'), alpha: true });
 renderer.setSize(width, height);
@@ -80,7 +81,7 @@ function animate() {
 animate();
 
 window.addEventListener('resize', () => {
-  const { width, height } = loginContainer.getBoundingClientRect();
+  const { width, height } = loginContainer ? loginContainer.getBoundingClientRect() : { width: window.innerWidth, height: window.innerHeight };
   camera.aspect = width / height;
   camera.updateProjectionMatrix();
   renderer.setSize(width, height);
