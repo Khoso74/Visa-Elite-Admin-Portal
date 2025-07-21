@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Visa Elite Login</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Login - Visa Elite</title>
+  <link rel="stylesheet" href="style.css"/>
 </head>
-<body id="login-body">
-  <canvas id="bg-canvas"></canvas>
-  <div class="login-container glossy">
+<body>
+  <div id="space-background"></div>
+  <div class="login-container">
     <h2>Admin Login</h2>
-    <input type="email" id="email" placeholder="Enter your Gmail" />
-    <button onclick="login()">Login</button>
-    <p id="status"></p>
+    <input type="email" placeholder="Email"/>
+    <input type="password" placeholder="Password"/>
+    <button>Login</button>
   </div>
 
-  <script src="three.min.js"></script>
+  <!-- Three.js and Custom BG Script -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
   <script src="background.js"></script>
-  <script src="login.js"></script>
 </body>
 </html>
