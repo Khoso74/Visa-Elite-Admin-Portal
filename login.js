@@ -1,17 +1,7 @@
-document.getElementById("loginForm").addEventListener("submit", function (e) {
-  e.preventDefault();
-  const loginBtn = document.getElementById("loginBtn");
-  const loginStatus = document.getElementById("login-status");
-  const loadingSpinner = document.getElementById("loadingSpinner");
+let retryCount = 0;
+const maxRetries = 3;
 
-  loginBtn.disabled = true;
-  loginBtn.textContent = "Logging in...";
-  loadingSpinner.classList.remove("hidden");
-  loginStatus.textContent = "";
-
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-
+function attemptLogin(email, password, loginBtn, loginStatus, loadingSpinner) {
   fetch("https://script.google.com/macros/s/AKfycbxIkJL8tNlrZKL2jS2zcfDL3_-XssqRGYWeZvWgbqPTK_pG2FOUSKNYAw-cpgugihdC/exec", {
     method: "POST",
     headers: {
@@ -39,10 +29,34 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
       }
     })
     .catch((err) => {
-      loginBtn.disabled = false;
-      loginBtn.textContent = "Login";
-      loadingSpinner.classList.add("hidden");
-      loginStatus.textContent = "An error occurred. Please check your network or try again later. Error: " + err.message;
-      console.error("Error:", err);
+      retryCount++;
+      if (retryCount < maxRetries) {
+        console.log(`Retry ${retryCount} of ${maxRetries}...`);
+        setTimeout(() => attemptLogin(email, password, loginBtn, loginStatus, loadingSpinner), 1000);
+      } else {
+        loginBtn.disabled = false;
+        loginBtn.textContent = "Login";
+        loadingSpinner.classList.add("hidden");
+        loginStatus.textContent = "An error occurred. Please check your network or try again later. Error: " + err.message;
+        console.error("Error:", err);
+      }
     });
+}
+
+document.getElementById("loginForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+  const loginBtn = document.getElementById("loginBtn");
+  const loginStatus = document.getElementById("login-status");
+  const loadingSpinner = document.getElementById("loadingSpinner");
+
+  loginBtn.disabled = true;
+  loginBtn.textContent = "Logging in...";
+  loadingSpinner.classList.remove("hidden");
+  loginStatus.textContent = "";
+
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  retryCount = 0;
+  attemptLogin(email, password, loginBtn, loginStatus, loadingSpinner);
 });
