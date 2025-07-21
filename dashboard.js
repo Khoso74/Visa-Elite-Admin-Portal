@@ -1,13 +1,17 @@
-// You will expand this part later with chart + fetch from sheet
-const ctx = document.getElementById('chart').getContext('2d');
-new Chart(ctx, {
-  type: 'bar',
-  data: {
-    labels: ['USA', 'UK', 'Canada'],
-    datasets: [{
-      label: 'Applications',
-      data: [12, 19, 3],
-      backgroundColor: ['red', 'blue', 'green']
-    }]
-  }
-});
+window.onload = async () => {
+  const response = await fetch('https://script.google.com/macros/s/YOUR_DEPLOYED_SCRIPT_URL/exec?action=getData');
+  const data = await response.json();
+
+  const ctx = document.getElementById('visaChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: data.map(row => row.name),
+      datasets: [{
+        label: 'Applications',
+        data: data.map(row => row.visa_count),
+        backgroundColor: 'blue'
+      }]
+    }
+  });
+};
