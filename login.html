@@ -8,16 +8,18 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
 </head>
 <body>
-  <!-- Background animation -->
+  <!-- Background Animation -->
   <div id="space-background"></div>
 
   <!-- Login Container -->
-  <div class="login-container animated-fade-in">
-    <h2 class="login-title">Admin Login</h2>
-    <input type="email" id="email" placeholder="Enter your email" required />
-    <input type="password" id="password" placeholder="Enter your password" required />
-    <button id="loginBtn">Login</button>
-    <p id="login-status" class="error-message"></p>
+  <div class="login-container fade-in">
+    <div class="login-box glassmorphic">
+      <h2 class="login-title">🔐 Admin Login</h2>
+      <input type="email" id="email" placeholder="Enter your email" required />
+      <input type="password" id="password" placeholder="Enter your password" required />
+      <button id="loginBtn">Login</button>
+      <p id="login-status" class="error-message"></p>
+    </div>
   </div>
 
   <script src="background.js"></script>
