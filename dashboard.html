@@ -1,39 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
- <meta charset="UTF-8"/>
- <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
- <title>Visa Elite Dashboard</title>
- <link rel="stylesheet" href="style.css"/>
- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <meta charset="UTF-8" />
+  <title>Visa Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body class="dashboard-body">
-
-  <header class="dashboard-header glass">
-    <h1>Visa Elite Admin</h1>
-    <button id="logoutBtn">Logout</button>
-  </header>
-
-  <main class="dashboard-main">
-    <canvas id="visaChart"></canvas>
-  </main>
-
-  <script>
-    if (!sessionStorage.getItem('loggedIn')) location.href = 'login.html';
-    document.getElementById('logoutBtn').onclick = () => {
-      sessionStorage.clear(); location.href = 'login.html';
-    };
-
-    // Fetch data for Chart
-    fetch('https://script.google.com/macros/s/AKfycbxIkJL8tNlrZKL2jS2zcfDL3_-XssqRGYWeZvWgbqPTK_pG2FOUSKNYAw-cpgugihdC/exec?action=getCharts')
-      .then(r => r.json())
-      .then(res => {
-        new Chart(document.getElementById('visaChart'), {
-          type: 'pie',
-          data: res,
-          options: { plugins: { legend: { position: 'bottom' } } }
-        });
-      });
-  </script>
+<body>
+  <h1>Visa Applications Dashboard</h1>
+  <canvas id="chart" width="400" height="200"></canvas>
+  <script src="dashboard.js"></script>
 </body>
 </html>
