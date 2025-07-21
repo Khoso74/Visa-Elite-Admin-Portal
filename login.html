@@ -1,22 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Login - Visa Elite</title>
-  <link rel="stylesheet" href="style.css"/>
+  <meta charset="UTF-8" />
+  <title>Visa Elite - Admin Login</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #0f0f0f, #1f1f1f);
+      font-family: 'Segoe UI', sans-serif;
+      color: white;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-image: url('https://images.unsplash.com/photo-1604770025042-bf0810a54b2d?auto=format&fit=crop&w=1920&q=80');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .login-container {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+      text-align: center;
+      width: 320px;
+    }
+
+    .login-container h2 {
+      margin-bottom: 30px;
+      color: #00ffff;
+    }
+
+    .login-container input {
+      width: 90%;
+      padding: 10px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 8px;
+    }
+
+    .login-container button {
+      padding: 10px 25px;
+      background-color: #00ffff;
+      color: #000;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .login-container button:hover {
+      background-color: #00cccc;
+    }
+  </style>
 </head>
 <body>
-  <div id="space-background"></div>
   <div class="login-container">
     <h2>Admin Login</h2>
-    <input type="email" placeholder="Email"/>
-    <input type="password" placeholder="Password"/>
-    <button>Login</button>
+    <input type="email" id="email" placeholder="Email" />
+    <input type="password" id="password" placeholder="Password" />
+    <button onclick="handleLogin()">Login</button>
+    <p id="error" style="color:red;"></p>
   </div>
 
-  <!-- Three.js and Custom BG Script -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
-  <script src="background.js"></script>
+  <script src="login.js"></script>
 </body>
 </html>
