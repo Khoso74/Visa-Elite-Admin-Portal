@@ -25,7 +25,7 @@
     };
 
     // Fetch data for Chart
-    fetch('YOUR_WEB_APP_URL?action=getCharts')
+    fetch('https://script.google.com/macros/s/AKfycbxIkJL8tNlrZKL2jS2zcfDL3_-XssqRGYWeZvWgbqPTK_pG2FOUSKNYAw-cpgugihdC/exec?action=getCharts')
       .then(r => r.json())
       .then(res => {
         new Chart(document.getElementById('visaChart'), {
