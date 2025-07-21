@@ -1,117 +1,29 @@
+<!-- Updated index.html with animation and dashboard -->
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Visa Elite Admin Dashboard</title>
-  <link rel="stylesheet" href="style.css" />
-  <style>
-    canvas#bg {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: -1;
-    }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visa Dashboard</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-  <!-- Background Canvas for Three.js Animation -->
   <canvas id="bg"></canvas>
-
-  <!-- Dashboard Header -->
-  <header class="dashboard-header glassmorphic">
-    <h1>Visa Elite Admin Panel</h1>
-    <button id="logoutBtn" class="logout-button">Logout</button>
-  </header>
-
-  <!-- Dashboard Cards Section -->
-  <main class="dashboard-main">
-    <div class="dashboard">
-      <h1>Welcome, Admin</h1>
-      <div class="features">
-        <div class="feature-card">
-          <h3>Clients</h3>
-          <p>View all visa applicants</p>
-        </div>
-        <div class="feature-card">
-          <h3>Admins</h3>
-          <p>Manage admin access</p>
-        </div>
-        <div class="feature-card">
-          <h3>Settings</h3>
-          <p>System preferences</p>
-        </div>
-        <div class="feature-card">
-          <h3>Sheets</h3>
-          <p>Google Sheet Integration</p>
-        </div>
+  <main>
+    <section class="dashboard-container">
+      <h1>Welcome to Visa Elite Dashboard</h1>
+      <h3>Admin Panel</h3>
+      <div class="dashboard-cards">
+        <div class="card">Clients</div>
+        <div class="card">Admins</div>
+        <div class="card">Settings</div>
+        <div class="card">Sheets</div>
       </div>
-    </div>
-
-    <!-- Embedded Google Sheet -->
-    <section class="iframe-section glassmorphic">
-      <iframe src="https://docs.google.com/spreadsheets/d/1FJn2u5QRh2fduij-nIn4gH6_uGzxnsa8Ou1y4SLA-SE/edit?usp=sharing"
-        width="100%" height="600" frameborder="0"></iframe>
+      <iframe id="sheet-embed" src="https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID_HERE/edit#gid=0" frameborder="0"></iframe>
+      <button onclick="logout()" class="logout-btn">Logout</button>
     </section>
   </main>
-
-  <!-- Footer -->
-  <footer class="dashboard-footer">
-    <p>&copy; 2025 Visa Elite | All rights reserved</p>
-  </footer>
-
-  <!-- Logout & Auth Check -->
-  <script>
-    if (!sessionStorage.getItem('loggedIn')) {
-      window.location.href = 'login.html';
-    }
-    document.getElementById('logoutBtn').addEventListener('click', () => {
-      sessionStorage.removeItem('loggedIn');
-      window.location.href = 'login.html';
-    });
-  </script>
-
-  <!-- THREE.js CDN -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <!-- Background Animation Script -->
-  <script>
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ canvas: document.querySelector('#bg') });
-    renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    camera.position.setZ(30);
-
-    const geometry = new THREE.TorusGeometry(10, 3, 16, 100);
-    const material = new THREE.MeshStandardMaterial({ color: 0x007BFF });
-    const torus = new THREE.Mesh(geometry, material);
-    scene.add(torus);
-
-    const pointLight = new THREE.PointLight(0xffffff);
-    pointLight.position.set(5, 5, 5);
-    scene.add(pointLight);
-
-    const ambientLight = new THREE.AmbientLight(0xffffff);
-    scene.add(ambientLight);
-
-    function animate() {
-      requestAnimationFrame(animate);
-      torus.rotation.x += 0.01;
-      torus.rotation.y += 0.005;
-      renderer.render(scene, camera);
-    }
-    animate();
-
-    window.addEventListener('resize', () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    });
-  </script>
+  <script src="dashboard.js"></script>
+  <script src="background.js"></script>
 </body>
-
 </html>
