@@ -28,7 +28,7 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
         sessionStorage.setItem("email", email);
         window.location.href = "dashboard.html";
       } else {
-        loginStatus.textContent = data.message || "Invalid credentials.";
+        loginStatus.textContent = data.message || "Invalid credentials. Please try again.";
       }
     })
     .catch((err) => {
