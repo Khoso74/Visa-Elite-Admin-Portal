@@ -3,22 +3,22 @@ body, html {
   padding: 0;
   height: 100%;
   overflow: hidden;
-  font-family: sans-serif;
+  font-family: 'Segoe UI', sans-serif;
+  background: transparent;
 }
 
-#intro-screen {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+/* Intro Animation */
+#intro {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
   background: #000;
   color: white;
+  font-size: 3rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2rem;
-  animation: fadeOut 2s ease 3s forwards;
+  z-index: 20;
+  animation: fadeOut 3s ease 2.5s forwards;
 }
 
 @keyframes fadeOut {
@@ -28,27 +28,72 @@ body, html {
   }
 }
 
+.hidden {
+  display: none;
+}
+
+/* Login Box */
 #login-container {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: rgba(255, 255, 255, 0.15);
-  padding: 30px;
+  backdrop-filter: blur(15px);
+  background: rgba(255, 255, 255, 0.08);
+  border: 2px solid rgba(255, 255, 255, 0.2);
   border-radius: 20px;
-  box-shadow: 0 0 30px #000;
-  backdrop-filter: blur(10px);
+  padding: 40px;
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
   z-index: 10;
+  animation: fadeIn 1.5s ease forwards;
 }
 
-.hidden {
-  display: none;
+@keyframes fadeIn {
+  from { opacity: 0; transform: translate(-50%, -60%); }
+  to { opacity: 1; transform: translate(-50%, -50%); }
 }
 
+#login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 250px;
+}
+
+#login-form h2 {
+  color: white;
+  text-shadow: 0 0 10px cyan;
+}
+
+#login-form input {
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  background: rgba(255,255,255,0.15);
+  color: white;
+  font-size: 1rem;
+  box-shadow: inset 0 0 5px cyan;
+}
+
+#login-form button {
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background: cyan;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+#login-form button:hover {
+  background: #0ff;
+  box-shadow: 0 0 10px #0ff;
+}
+
+/* 3D Canvas Background */
 #bg-canvas {
   position: fixed;
-  top: 0;
-  left: 0;
+  top: 0; left: 0;
   width: 100%;
   height: 100%;
   z-index: 0;
