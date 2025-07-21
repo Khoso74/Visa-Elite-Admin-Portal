@@ -2,40 +2,69 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Visa Elite</title>
-  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
   <style>
-    body {
+    body, html {
       margin: 0;
-      background: linear-gradient(to right, #141e30, #243b55);
-      color: white;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
       font-family: 'Segoe UI', sans-serif;
+      background-color: #0f0f0f;
+      color: white;
+    }
+
+    #intro {
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      overflow: hidden;
+      height: 100%;
+      flex-direction: column;
+      animation: fadeIn 2s ease-in-out;
     }
-    .intro {
-      opacity: 0;
-      animation: fadeIn 2s ease-in-out forwards;
+
+    #intro h1 {
+      font-size: 48px;
+      color: #00ffff;
+      margin-bottom: 10px;
     }
+
+    #intro p {
+      font-size: 20px;
+      color: #ccc;
+    }
+
+    .btn {
+      margin-top: 30px;
+      padding: 10px 30px;
+      background-color: #00ffff;
+      border: none;
+      border-radius: 8px;
+      color: #000;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: #00bbbb;
+    }
+
     @keyframes fadeIn {
-      to { opacity: 1; }
+      from { opacity: 0 }
+      to { opacity: 1 }
     }
   </style>
 </head>
 <body>
-  <div class="intro">
-    <h1 style="font-size: 3rem; text-align: center;">Welcome to <span style="color:#00f0ff;">Visa Elite</span></h1>
-    <p style="text-align: center;">Your Trusted Visa Consultancy Partner</p>
+  <div id="intro">
+    <h1>Welcome to Visa Elite</h1>
+    <p>Your Trusted Visa Consultancy Portal</p>
+    <button class="btn" onclick="window.location.href='login.html'">Get Started</button>
   </div>
-
-  <script>
-    setTimeout(() => {
-      window.location.href = "login.html";
-    }, 4000);
-  </script>
 </body>
 </html>
