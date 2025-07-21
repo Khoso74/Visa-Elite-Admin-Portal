@@ -2,74 +2,76 @@ body, html {
   margin: 0;
   padding: 0;
   font-family: 'Segoe UI', sans-serif;
-  overflow: hidden;
+  height: 100%;
+}
+
+.intro-body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 100vh;
-  width: 100vw;
-  background-color: #0a0a0a;
+  background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
   color: white;
 }
 
-#vanta-bg {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
+.intro-container {
+  text-align: center;
 }
 
-.intro-text {
-  position: absolute;
-  top: 30%;
-  width: 100%;
-  text-align: center;
-  font-size: 2rem;
+.fade-in {
   opacity: 0;
-  animation: fadeIn 3s forwards;
+  animation: fadeIn 2s forwards;
 }
 
-.intro-text span {
-  color: #00ffff;
-  font-weight: bold;
-  font-size: 2.5rem;
-}
-
-.login-container {
-  position: absolute;
-  top: 60%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: rgba(255, 255, 255, 0.1);
-  padding: 30px;
-  border-radius: 15px;
-  box-shadow: 0 0 20px #00ffff;
-  backdrop-filter: blur(8px);
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  width: 300px;
-  text-align: center;
-}
-
-.login-container input {
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-}
-
-.login-container button {
-  background: #00ffff;
-  border: none;
-  padding: 10px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.hidden {
-  display: none;
+.fade-in.delay {
+  animation-delay: 1s;
 }
 
 @keyframes fadeIn {
   to {
     opacity: 1;
   }
+}
+
+.highlight {
+  color: #00ffff;
+}
+
+#animated-bg {
+  height: 100vh;
+  margin: 0;
+}
+
+.login-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+  backdrop-filter: blur( 8.5px );
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  text-align: center;
+}
+
+.login-container input, .login-container button {
+  margin: 10px 0;
+  padding: 10px;
+  width: 90%;
+  border-radius: 8px;
+  border: none;
+}
+
+button {
+  background-color: #00ffff;
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.error {
+  color: red;
+  font-size: 0.9rem;
 }
