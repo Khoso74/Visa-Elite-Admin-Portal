@@ -1,12 +1,51 @@
 body, html {
   margin: 0;
   padding: 0;
-  overflow: hidden;
   font-family: 'Segoe UI', sans-serif;
 }
 
+.intro-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #091540, #1c2a4d);
+  color: white;
+  flex-direction: column;
+}
+
+.intro-container h1, .intro-container p {
+  margin: 0;
+  padding: 10px;
+  text-align: center;
+}
+
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 1.5s forwards;
+}
+
+.fade-in.delay {
+  animation-delay: 1.5s;
+}
+
+.highlight {
+  color: #00BFFF;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+#login-body {
+  margin: 0;
+  overflow: hidden;
+}
+
 #bg-canvas {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
@@ -19,41 +58,14 @@ body, html {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(30, 30, 30, 0.8);
+  color: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px #00ffff99;
+}
+
+.glossy {
   backdrop-filter: blur(10px);
-  border-radius: 20px;
-  padding: 40px;
-  text-align: center;
-  box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
-  color: white;
-  width: 300px;
-}
-
-.login-container h2 {
-  margin-bottom: 20px;
-  color: #ffffff;
-}
-
-.login-container input {
-  width: 90%;
-  margin: 10px 0;
-  padding: 10px;
-  border: none;
-  border-radius: 10px;
-  outline: none;
-}
-
-.login-container button {
-  background-color: #4CAF50;
-  color: white;
-  padding: 10px 20px;
-  margin-top: 15px;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.login-container button:hover {
-  background-color: #45a049;
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
