@@ -1,50 +1,170 @@
-/* Reset & Font */
-body, html {
+/* Reset and Base Styling */
+* {
   margin: 0;
   padding: 0;
-  font-family: 'Segoe UI', sans-serif;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body, html {
+  width: 100%;
   height: 100%;
   overflow: hidden;
 }
 
-/* Login Container */
-.login-container {
+/* ============================= */
+/* Intro Page Animation */
+/* ============================= */
+#intro-page {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: rgba(255, 255, 255, 0.1);
-  padding: 40px;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #003366, #004488);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  animation: fadeIn 2s ease-in-out forwards;
+  z-index: 10;
+}
+
+#intro-page h1 {
+  font-size: 3em;
+  margin-bottom: 10px;
+  letter-spacing: 2px;
+}
+
+#intro-page p {
+  font-size: 1.2em;
+  opacity: 0.9;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; transform: scale(0.95); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* ============================= */
+/* Login Page Styling */
+/* ============================= */
+.login-page {
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, #0f2027, #203a43, #2c5364);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.login-container {
+  background: rgba(255, 255, 255, 0.08);
+  padding: 40px 30px;
   border-radius: 20px;
   backdrop-filter: blur(10px);
-  box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  color: #fff;
+  width: 320px;
   text-align: center;
-  width: 300px;
-  color: white;
+  animation: slideUp 0.8s ease forwards;
+  opacity: 0;
+}
+
+@keyframes slideUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.login-container h2 {
+  margin-bottom: 20px;
+  font-size: 1.8em;
 }
 
 .login-container input {
-  width: 90%;
-  padding: 10px;
+  width: 100%;
+  padding: 10px 15px;
   margin: 10px 0;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   outline: none;
+  background-color: rgba(255, 255, 255, 0.15);
+  color: white;
 }
 
 .login-container button {
   width: 100%;
-  padding: 12px;
-  background-color: #00f0ff;
+  padding: 10px;
   border: none;
-  border-radius: 8px;
-  font-weight: bold;
+  background: linear-gradient(to right, #00b09b, #96c93d);
+  color: #fff;
+  border-radius: 10px;
+  font-size: 1em;
   cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-#space-background {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
+.login-container button:hover {
+  background: linear-gradient(to right, #96c93d, #00b09b);
+}
+
+#error-msg {
+  margin-top: 10px;
+  color: #ffaaaa;
+  font-size: 0.9em;
+}
+
+/* ============================= */
+/* Dashboard Page Styling */
+/* ============================= */
+.dashboard {
+  background: linear-gradient(120deg, #232526, #414345);
+  height: 100vh;
+  color: white;
+  padding: 40px;
+}
+
+.dashboard h1 {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+}
+
+.dashboard .features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 20px;
+}
+
+.feature-card {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  padding: 20px;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  transition: 0.3s;
+  text-align: center;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.feature-card h3 {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}
+
+/* ============================= */
+/* Reusable Classes */
+/* ============================= */
+.hidden {
+  display: none;
+}
+
+.fade-in {
+  animation: fadeIn 1s ease-in forwards;
 }
