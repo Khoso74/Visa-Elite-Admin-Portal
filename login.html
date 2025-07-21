@@ -1,19 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login - Visa Elite</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Visa Elite Admin Login</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <canvas id="bg"></canvas>
+  <!-- 3D ANIMATED BACKGROUND -->
+  <div id="stars"></div>
+  <div id="stars2"></div>
+  <div id="stars3"></div>
+
+  <!-- LOGIN FORM -->
   <div class="login-container">
-    <h2>Visa Elite Admin Login</h2>
-    <input type="email" id="email" placeholder="Enter your Gmail">
-    <button onclick="loginUser()">Login</button>
+    <h2>Admin Login</h2>
+    <input type="email" id="email" placeholder="Email" required />
+    <input type="password" id="password" placeholder="Password" required />
+    <button id="loginBtn">Login</button>
+    <p id="error" class="error"></p>
   </div>
-  <script src="login.js"></script>
-  <script src="background.js"></script>
+
+  <script>
+    document.getElementById('loginBtn').addEventListener('click', () => {
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      google.script.run.withSuccessHandler(response => {
+        if (response === "success") {
+          sessionStorage.setItem('loggedIn', 'true');
+          window.location.href = 'dashboard.html';
+        } else {
+          document.getElementById('error').textContent = "Invalid Email or Password";
+        }
+      }).checkLogin(email, password);
+    });
+
+    if (sessionStorage.getItem('loggedIn')) {
+      window.location.href = 'dashboard.html';
+    }
+  </script>
 </body>
 </html>
