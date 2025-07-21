@@ -12,9 +12,9 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
   fetch("https://script.google.com/macros/s/AKfycbxIkJL8tNlrZKL2jS2zcfDL3_-XssqRGYWeZvWgbqPTK_pG2FOUSKNYAw-cpgugihdC/exec", { // Replace with your deployed URL
     method: "POST",
     headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
+      "Content-Type": "application/json", // Changed to JSON
     },
-    body: new URLSearchParams({
+    body: JSON.stringify({
       email: email,
       password: password,
     }),
