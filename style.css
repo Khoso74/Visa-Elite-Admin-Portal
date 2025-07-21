@@ -1,113 +1,88 @@
 body, html {
   margin: 0;
   padding: 0;
-  height: 100%;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   overflow: hidden;
-  background: #000;
+  height: 100%;
+  background: transparent;
+  color: #fff;
 }
 
-/* ============================= */
-/* Intro Animation */
-/* ============================= */
-.intro-container {
-  background: linear-gradient(to right, #000428, #004e92);
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  flex-direction: column;
-  text-align: center;
-  z-index: 5;
-  position: absolute;
-  width: 100%;
-}
-
-.intro-container h1 {
-  font-size: 3em;
-  opacity: 0;
-  animation: fadeIn 2s forwards;
-}
-
-.intro-container span {
-  color: #00d4ff;
-  font-weight: bold;
-}
-
-@keyframes fadeIn {
-  to { opacity: 1; }
-}
-
-/* ============================= */
-/* Login Page Styling */
-/* ============================= */
-.login-container {
-  height: 100vh;
-  width: 100vw;
-  position: absolute;
+canvas#bg {
+  position: fixed;
   top: 0;
   left: 0;
-}
-
-#vanta-bg {
-  width: 100%;
-  height: 100%;
-  position: absolute;
   z-index: -1;
 }
 
-.form-box {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: rgba(255, 255, 255, 0.08);
-  padding: 30px;
-  border-radius: 15px;
-  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
-  backdrop-filter: blur(8px);
-  color: white;
-  min-width: 300px;
+.login-container, .dashboard-container {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 40px;
   width: 90%;
-  max-width: 350px;
-  animation: fadeIn 1.2s ease-in-out;
-}
-
-input {
-  width: 100%;
-  padding: 12px;
-  margin: 10px 0;
-  border: none;
-  border-radius: 10px;
-  background: rgba(255,255,255,0.15);
-  color: white;
-  outline: none;
-}
-
-button {
-  width: 100%;
-  padding: 12px;
-  background-color: #00d4ff;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  font-weight: bold;
-  cursor: pointer;
-  margin-top: 10px;
-  transition: background 0.3s ease;
-}
-
-button:hover {
-  background-color: #008fb3;
-}
-
-.error {
-  color: #ff4d4d;
-  margin-top: 10px;
+  max-width: 500px;
+  margin: 100px auto;
+  backdrop-filter: blur(15px);
+  box-shadow: 0 0 30px rgba(0,0,0,0.5);
   text-align: center;
 }
 
-.hidden {
-  display: none;
+input {
+  padding: 12px;
+  margin-top: 20px;
+  width: 80%;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background: #007BFF;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #0056b3;
+}
+
+.dashboard-cards {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 12px;
+  width: 150px;
+  text-align: center;
+  transition: 0.4s;
+  cursor: pointer;
+}
+
+.card:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+iframe#sheet-embed {
+  width: 100%;
+  height: 500px;
+  margin-top: 30px;
+  border: none;
+  border-radius: 12px;
+}
+
+.logout-btn {
+  background: crimson;
+  margin-top: 30px;
 }
