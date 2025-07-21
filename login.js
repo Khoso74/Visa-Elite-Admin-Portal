@@ -1,33 +1,26 @@
-async function login() {
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value.trim();
-  const error = document.getElementById("login-error");
+document.getElementById("loginForm").addEventListener("submit", function (e) {
+  e.preventDefault();
 
-  error.textContent = "";
+  var email = document.getElementById("email").value;
+  var password = document.getElementById("password").value;
 
-  if (!email || !password) {
-    error.textContent = "Please fill in both fields.";
-    return;
-  }
-
-  try {
-    const response = await fetch(
-      "https://script.google.com/macros/s/AKfycbxIkJL8tNlrZKL2jS2zcfDL3_-XssqRGYWeZvWgbqPTK_pG2FOUSKNYAw-cpgugihdC/exec?action=login",
-      {
-        method: "POST",
-        body: JSON.stringify({ email, password }),
-        headers: { "Content-Type": "application/json" }
+  fetch("https://script.google.com/macros/s/AKfycbxIkJL8tNlrZKL2jS2zcfDL3_-XssqRGYWeZvWgbqPTK_pG2FOUSKNYAw-cpgugihdC/exec", {
+    method: "POST",
+    body: new URLSearchParams({
+      email: email,
+      password: password,
+    }),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.status === "success") {
+        window.location.href = "dashboard.html";
+      } else {
+        alert("Login Failed. Invalid credentials.");
       }
-    );
-
-    const result = await response.json();
-
-    if (result.success) {
-      window.location.href = "dashboard.html";
-    } else {
-      error.textContent = "Login failed. Check credentials.";
-    }
-  } catch (err) {
-    error.textContent = "Error connecting to server.";
-  }
-}
+    })
+    .catch((err) => {
+      console.error("Error:", err);
+      alert("Something went wrong. Please try again later.");
+    });
+});
