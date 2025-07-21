@@ -2,7 +2,8 @@ let retryCount = 0;
 const maxRetries = 3;
 
 function attemptLogin(email, password, loginBtn, loginStatus, loadingSpinner) {
-  fetch("https://visa-elite-admin-portal-pykl0uwg3-khoso74s-projects.vercel.app/api/proxy", { // Your Vercel URL
+  console.log("Attempting fetch to: https://visa-elite-admin-portal-pykl0uwg3-khoso74s-projects.vercel.app/api/proxy");
+  fetch("https://visa-elite-admin-portal-pykl0uwg3-khoso74s-projects.vercel.app/api/proxy", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -13,10 +14,12 @@ function attemptLogin(email, password, loginBtn, loginStatus, loadingSpinner) {
     }),
   })
     .then((res) => {
+      console.log("Fetch response status:", res.status);
       if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
       return res.json();
     })
     .then((data) => {
+      console.log("Response data:", data);
       loginBtn.disabled = false;
       loginBtn.textContent = "Login";
       loadingSpinner.classList.add("hidden");
@@ -29,6 +32,7 @@ function attemptLogin(email, password, loginBtn, loginStatus, loadingSpinner) {
       }
     })
     .catch((err) => {
+      console.error("Fetch error:", err);
       retryCount++;
       if (retryCount < maxRetries) {
         console.log(`Retry ${retryCount} of ${maxRetries}... Error: ${err.message}`);
