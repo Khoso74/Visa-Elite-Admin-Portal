@@ -1,5 +1,5 @@
 // Replace this with your Apps Script Web App URL 👇
-const scriptURL = "https://script.google.com/macros/s/AKfycbxxxxx/exec";
+const scriptURL = "https://script.google.com/macros/s/AKfycbxIkJL8tNlrZKL2jS2zcfDL3_-XssqRGYWeZvWgbqPTK_pG2FOUSKNYAw-cpgugihdC/exec";
 
 async function login() {
   const email = document.getElementById("email").value.trim();
