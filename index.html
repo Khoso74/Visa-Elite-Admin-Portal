@@ -2,20 +2,40 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Visa Elite</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    body {
+      margin: 0;
+      background: linear-gradient(to right, #141e30, #243b55);
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .intro {
+      opacity: 0;
+      animation: fadeIn 2s ease-in-out forwards;
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+  </style>
 </head>
-<body class="intro-body">
-  <div class="intro-container">
-    <h1 class="fade-in">🌍 Welcome to <span class="highlight">Visa Elite</span></h1>
-    <p class="fade-in delay">Your trusted travel and visa consultancy</p>
+<body>
+  <div class="intro">
+    <h1 style="font-size: 3rem; text-align: center;">Welcome to <span style="color:#00f0ff;">Visa Elite</span></h1>
+    <p style="text-align: center;">Your Trusted Visa Consultancy Partner</p>
   </div>
 
   <script>
     setTimeout(() => {
       window.location.href = "login.html";
-    }, 4000); // auto-redirect after 4 seconds
+    }, 4000);
   </script>
 </body>
 </html>
