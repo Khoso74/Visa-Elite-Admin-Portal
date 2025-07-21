@@ -1,1 +1,35 @@
-# Visa-Elite-Admin-Portal
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Visa Admin Login</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.space.min.js"></script>
+</head>
+<body>
+  <div id="vanta-bg">
+    <div class="login-container">
+      <h2>Visa Admin Login</h2>
+      <input type="email" id="email" placeholder="Enter Email" required />
+      <input type="password" id="password" placeholder="Enter Password" required />
+      <button onclick="login()">Login</button>
+      <p id="error" class="error-message"></p>
+    </div>
+  </div>
+
+  <script src="login.js"></script>
+  <script>
+    VANTA.SPACE({
+      el: "#vanta-bg",
+      mouseControls: true,
+      touchControls: true,
+      minHeight: 600.00,
+      minWidth: 600.00,
+      scale: 1.00,
+      scaleMobile: 1.00
+    });
+  </script>
+</body>
+</html>
