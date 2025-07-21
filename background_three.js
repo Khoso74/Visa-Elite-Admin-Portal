@@ -14,25 +14,15 @@ scene.add(ambientLight);
 
 // Sun
 const sunGeometry = new THREE.SphereGeometry(3, 32, 32);
-const sunTexture = new THREE.TextureLoader().load(
-  'https://images-assets.nasa.gov/image/PIA00129/PIA00129~thumb.jpg',
-  undefined,
-  undefined,
-  () => { console.error('Failed to load sun texture'); }
-);
-const sunMaterial = new THREE.MeshStandardMaterial({ map: sunTexture || new THREE.Color(0xffff00) });
+const sunTexture = new THREE.TextureLoader().load('https://i.imgur.com/4f5z1rY.jpg');
+const sunMaterial = new THREE.MeshStandardMaterial({ map: sunTexture });
 const sun = new THREE.Mesh(sunGeometry, sunMaterial);
 scene.add(sun);
 
 // Earth
 const earthGeometry = new THREE.SphereGeometry(1, 32, 32);
-const earthTexture = new THREE.TextureLoader().load(
-  'https://images-assets.nasa.gov/image/PIA00122/PIA00122~thumb.jpg',
-  undefined,
-  undefined,
-  () => { console.error('Failed to load earth texture'); }
-);
-const earthMaterial = new THREE.MeshStandardMaterial({ map: earthTexture || new THREE.Color(0x0000ff) });
+const earthTexture = new THREE.TextureLoader().load('https://i.imgur.com/2v2F8rW.jpg');
+const earthMaterial = new THREE.MeshStandardMaterial({ map: earthTexture });
 const earth = new THREE.Mesh(earthGeometry, earthMaterial);
 earth.position.set(6, 0, 0);
 scene.add(earth);
