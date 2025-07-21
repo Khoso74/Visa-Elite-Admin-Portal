@@ -1,16 +1,21 @@
 function login() {
-  const email = document.getElementById('email').value;
-  const password = document.getElementById('password').value;
+  const email = document.getElementById("email").value.trim();
+  const allowedEmails = [
+    "admin1@gmail.com",
+    "admin2@gmail.com",
+    "admin3@gmail.com"
+  ];
 
-  if (!email || !password) {
-    alert('Please enter both email and password');
-    return;
-  }
+  const status = document.getElementById("status");
 
-  // Dummy check
-  if (email === "admin@example.com" && password === "123456") {
-    window.location.href = "dashboard.html"; // Replace with your page
+  if (allowedEmails.includes(email)) {
+    status.innerText = "Access Granted ✅";
+    status.style.color = "green";
+    setTimeout(() => {
+      window.location.href = "dashboard.html"; // Or wherever you want
+    }, 1000);
   } else {
-    alert("Invalid credentials");
+    status.innerText = "Access Denied ❌";
+    status.style.color = "red";
   }
 }
