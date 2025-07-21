@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Visa Elite - Login</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- Intro screen -->
-  <div id="intro-screen">
+
+  <!-- Intro Animation -->
+  <div id="intro">
     <h1>Welcome to Visa Elite</h1>
   </div>
 
-  <!-- Login container -->
+  <!-- Login Form -->
   <div id="login-container" class="hidden">
     <form id="login-form">
       <h2>Admin Login</h2>
@@ -21,9 +23,11 @@
     </form>
   </div>
 
-  <!-- 3D background -->
+  <!-- 3D Background -->
   <canvas id="bg-canvas"></canvas>
 
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.148.0/build/three.min.js"></script>
   <script src="background_three.js"></script>
   <script src="login.js"></script>
 </body>
