@@ -1,22 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Login – Visa Elite</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - Visa Elite</title>
+  <link rel="stylesheet" href="style.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
-<body>
-  <canvas id="bg"></canvas>
-  <div class="login-container glass">
-    <h2>Admin Login</h2>
-    <input type="email" id="email" placeholder="Email" />
-    <input type="password" id="password" placeholder="Password" />
-    <button id="loginBtn">Login</button>
-    <p id="error" class="error"></p>
+<body class="login-page">
+  <div class="login-container fade-in">
+    <canvas id="login-bg"></canvas>
+    <div class="login-box glassmorphic">
+      <h2 class="login-title">🔐 Admin Login</h2>
+      <form id="loginForm">
+        <input type="email" id="email" placeholder="Enter your email" required class="input-field" />
+        <input type="password" id="password" placeholder="Enter your password" required class="input-field" />
+        <button type="submit" id="loginBtn" class="login-button">Login</button>
+        <p id="login-status" class="error-message"></p>
+      </form>
+    </div>
   </div>
+  <script src="background.js"></script>
   <script src="login.js"></script>
-  <script src="background_three.js"></script>
 </body>
 </html>
