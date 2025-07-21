@@ -3,20 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Visa Elite - Admin Login</title>
+  <title>Visa Elite Login</title>
   <link rel="stylesheet" href="style.css" />
 </head>
-<body>
-  <div id="bg-canvas"></div>
-
-  <div class="login-container">
-    <h2>Visa Elite Admin Login</h2>
-    <input type="email" id="email" placeholder="Enter Email" />
-    <input type="password" id="password" placeholder="Enter Password" />
+<body id="login-body">
+  <canvas id="bg-canvas"></canvas>
+  <div class="login-container glossy">
+    <h2>Admin Login</h2>
+    <input type="email" id="email" placeholder="Enter your Gmail" />
     <button onclick="login()">Login</button>
+    <p id="status"></p>
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+  <script src="three.min.js"></script>
   <script src="background.js"></script>
   <script src="login.js"></script>
 </body>
