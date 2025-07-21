@@ -1,10 +1,8 @@
-// Check if user is logged in
-window.onload = function () {
-  const email = localStorage.getItem("email");
-  const password = localStorage.getItem("password");
+if (!sessionStorage.getItem("admin")) {
+  window.location.href = "login.html";
+}
 
-  // Redirect to login if not logged in
-  if (!email || !password) {
-    window.location.href = "index.html";
-  }
-};
+function logout() {
+  sessionStorage.removeItem("admin");
+  window.location.href = "login.html";
+}
