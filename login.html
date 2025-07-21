@@ -2,23 +2,25 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Visa Elite Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - Visa Elite</title>
   <link rel="stylesheet" href="style.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
 </head>
 <body>
-  <div id="login-bg"></div>
+  <!-- Background animation -->
+  <div id="space-background"></div>
 
-  <div class="login-container animated fadeIn">
-    <h2>Visa Elite Admin Login</h2>
-    <input type="email" id="email" placeholder="Email" />
-    <input type="password" id="password" placeholder="Password" />
-    <button onclick="login()">Login</button>
-    <p id="login-error" class="error-text"></p>
+  <!-- Login Container -->
+  <div class="login-container animated-fade-in">
+    <h2 class="login-title">Admin Login</h2>
+    <input type="email" id="email" placeholder="Enter your email" required />
+    <input type="password" id="password" placeholder="Enter your password" required />
+    <button id="loginBtn">Login</button>
+    <p id="login-status" class="error-message"></p>
   </div>
 
-  <script src="login.js"></script>
   <script src="background.js"></script>
+  <script src="login.js"></script>
 </body>
 </html>
