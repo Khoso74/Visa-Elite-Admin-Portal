@@ -1,5 +1,5 @@
-// Replace this with your Apps Script Web App URL 👇
-const scriptURL = "https://script.google.com/macros/s/AKfycbxIkJL8tNlrZKL2jS2zcfDL3_-XssqRGYWeZvWgbqPTK_pG2FOUSKNYAw-cpgugihdC/exec";
+// Replace this with your actual Apps Script URL 👇
+const scriptURL = "https://script.google.com/macros/s/AKfycbxxxxx/exec";
 
 async function login() {
   const email = document.getElementById("email").value.trim();
@@ -21,10 +21,9 @@ async function login() {
     );
 
     if (matched) {
-      // Save session (if needed)
       localStorage.setItem("loggedIn", "true");
       localStorage.setItem("adminEmail", email);
-      window.location.href = "dashboard.html"; // Redirect to dashboard
+      window.location.href = "dashboard.html";
     } else {
       errorMsg.textContent = "Invalid login credentials.";
     }
@@ -33,4 +32,3 @@ async function login() {
     console.error(err);
   }
 }
-
