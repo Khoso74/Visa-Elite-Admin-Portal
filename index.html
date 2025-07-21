@@ -2,25 +2,39 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Visa Elite Login</title>
-  <link rel="stylesheet" href="style.css"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Visa Elite - Intro</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
 </head>
 <body>
-  <div id="intro" class="fade-in">
-    <h1>Welcome to Visa Elite</h1>
+  <div id="intro-page">
+    <div id="particles-js"></div>
+    <div class="intro-content">
+      <h1 class="intro-title">Visa Elite Dashboard</h1>
+      <p class="intro-subtitle">Empowering Seamless Visa Management</p>
+    </div>
   </div>
-
-  <div class="login-container" style="display:none;">
-    <h2>Login</h2>
-    <input type="email" id="email" placeholder="Enter Email" required>
-    <input type="password" id="password" placeholder="Enter Password" required>
-    <button onclick="login()">Login</button>
-    <div id="error-msg"></div>
-  </div>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script src="background_three.js"></script>
-  <script src="login.js"></script>
+  <script>
+    particlesJS("particles-js", {
+      particles: {
+        number: { value: 120, density: { enable: true, value_area: 800 } },
+        color: { value: "#00d4ff" },
+        shape: { type: "circle" },
+        opacity: { value: 0.6, random: true },
+        size: { value: 3, random: true },
+        line_linked: { enable: false },
+        move: { enable: true, speed: 3, direction: "none", random: true }
+      },
+      interactivity: {
+        detect_on: "canvas",
+        events: { onhover: { enable: true, mode: "repulse" }, onclick: { enable: true, mode: "push" } },
+        modes: { repulse: { distance: 100, duration: 0.4 }, push: { particles_nb: 4 } }
+      }
+    });
+    setTimeout(() => {
+      window.location.href = 'login.html';
+    }, 3000);
+  </script>
 </body>
 </html>
