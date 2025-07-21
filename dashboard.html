@@ -3,119 +3,30 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Visa Elite Dashboard</title>
-  <link rel="stylesheet" href="style.css"/>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <style>
-    body {
-      background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
-      color: white;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-
-    .dashboard-container {
-      max-width: 1200px;
-      margin: auto;
-      padding: 20px;
-    }
-
-    h1 {
-      text-align: center;
-      margin-top: 20px;
-      color: #00e5ff;
-    }
-
-    .charts-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 30px;
-      margin-top: 40px;
-    }
-
-    canvas {
-      background: white;
-      border-radius: 10px;
-      padding: 20px;
-    }
-
-    .logout-btn {
-      display: block;
-      margin: 30px auto;
-      padding: 10px 20px;
-      background: #ff416c;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    .logout-btn:hover {
-      background: #ff4b2b;
-    }
-  </style>
+  <title>Visa Elite Admin Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="dashboard-container">
-    <h1>📊 Visa Elite Admin Dashboard</h1>
+  <header class="dashboard-header">
+    <h1>Visa Elite Admin Dashboard</h1>
+    <button id="logoutBtn" class="logout-button">Logout</button>
+  </header>
 
-    <div class="charts-grid">
-      <div>
-        <canvas id="visaTypeChart"></canvas>
-      </div>
-      <div>
-        <canvas id="countryChart"></canvas>
-      </div>
-    </div>
-
-    <button class="logout-btn" onclick="logout()">Logout</button>
-  </div>
+  <main class="dashboard-main">
+    <section class="welcome-box glassmorphic">
+      <h2>Welcome, Admin!</h2>
+      <p>This is your dashboard. More charts coming soon.</p>
+    </section>
+  </main>
 
   <script>
-    // Sample data (replace with live data fetch from Apps Script if needed)
-    const visaTypeData = {
-      labels: ["B1/B2", "Student", "Work", "Tourist"],
-      datasets: [{
-        label: 'Visa Types',
-        data: [12, 19, 3, 5],
-        backgroundColor: ['#007bff', '#28a745', '#ffc107', '#dc3545'],
-      }]
-    };
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      sessionStorage.removeItem('loggedIn');
+      window.location.href = 'login.html';
+    });
 
-    const countryData = {
-      labels: ["USA", "UK", "Canada", "UAE"],
-      datasets: [{
-        label: 'Applications by Country',
-        data: [14, 9, 6, 4],
-        backgroundColor: ['#6f42c1', '#17a2b8', '#fd7e14', '#20c997'],
-      }]
-    };
-
-    const config1 = {
-      type: 'pie',
-      data: visaTypeData,
-    };
-
-    const config2 = {
-      type: 'bar',
-      data: countryData,
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true
-          }
-        }
-      }
-    };
-
-    new Chart(document.getElementById('visaTypeChart'), config1);
-    new Chart(document.getElementById('countryChart'), config2);
-
-    function logout() {
-      // Clear local storage / redirect
-      localStorage.removeItem("user");
-      window.location.href = "login.html";
+    if (!sessionStorage.getItem('loggedIn')) {
+      window.location.href = 'login.html';
     }
   </script>
 </body>
