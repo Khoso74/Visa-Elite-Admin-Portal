@@ -1,16 +1,29 @@
-function loginUser() {
+// login.js
+function login() {
   const email = document.getElementById("email").value.trim();
-  if (!email) return alert("Please enter your Gmail.");
+  const password = document.getElementById("password").value.trim();
+  const errorElem = document.getElementById("error");
 
-  fetch("https://script.google.com/macros/s/AKfycbxIkJL8tNlrZKL2jS2zcfDL3_-XssqRGYWeZvWgbqPTK_pG2FOUSKNYAw-cpgugihdC/exec?email=" + email)
+  if (!email || !password) {
+    errorElem.textContent = "Please enter both email and password.";
+    return;
+  }
+
+  fetch("YOUR_WEB_APP_URL", {
+    method: "POST",
+    body: JSON.stringify({ email, password }),
+    contentType: "application/json"
+  })
     .then(res => res.json())
     .then(data => {
       if (data.success) {
-        sessionStorage.setItem("admin", email);
-        window.location.href = "index.html";
+        window.location.href = "dashboard.html";
       } else {
-        alert("Access denied. Contact Admin.");
+        errorElem.textContent = data.message;
       }
+    })
+    .catch(err => {
+      errorElem.textContent = "Network error. Try again.";
+      console.error("Login error:", err);
     });
 }
-```
