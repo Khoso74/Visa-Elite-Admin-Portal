@@ -1,33 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Visa Elite Admin Dashboard</title>
-  <link rel="stylesheet" href="style.css" />
+ <meta charset="UTF-8"/>
+ <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+ <title>Visa Elite Dashboard</title>
+ <link rel="stylesheet" href="style.css"/>
+ <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body>
-  <header class="dashboard-header">
-    <h1>Visa Elite Admin Dashboard</h1>
-    <button id="logoutBtn" class="logout-button">Logout</button>
+<body class="dashboard-body">
+
+  <header class="dashboard-header glass">
+    <h1>Visa Elite Admin</h1>
+    <button id="logoutBtn">Logout</button>
   </header>
 
   <main class="dashboard-main">
-    <section class="welcome-box glassmorphic">
-      <h2>Welcome, Admin!</h2>
-      <p>This is your dashboard. More charts coming soon.</p>
-    </section>
+    <canvas id="visaChart"></canvas>
   </main>
 
   <script>
-    document.getElementById('logoutBtn').addEventListener('click', () => {
-      sessionStorage.removeItem('loggedIn');
-      window.location.href = 'login.html';
-    });
+    if (!sessionStorage.getItem('loggedIn')) location.href = 'login.html';
+    document.getElementById('logoutBtn').onclick = () => {
+      sessionStorage.clear(); location.href = 'login.html';
+    };
 
-    if (!sessionStorage.getItem('loggedIn')) {
-      window.location.href = 'login.html';
-    }
+    // Fetch data for Chart
+    fetch('YOUR_WEB_APP_URL?action=getCharts')
+      .then(r => r.json())
+      .then(res => {
+        new Chart(document.getElementById('visaChart'), {
+          type: 'pie',
+          data: res,
+          options: { plugins: { legend: { position: 'bottom' } } }
+        });
+      });
   </script>
 </body>
 </html>
