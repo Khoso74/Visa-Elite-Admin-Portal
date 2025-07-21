@@ -1,41 +1,33 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const loginForm = document.getElementById('loginForm');
-  const errorMsg = document.getElementById('error-msg');
+async function login() {
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value.trim();
+  const error = document.getElementById("login-error");
 
-  // If already logged in, redirect to dashboard
-  if (localStorage.getItem('loggedIn') === 'true') {
-    window.location.href = 'dashboard.html';
+  error.textContent = "";
+
+  if (!email || !password) {
+    error.textContent = "Please fill in both fields.";
     return;
   }
 
-  loginForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    
-    const email = document.getElementById('email').value.trim();
-    const password = document.getElementById('password').value.trim();
+  try {
+    const response = await fetch(
+      "https://script.google.com/macros/s/AKfycbxIkJL8tNlrZKL2jS2zcfDL3_-XssqRGYWeZvWgbqPTK_pG2FOUSKNYAw-cpgugihdC/exec?action=login",
+      {
+        method: "POST",
+        body: JSON.stringify({ email, password }),
+        headers: { "Content-Type": "application/json" }
+      }
+    );
 
-    if (!email || !password) {
-      errorMsg.textContent = "Please enter both email and password.";
-      return;
+    const result = await response.json();
+
+    if (result.success) {
+      window.location.href = "dashboard.html";
+    } else {
+      error.textContent = "Login failed. Check credentials.";
     }
-
-    // Google Apps Script Web App URL
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbxIkJL8tNlrZKL2jS2zcfDL3_-XssqRGYWeZvWgbqPTK_pG2FOUSKNYAw-cpgugihdC/exec';
-
-    fetch(`${scriptURL}?sheet=Admin-Login&email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`)
-      .then(res => res.json())
-      .then(data => {
-        if (data.success) {
-          localStorage.setItem('loggedIn', 'true');
-          localStorage.setItem('userEmail', email);
-          window.location.href = 'dashboard.html';
-        } else {
-          errorMsg.textContent = "Invalid email or password.";
-        }
-      })
-      .catch(err => {
-        console.error('Error:', err);
-        errorMsg.textContent = "An error occurred. Please try again.";
-      });
-  });
-});
+  } catch (err) {
+    error.textContent = "Error connecting to server.";
+  }
+}
