@@ -1,14 +1,78 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Dashboard - Visa Elite</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard | Visa Elite</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
-<body>
-  <h1>Welcome to Dashboard</h1>
-  <canvas id="visaChart" width="400" height="200"></canvas>
-
+<body class="dashboard-body">
+  <div class="sidebar">
+    <h2 class="sidebar-title">Visa Elite</h2>
+    <ul class="sidebar-menu">
+      <li class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</li>
+      <li><i class="fas fa-users"></i> Clients</li>
+      <li><i class="fas fa-user-shield"></i> Admins</li>
+      <li><i class="fas fa-cogs"></i> Settings</li>
+    </ul>
+  </div>
+  <div class="main-content">
+    <header class="dashboard-header glassmorphic">
+      <h1>Visa Elite Admin Panel</h1>
+      <button id="logoutBtn" class="logout-button">Logout</button>
+    </header>
+    <main class="dashboard-main">
+      <section class="welcome-box glassmorphic">
+        <h2>Welcome, Admin!</h2>
+        <p>Explore visa application data with interactive charts and detailed insights.</p>
+      </section>
+      <section class="charts-section glassmorphic">
+        <h2>Visa Applications Analytics</h2>
+        <div id="loading-charts" class="loading-message">Loading data...</div>
+        <div class="charts-grid hidden">
+          <div class="chart-container">
+            <h3>Visa Type Distribution</h3>
+            <canvas id="visaTypeChart"></canvas>
+          </div>
+          <div class="chart-container">
+            <h3>Travel Purpose Distribution</h3>
+            <canvas id="travelPurposeChart"></canvas>
+          </div>
+          <div class="chart-container">
+            <h3>Travel Date Trends</h3>
+            <canvas id="travelDateChart"></canvas>
+          </div>
+        </div>
+        <p id="chart-error" class="error-message"></p>
+      </section>
+      <section class="data-table-section glassmorphic">
+        <h2>Visa Applications Data</h2>
+        <div id="loading-table" class="loading-message">Loading data...</div>
+        <table id="visaDataTable" class="data-table hidden">
+          <thead>
+            <tr>
+              <th>Full Name</th>
+              <th>Passport Number</th>
+              <th>Email</th>
+              <th>Location</th>
+              <th>Travel Purpose</th>
+              <th>Visa Type</th>
+              <th>Date of Travel</th>
+              <th>Additional Notes</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <p id="table-error" class="error-message"></p>
+      </section>
+    </main>
+    <footer class="dashboard-footer">
+      <p>© 2025 Visa Elite | All rights reserved</p>
+    </footer>
+  </div>
   <script src="dashboard.js"></script>
 </body>
 </html>
