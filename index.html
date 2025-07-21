@@ -5,36 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Visa Elite Intro</title>
   <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background: black;
-      color: white;
-      font-family: Arial, sans-serif;
-      overflow: hidden;
-    }
-    .intro {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      font-size: 2rem;
-      animation: fadeOut 4s ease-in-out forwards;
-    }
-
-    @keyframes fadeOut {
-      0% {opacity: 1;}
-      100% {opacity: 0;}
-    }
+    body, html { margin:0; padding:0; height:100%; background:#000; display:flex; align-items:center; justify-content:center; color:#fff; font-family:'Segoe UI', sans-serif; }
+    .intro { text-align:center; animation:fadeOut 4s forwards; }
+    .intro h1 { font-size:3em; color:#00e5ff; }
+    @keyframes fadeOut { 0% { opacity:1 } 80% { opacity:1 } 100% { opacity:0 } }
   </style>
 </head>
 <body>
-  <div class="intro">🚀 Welcome to Visa Elite Admin Portal...</div>
-
+  <div class="intro">
+    <h1>Welcome to Visa Elite</h1>
+  </div>
   <script>
-    setTimeout(() => {
-      window.location.href = 'login.html';
-    }, 4000);
+    setTimeout(() => window.location.href = 'login.html', 4000);
   </script>
 </body>
 </html>
