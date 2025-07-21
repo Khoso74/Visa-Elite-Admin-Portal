@@ -1,70 +1,190 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Visa Elite</title>
-  <link rel="stylesheet" href="style.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visa Elite - Welcome</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
   <style>
-    body, html {
+    * {
       margin: 0;
       padding: 0;
-      height: 100%;
-      overflow: hidden;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #0f0f0f;
-      color: white;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
     }
 
-    #intro {
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    body, html {
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .intro-container {
+      position: absolute;
+      width: 100%;
       height: 100%;
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       flex-direction: column;
       animation: fadeIn 2s ease-in-out;
+      z-index: 10;
     }
 
-    #intro h1 {
-      font-size: 48px;
-      color: #00ffff;
-      margin-bottom: 10px;
+    .intro-container h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
     }
 
-    #intro p {
-      font-size: 20px;
-      color: #ccc;
-    }
-
-    .btn {
-      margin-top: 30px;
-      padding: 10px 30px;
-      background-color: #00ffff;
-      border: none;
-      border-radius: 8px;
-      color: #000;
-      font-weight: bold;
-      font-size: 16px;
-      cursor: pointer;
-      transition: 0.3s ease;
-    }
-
-    .btn:hover {
-      background-color: #00bbbb;
+    .intro-container p {
+      font-size: 1.2rem;
+      text-align: center;
+      max-width: 600px;
     }
 
     @keyframes fadeIn {
-      from { opacity: 0 }
-      to { opacity: 1 }
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    #login-container {
+      display: none;
+      width: 100%;
+      height: 100vh;
+      background: #000;
+    }
+
+    canvas {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+
+    .login-box {
+      position: relative;
+      z-index: 1;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      backdrop-filter: blur(10px);
+      padding: 2rem;
+      width: 350px;
+      margin: auto;
+      top: 25%;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+    }
+
+    .login-box h2 {
+      text-align: center;
+      color: #fff;
+      margin-bottom: 1.5rem;
+    }
+
+    .login-box input {
+      width: 100%;
+      padding: 0.8rem;
+      margin: 0.5rem 0;
+      border: none;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+    }
+
+    .login-box button {
+      width: 100%;
+      padding: 0.8rem;
+      margin-top: 1rem;
+      border: none;
+      border-radius: 8px;
+      background-color: #00bcd4;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
     }
   </style>
 </head>
+
 <body>
-  <div id="intro">
+  <div class="intro-container" id="intro">
     <h1>Welcome to Visa Elite</h1>
-    <p>Your Trusted Visa Consultancy Portal</p>
-    <button class="btn" onclick="window.location.href='login.html'">Get Started</button>
+    <p>Professional Visa Consultancy Solutions | US, UK, Turkey & More</p>
   </div>
+
+  <div id="login-container">
+    <canvas id="bg-canvas"></canvas>
+    <div class="login-box">
+      <h2>Login</h2>
+      <input type="email" id="email" placeholder="Enter your email">
+      <input type="password" id="password" placeholder="Enter your password">
+      <button onclick="handleLogin()">Login</button>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
+  <script>
+    // Space background
+    let scene = new THREE.Scene();
+    let camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+    let renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.getElementById("bg-canvas").replaceWith(renderer.domElement);
+
+    let starsGeometry = new THREE.BufferGeometry();
+    let starVertices = [];
+    for (let i = 0; i < 10000; i++) {
+      let x = (Math.random() - 0.5) * 2000;
+      let y = (Math.random() - 0.5) * 2000;
+      let z = (Math.random() - 0.5) * 2000;
+      starVertices.push(x, y, z);
+    }
+    starsGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
+    let starsMaterial = new THREE.PointsMaterial({ color: 0xffffff });
+    let starField = new THREE.Points(starsGeometry, starsMaterial);
+    scene.add(starField);
+    camera.position.z = 1;
+
+    function animateStars() {
+      requestAnimationFrame(animateStars);
+      starField.rotation.y += 0.0005;
+      renderer.render(scene, camera);
+    }
+    animateStars();
+  </script>
+
+  <script>
+    // Show login after intro
+    setTimeout(() => {
+      document.getElementById("intro").style.display = "none";
+      document.getElementById("login-container").style.display = "block";
+    }, 3000);
+
+    function handleLogin() {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      if (!email || !password) {
+        alert("Please fill in all fields.");
+        return;
+      }
+
+      // Replace with your own Google Sheet verification later
+      if (email === "admin@visaelite.com" && password === "admin123") {
+        window.location.href = "dashboard.html";
+      } else {
+        alert("Invalid credentials");
+      }
+    }
+  </script>
 </body>
+
 </html>
