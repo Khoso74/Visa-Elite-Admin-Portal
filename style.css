@@ -56,3 +56,46 @@ body, html {
   font-size: 14px;
   margin-top: 10px;
 }
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  background: #222;
+  color: white;
+}
+
+.header h1 {
+  margin: 0;
+}
+
+.header button {
+  padding: 8px 15px;
+  border: none;
+  background-color: #dc3545;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.summary-boxes {
+  display: flex;
+  justify-content: center;
+  margin: 20px;
+}
+
+.summary-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 15px;
+  text-align: center;
+  width: 200px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.charts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
