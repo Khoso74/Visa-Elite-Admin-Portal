@@ -31,8 +31,7 @@
       </section>
       <section class="charts-section glassmorphic">
         <h2>Visa Applications Analytics</h2>
-        <div id="loading-charts" class="loading-message">Loading data...</div>
-        <div class="charts-grid hidden">
+        <div class="charts-grid">
           <div class="chart-container">
             <h3>Visa Type Distribution</h3>
             <canvas id="visaTypeChart"></canvas>
@@ -46,12 +45,10 @@
             <canvas id="travelDateChart"></canvas>
           </div>
         </div>
-        <p id="chart-error" class="error-message"></p>
       </section>
       <section class="data-table-section glassmorphic">
         <h2>Visa Applications Data</h2>
-        <div id="loading-table" class="loading-message">Loading data...</div>
-        <table id="visaDataTable" class="data-table hidden">
+        <table id="visaDataTable" class="data-table">
           <thead>
             <tr>
               <th>Full Name</th>
@@ -66,7 +63,6 @@
           </thead>
           <tbody></tbody>
         </table>
-        <p id="table-error" class="error-message"></p>
       </section>
     </main>
     <footer class="dashboard-footer">
