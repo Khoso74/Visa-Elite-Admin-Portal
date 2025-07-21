@@ -1,3 +1,4 @@
+/* General Reset */
 body, html {
   margin: 0;
   padding: 0;
@@ -5,50 +6,94 @@ body, html {
   font-family: "Segoe UI", sans-serif;
 }
 
+/* 🌍 Intro Screen */
+#intro-screen {
+  background: radial-gradient(ellipse at center, #000000 0%, #111111 100%);
+  color: white;
+  height: 100vh;
+  width: 100%;
+  position: absolute;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 1s ease-in-out;
+}
+
+.intro-title {
+  font-size: 3em;
+  font-weight: bold;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+  text-shadow: 0 0 20px #00bfff;
+}
+
+.intro-sub {
+  font-size: 1.2em;
+  color: #ccc;
+  text-shadow: 0 0 10px #888;
+}
+
+/* 🪐 Login Background */
 #vanta-bg {
   width: 100%;
   height: 100vh;
   position: relative;
 }
 
+/* ✨ Glossy Login Container */
 .login-container {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.08);
   border-radius: 20px;
-  backdrop-filter: blur(15px);
+  backdrop-filter: blur(18px);
   padding: 40px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.5);
+  box-shadow: 0 0 25px rgba(0,0,0,0.8);
   text-align: center;
-  width: 300px;
-  color: white;
+  width: 330px;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.2);
 }
 
 .login-container h2 {
   margin-bottom: 20px;
+  color: #fff;
+  text-shadow: 0 0 10px #00bfff;
 }
 
 .login-container input {
   width: 100%;
-  padding: 10px;
-  margin: 8px 0;
+  padding: 12px;
+  margin: 10px 0;
   border: none;
   border-radius: 8px;
+  outline: none;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+.login-container input::placeholder {
+  color: #ddd;
 }
 
 .login-container button {
-  padding: 10px 20px;
+  padding: 10px 25px;
   border: none;
-  background-color: #007BFF;
+  background-color: #00bfff;
   color: white;
   border-radius: 10px;
+  font-weight: bold;
   cursor: pointer;
+  margin-top: 10px;
+  transition: background 0.3s;
 }
 
 .login-container button:hover {
-  background-color: #0056b3;
+  background-color: #0088cc;
 }
 
 .error-message {
@@ -56,46 +101,8 @@ body, html {
   font-size: 14px;
   margin-top: 10px;
 }
-.header {
-  display: flex;
-  justify-content: space-between;
-  padding: 20px;
-  background: #222;
-  color: white;
-}
 
-.header h1 {
-  margin: 0;
+@keyframes fadeIn {
+  from { opacity: 0 }
+  to { opacity: 1 }
 }
-
-.header button {
-  padding: 8px 15px;
-  border: none;
-  background-color: #dc3545;
-  color: white;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.summary-boxes {
-  display: flex;
-  justify-content: center;
-  margin: 20px;
-}
-
-.summary-card {
-  background: #fff;
-  padding: 20px;
-  border-radius: 15px;
-  text-align: center;
-  width: 200px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-}
-
-.charts-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
-  padding: 20px;
-}
-
