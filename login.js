@@ -1,28 +1,30 @@
-async function login() {
+const loginForm = document.getElementById("login-form");
+
+loginForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
   const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value.trim();
-  const status = document.getElementById("login-status");
 
-  if (!email || !password) {
-    status.innerText = "Please enter both fields.";
-    return;
-  }
+  const sheetURL = "https://docs.google.com/spreadsheets/d/1FJn2u5QRh2fduij-nIn4gH6_uGzxnsa8Ou1y4SLA-SE/gviz/tq?tqx=out:json&sheet=Admin-Login";
 
   try {
-    const sheetURL = "https://opensheet.elk.sh/1FJn2u5QRh2fduij-nIn4gH6_uGzxnsa8Ou1y4SLA-SE/Admin-Login";
-    const response = await fetch(sheetURL);
-    const admins = await response.json();
+    const res = await fetch(sheetURL);
+    const text = await res.text();
+    const json = JSON.parse(text.substr(47).slice(0, -2));
 
-    const found = admins.find(admin => admin["Email ID"] === email && admin.Password === password);
+    const admins = json.table.rows.map((row) => ({
+      email: row.c[0]?.v,
+      password: row.c[1]?.v,
+    }));
 
-    if (found) {
-      status.innerText = "Login successful!";
-      localStorage.setItem("admin", JSON.stringify(found));
+    const matched = admins.find((admin) => admin.email === email && admin.password === password);
+
+    if (matched) {
       window.location.href = "dashboard.html";
     } else {
-      status.innerText = "Invalid login credentials.";
+      document.getElementById("login-error").textContent = "Invalid credentials!";
     }
   } catch (err) {
-    status.innerText = "Error connecting to server.";
+    console.error("Login Error:", err);
   }
-}
+});
