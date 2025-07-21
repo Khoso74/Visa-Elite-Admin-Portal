@@ -2,7 +2,7 @@ let retryCount = 0;
 const maxRetries = 3;
 
 function attemptLogin(email, password, loginBtn, loginStatus, loadingSpinner) {
-  fetch("https://script.google.com/macros/s/AKfycbxIkJL8tNlrZKL2jS2zcfDL3_-XssqRGYWeZvWgbqPTK_pG2FOUSKNYAw-cpgugihdC/exec", {
+  fetch("https://visa-elite-admin-portal-pykl0uwg3-khoso74s-projects.vercel.app/api/proxy", { // Your Vercel URL
     method: "POST",
     headers: {
       "Content-Type": "application/json",
