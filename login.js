@@ -12,7 +12,7 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
-  fetch("https://script.google.com/macros/s/AKfycbxIkJL8tNlrZKL2jS2zcfDL3_-XssqRGYWeZvWgbqPTK_pG2FOUSKNYAw-cpgugihdC/exec", { // Your deployed URL
+  fetch("https://script.google.com/macros/s/AKfycbxIkJL8tNlrZKL2jS2zcfDL3_-XssqRGYWeZvWgbqPTK_pG2FOUSKNYAw-cpgugihdC/exec", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -42,7 +42,7 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
       loginBtn.disabled = false;
       loginBtn.textContent = "Login";
       loadingSpinner.classList.add("hidden");
-      loginStatus.textContent = "An error occurred. Please check your network or try again later.";
+      loginStatus.textContent = "An error occurred. Please check your network or try again later. Error: " + err.message;
       console.error("Error:", err);
     });
 });
