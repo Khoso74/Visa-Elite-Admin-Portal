@@ -3,31 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Visa Elite - Login</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Visa Elite Login</title>
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-
-  <!-- Intro Animation -->
-  <div id="intro">
+  <div id="intro" class="fade-in">
     <h1>Welcome to Visa Elite</h1>
   </div>
 
-  <!-- Login Form -->
-  <div id="login-container" class="hidden">
-    <form id="login-form">
-      <h2>Admin Login</h2>
-      <input type="email" id="email" placeholder="Email" required />
-      <input type="password" id="password" placeholder="Password" required />
-      <button type="submit">Login</button>
-    </form>
+  <div class="login-container" style="display:none;">
+    <h2>Login</h2>
+    <input type="email" id="email" placeholder="Enter Email" required>
+    <input type="password" id="password" placeholder="Enter Password" required>
+    <button onclick="login()">Login</button>
+    <div id="error-msg"></div>
   </div>
 
-  <!-- 3D Background -->
-  <canvas id="bg-canvas"></canvas>
-
-  <!-- Scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/three@0.148.0/build/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="background_three.js"></script>
   <script src="login.js"></script>
 </body>
