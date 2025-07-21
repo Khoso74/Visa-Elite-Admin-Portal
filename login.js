@@ -1,87 +1,48 @@
-const scene = new THREE.Scene();
-const loginContainer = document.querySelector('.login-container');
-const { width, height } = loginContainer.getBoundingClientRect();
-const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
-const renderer = new THREE.WebGLRenderer({ canvas: document.querySelector('#login-bg'), alpha: true });
-renderer.setSize(width, height);
+document.getElementById("loginForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+  const loginBtn = document.getElementById("loginBtn");
+  const loginStatus = document.getElementById("login-status");
+  const loadingSpinner = document.getElementById("loadingSpinner");
 
-// Lighting
-const pointLight = new THREE.PointLight(0xffffff, 1, 100);
-pointLight.position.set(10, 10, 10);
-scene.add(pointLight);
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-scene.add(ambientLight);
+  loginBtn.disabled = true;
+  loginBtn.textContent = "Logging in...";
+  loadingSpinner.classList.remove("hidden");
+  loginStatus.textContent = "";
 
-// Sun
-const sunGeometry = new THREE.SphereGeometry(3, 32, 32);
-const sunTexture = new THREE.TextureLoader().load('https://i.imgur.com/4f5z1rY.jpg');
-const sunMaterial = new THREE.MeshStandardMaterial({ map: sunTexture });
-const sun = new THREE.Mesh(sunGeometry, sunMaterial);
-scene.add(sun);
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
 
-// Earth
-const earthGeometry = new THREE.SphereGeometry(1, 32, 32);
-const earthTexture = new THREE.TextureLoader().load('https://i.imgur.com/2v2F8rW.jpg');
-const earthMaterial = new THREE.MeshStandardMaterial({ map: earthTexture });
-const earth = new THREE.Mesh(earthGeometry, earthMaterial);
-earth.position.set(6, 0, 0);
-scene.add(earth);
-
-// Asteroids
-for (let i = 0; i < 30; i++) {
-  const asteroidGeometry = new THREE.SphereGeometry(Math.random() * 0.3 + 0.1, 8, 8);
-  const asteroidMaterial = new THREE.MeshStandardMaterial({ color: 0x888888, roughness: 0.8 });
-  const asteroid = new THREE.Mesh(asteroidGeometry, asteroidMaterial);
-  asteroid.position.set(
-    (Math.random() - 0.5) * 20,
-    (Math.random() - 0.5) * 20,
-    (Math.random() - 0.5) * 20
-  );
-  scene.add(asteroid);
-}
-
-// Stars
-const starGeometry = new THREE.BufferGeometry();
-const starMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 0.15 });
-const starVertices = [];
-for (let i = 0; i < 800; i++) {
-  starVertices.push(
-    (Math.random() - 0.5) * 60,
-    (Math.random() - 0.5) * 60,
-    (Math.random() - 0.5) * 60
-  );
-}
-starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
-const stars = new THREE.Points(starGeometry, starMaterial);
-scene.add(stars);
-
-// Shooting Star
-const shootingStarGeometry = new THREE.BufferGeometry();
-const shootingStarMaterial = new THREE.PointsMaterial({ color: 0xffff00, size: 0.3 });
-const shootingStarVertices = [0, 0, 0];
-shootingStarGeometry.setAttribute('position', new THREE.Float32BufferAttribute(shootingStarVertices, 3));
-const shootingStar = new THREE.Points(shootingStarGeometry, shootingStarMaterial);
-scene.add(shootingStar);
-
-camera.position.z = 12;
-
-function animate() {
-  requestAnimationFrame(animate);
-  sun.rotation.y += 0.005;
-  earth.rotation.y += 0.01;
-  shootingStar.position.x += 0.15;
-  shootingStar.position.y -= 0.08;
-  if (shootingStar.position.x > 25) {
-    shootingStar.position.x = -25;
-    shootingStar.position.y = 15;
-  }
-  renderer.render(scene, camera);
-}
-animate();
-
-window.addEventListener('resize', () => {
-  const { width, height } = loginContainer.getBoundingClientRect();
-  camera.aspect = width / height;
-  camera.updateProjectionMatrix();
-  renderer.setSize(width, height);
+  fetch("https://script.google.com/macros/s/AKfycbxIkJL8tNlrZKL2jS2zcfDL3_-XssqRGYWeZvWgbqPTK_pG2FOUSKNYAw-cpgugihdC/exec", { // Your deployed URL
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      email: email,
+      password: password,
+    }),
+  })
+    .then((res) => {
+      if (!res.ok) throw new Error("Network response was not ok");
+      return res.json();
+    })
+    .then((data) => {
+      loginBtn.disabled = false;
+      loginBtn.textContent = "Login";
+      loadingSpinner.classList.add("hidden");
+      if (data.status === "success") {
+        sessionStorage.setItem("loggedIn", true);
+        sessionStorage.setItem("email", email);
+        window.location.href = "dashboard.html";
+      } else {
+        loginStatus.textContent = data.message || "Invalid credentials. Please try again.";
+      }
+    })
+    .catch((err) => {
+      loginBtn.disabled = false;
+      loginBtn.textContent = "Login";
+      loadingSpinner.classList.add("hidden");
+      loginStatus.textContent = "An error occurred. Please check your network or try again later.";
+      console.error("Error:", err);
+    });
 });
