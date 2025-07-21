@@ -1,25 +1,41 @@
-async function handleLogin() {
-  const email = document.getElementById('email').value.trim();
-  const password = document.getElementById('password').value.trim();
-  const error = document.getElementById('error');
+document.addEventListener('DOMContentLoaded', () => {
+  const loginForm = document.getElementById('loginForm');
+  const errorMsg = document.getElementById('error-msg');
 
-  try {
-    const response = await fetch(
-      'https://opensheet.vercel.app/1FJn2u5QRh2fduij-nIn4gH6_uGzxnsa8Ou1y4SLA-SE/Admin-Login'
-    );
-    const data = await response.json();
-
-    const matched = data.find(
-      (entry) => entry.Email === email && entry.Password === password
-    );
-
-    if (matched) {
-      window.location.href = 'dashboard.html';
-    } else {
-      error.textContent = 'Invalid credentials. Please try again.';
-    }
-  } catch (err) {
-    console.error(err);
-    error.textContent = 'Login failed. Try again later.';
+  // If already logged in, redirect to dashboard
+  if (localStorage.getItem('loggedIn') === 'true') {
+    window.location.href = 'dashboard.html';
+    return;
   }
-}
+
+  loginForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value.trim();
+
+    if (!email || !password) {
+      errorMsg.textContent = "Please enter both email and password.";
+      return;
+    }
+
+    // Google Apps Script Web App URL
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxIkJL8tNlrZKL2jS2zcfDL3_-XssqRGYWeZvWgbqPTK_pG2FOUSKNYAw-cpgugihdC/exec';
+
+    fetch(`${scriptURL}?sheet=Admin-Login&email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          localStorage.setItem('loggedIn', 'true');
+          localStorage.setItem('userEmail', email);
+          window.location.href = 'dashboard.html';
+        } else {
+          errorMsg.textContent = "Invalid email or password.";
+        }
+      })
+      .catch(err => {
+        console.error('Error:', err);
+        errorMsg.textContent = "An error occurred. Please try again.";
+      });
+  });
+});
