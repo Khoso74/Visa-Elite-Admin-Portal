@@ -3,55 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Dashboard | Visa Elite</title>
-  <link rel="stylesheet" href="style.css"/>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-</head>
-<body class="dashboard-body">
-
-  <!-- Header -->
-  <header class="dashboard-header">
-    <h1>Welcome, Admin</h1>
-    <button class="logout-btn" onclick="logout()">Logout</button>
-  </header>
-
-  <!-- Dashboard Cards -->
-  <main class="dashboard-main">
-    <div class="card">
-      <i class="fas fa-users"></i>
-      <h3>Clients</h3>
-      <p>View all visa applicants</p>
-    </div>
-    <div class="card">
-      <i class="fas fa-user-shield"></i>
-      <h3>Admins</h3>
-      <p>Manage admin access</p>
-    </div>
-    <div class="card">
-      <i class="fas fa-cogs"></i>
-      <h3>Settings</h3>
-      <p>System preferences</p>
-    </div>
-    <div class="card">
-      <i class="fas fa-database"></i>
-      <h3>Sheets</h3>
-      <p>Google Sheet Integration</p>
-    </div>
-  </main>
-
-  <!-- Optional Footer -->
-  <footer class="dashboard-footer">
-    <p>&copy; 2025 Visa Elite | All rights reserved</p>
-  </footer>
-
-  <script>
-    function logout() {
-      localStorage.removeItem("email");
-      localStorage.removeItem("password");
-      window.location.href = "index.html";
+  <title>Dashboard - Visa Elite</title>
+  <style>
+    body {
+      margin: 0;
+      background: #0a0a23;
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
     }
-  </script>
 
+    h1 {
+      font-size: 2.5rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>Welcome to Visa Elite Admin Dashboard</h1>
 </body>
 </html>
