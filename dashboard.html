@@ -77,6 +77,7 @@
   </div>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
+      console.log('Dashboard DOM Loaded');
       if (!sessionStorage.getItem('loggedIn')) {
         console.log('No session, redirecting to login');
         window.location.href = 'login.html';
@@ -84,28 +85,30 @@
       }
 
       const baseUrl = 'https://script.google.com/macros/s/AKfycbxIkJL8tNlrZKL2jS2zcfDL3_-XssqRGYWeZvWgbqPTK_pG2FOUSKNYAw-cpgugihdC/exec'; // Update if new
+      const proxyUrl = 'https://cors-anywhere.herokuapp.com/' + baseUrl;
       fetch(baseUrl, { method: 'GET', headers: { 'Content-Type': 'application/json' } })
         .then(res => {
-          console.log('Dashboard fetch status:', res.status, 'OK:', res.ok);
+          console.log('Fetch Status:', res.status, 'OK:', res.ok);
           if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
           return res.json();
         })
         .then(data => {
-          console.log('Dashboard data received:', data);
+          console.log('Data Received:', data);
           if (data.status === 'success') {
             const applications = data.data;
             const tableBody = document.querySelector('#visaTable tbody');
-            tableBody.innerHTML = ''; // Clear existing rows
+            if (!tableBody) console.error('Table body not found');
+            tableBody.innerHTML = '';
             applications.forEach(app => {
               const row = document.createElement('tr');
               row.innerHTML = `<td>${app.fullName || 'N/A'}</td><td>${app.passportNumber || 'N/A'}</td><td>${app.email || 'N/A'}</td><td>${app.location || 'N/A'}</td><td>${app.travelPurpose || 'N/A'}</td><td>${app.visaType || 'N/A'}</td><td>${app.dateOfTravel || 'N/A'}</td><td>${app.additionalNotes || 'N/A'}</td>`;
               tableBody.appendChild(row);
             });
 
-            // Chart by Visa Type
             const visaTypes = [...new Set(applications.map(app => app.visaType))];
             const typeCounts = visaTypes.map(type => applications.filter(app => app.visaType === type).length);
             const ctx = document.getElementById('visaChart').getContext('2d');
+            if (!ctx) console.error('Chart canvas not found');
             new Chart(ctx, {
               type: 'bar',
               data: {
@@ -113,8 +116,8 @@
                 datasets: [{
                   label: 'Visa Applications by Type',
                   data: typeCounts,
-                  backgroundColor: 'rgba(74, 144, 226, 0.8)',
-                  borderColor: 'rgba(74, 144, 226, 1)',
+                  backgroundColor: 'rgba(80, 227, 194, 0.8)',
+                  borderColor: 'rgba(80, 227, 194, 1)',
                   borderWidth: 1
                 }]
               },
@@ -129,7 +132,52 @@
             console.error('Data fetch failed:', data.message);
           }
         })
-        .catch(err => console.error('Dashboard error:', err.name, err.message, err.stack));
+        .catch(err => {
+          console.error('Fetch Error:', err.name, err.message, err.stack);
+          fetch(proxyUrl, { method: 'GET', headers: { 'Content-Type': 'application/json' } })
+            .then(res => {
+              console.log('Proxy Fetch Status:', res.status, 'OK:', res.ok);
+              if (!res.ok) throw err;
+              return res.json();
+            })
+            .then(data => {
+              console.log('Proxy Data:', data);
+              if (data.status === 'success') {
+                const applications = data.data;
+                const tableBody = document.querySelector('#visaTable tbody');
+                tableBody.innerHTML = '';
+                applications.forEach(app => {
+                  const row = document.createElement('tr');
+                  row.innerHTML = `<td>${app.fullName || 'N/A'}</td><td>${app.passportNumber || 'N/A'}</td><td>${app.email || 'N/A'}</td><td>${app.location || 'N/A'}</td><td>${app.travelPurpose || 'N/A'}</td><td>${app.visaType || 'N/A'}</td><td>${app.dateOfTravel || 'N/A'}</td><td>${app.additionalNotes || 'N/A'}</td>`;
+                  tableBody.appendChild(row);
+                });
+
+                const visaTypes = [...new Set(applications.map(app => app.visaType))];
+                const typeCounts = visaTypes.map(type => applications.filter(app => app.visaType === type).length);
+                const ctx = document.getElementById('visaChart').getContext('2d');
+                new Chart(ctx, {
+                  type: 'bar',
+                  data: {
+                    labels: visaTypes,
+                    datasets: [{
+                      label: 'Visa Applications by Type',
+                      data: typeCounts,
+                      backgroundColor: 'rgba(80, 227, 194, 0.8)',
+                      borderColor: 'rgba(80, 227, 194, 1)',
+                      borderWidth: 1
+                    }]
+                  },
+                  options: {
+                    scales: { y: { beginAtZero: true, ticks: { color: '#e0e0e0' } } },
+                    plugins: { legend: { labels: { color: '#e0e0e0' } } },
+                    responsive: true,
+                    maintainAspectRatio: false
+                  }
+                });
+              }
+            })
+            .catch(err => console.error('Proxy Error:', err.name, err.message, err.stack));
+        });
     });
   </script>
 </body>
