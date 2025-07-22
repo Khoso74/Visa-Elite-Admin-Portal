@@ -129,7 +129,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
     const errorMessage = document.getElementById('errorMessage');
 
     // !!! IMPORTANT: Replace with your deployed Google Apps Script Web App URL !!!
-    const gasUrl = 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE';
+    const gasUrl = 'https://script.google.com/macros/s/AKfycbxIkJL8tNlrZKL2jS2zcfDL3_-XssqRGYWeZvWgbqPTK_pG2FOUSKNYAw-cpgugihdC/exec';
 
     try {
         const response = await fetch(gasUrl, {
