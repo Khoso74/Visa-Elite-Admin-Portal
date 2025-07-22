@@ -23,12 +23,66 @@ async function fetchDashboardData() {
     }
 }
 
+// Define a professional and vibrant color palette
+const chartColors = {
+    primary: '#00e6e6', // Cyan Neon
+    secondary: '#ff00ff', // Magenta Neon
+    tertiary: '#00ff00', // Green Neon
+    quaternary: '#ffff00', // Yellow Neon
+    quinary: '#ff6600', // Orange Neon
+    senary: '#6600ff', // Purple Neon
+    lightGrey: '#cccccc',
+    darkGrey: '#444444'
+};
+
+// Set Chart.js defaults for a dark theme
+Chart.defaults.color = chartColors.lightGrey;
+Chart.defaults.font.family = 'Lato, sans-serif';
+Chart.defaults.plugins.title.color = chartColors.primary;
+Chart.defaults.plugins.legend.labels.color = chartColors.lightGrey;
+Chart.defaults.elements.arc.borderColor = '#1a1a1a'; // Border for pie/doughnut slices
+Chart.defaults.elements.arc.borderWidth = 2;
+
 function processDataAndRenderCharts(data) {
-    // Example: Count Visa Types
+    // Helper function to generate dynamic background colors for charts
+    const generateChartBackgrounds = (numColors) => {
+        const colors = [
+            'rgba(0, 230, 230, 0.8)', // Cyan
+            'rgba(255, 0, 255, 0.8)', // Magenta
+            'rgba(0, 255, 0, 0.8)',   // Green
+            'rgba(255, 255, 0, 0.8)', // Yellow
+            'rgba(255, 102, 0, 0.8)', // Orange
+            'rgba(102, 0, 255, 0.8)'  // Purple
+        ];
+        const selectedColors = [];
+        for (let i = 0; i < numColors; i++) {
+            selectedColors.push(colors[i % colors.length]);
+        }
+        return selectedColors;
+    };
+
+    const generateChartBorders = (numColors) => {
+        const borders = [
+            'rgba(0, 230, 230, 1)',
+            'rgba(255, 0, 255, 1)',
+            'rgba(0, 255, 0, 1)',
+            'rgba(255, 255, 0, 1)',
+            'rgba(255, 102, 0, 1)',
+            'rgba(102, 0, 255, 1)'
+        ];
+        const selectedBorders = [];
+        for (let i = 0; i < numColors; i++) {
+            selectedBorders.push(borders[i % borders.length]);
+        }
+        return selectedBorders;
+    };
+
+
+    // 1. Visa Type Distribution
     const visaTypeCounts = {};
     data.forEach(row => {
-        const visaType = row['Visa Type']; // Use the exact column name from your sheet
-        if (visaType) { // Ensure value exists
+        const visaType = row['Visa Type'];
+        if (visaType) {
             visaTypeCounts[visaType] = (visaTypeCounts[visaType] || 0) + 1;
         }
     });
@@ -36,30 +90,15 @@ function processDataAndRenderCharts(data) {
     const visaTypeLabels = Object.keys(visaTypeCounts);
     const visaTypeData = Object.values(visaTypeCounts);
 
-    // Render Visa Type Chart
     new Chart(document.getElementById('visaTypeChart'), {
         type: 'pie',
         data: {
             labels: visaTypeLabels,
             datasets: [{
                 data: visaTypeData,
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.8)', // Red
-                    'rgba(54, 162, 235, 0.8)', // Blue
-                    'rgba(255, 206, 86, 0.8)', // Yellow
-                    'rgba(75, 192, 192, 0.8)', // Green
-                    'rgba(153, 102, 255, 0.8)', // Purple
-                    'rgba(255, 159, 64, 0.8)'  // Orange
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
+                backgroundColor: generateChartBackgrounds(visaTypeLabels.length),
+                borderColor: generateChartBorders(visaTypeLabels.length),
+                hoverOffset: 10
             }]
         },
         options: {
@@ -68,18 +107,30 @@ function processDataAndRenderCharts(data) {
                 title: {
                     display: true,
                     text: 'Visa Type Distribution',
-                    color: '#e0e0e0' // Text color for dark theme
+                    font: { size: 18, family: 'Orbitron, sans-serif' },
+                    color: chartColors.primary
                 },
                 legend: {
+                    position: 'right', // Place legend on the right for better use of space
                     labels: {
-                        color: '#e0e0e0' // Label color for dark theme
+                        font: { size: 12 },
+                        padding: 15
                     }
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(26, 26, 26, 0.9)', // Darker tooltip background
+                    titleColor: chartColors.primary,
+                    bodyColor: chartColors.lightGrey,
+                    borderColor: chartColors.primary,
+                    borderWidth: 1,
+                    cornerRadius: 8,
+                    padding: 12
                 }
             }
         }
     });
 
-    // Example: Applications by Location
+    // 2. Applications by Location
     const locationCounts = {};
     data.forEach(row => {
         const location = row['Location'];
@@ -98,8 +149,8 @@ function processDataAndRenderCharts(data) {
             datasets: [{
                 label: 'Number of Applications',
                 data: locationData,
-                backgroundColor: 'rgba(75, 192, 192, 0.8)',
-                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: generateChartBackgrounds(locationLabels.length),
+                borderColor: generateChartBorders(locationLabels.length),
                 borderWidth: 1
             }]
         },
@@ -108,7 +159,7 @@ function processDataAndRenderCharts(data) {
             scales: {
                 x: {
                     ticks: {
-                        color: '#e0e0e0' // X-axis label color
+                        color: chartColors.lightGrey // X-axis label color
                     },
                     grid: {
                         color: 'rgba(255, 255, 255, 0.1)' // Grid line color
@@ -117,7 +168,7 @@ function processDataAndRenderCharts(data) {
                 y: {
                     beginAtZero: true,
                     ticks: {
-                        color: '#e0e0e0' // Y-axis label color
+                        color: chartColors.lightGrey // Y-axis label color
                     },
                     grid: {
                         color: 'rgba(255, 255, 255, 0.1)' // Grid line color
@@ -128,18 +179,26 @@ function processDataAndRenderCharts(data) {
                 title: {
                     display: true,
                     text: 'Applications by Location',
-                    color: '#e0e0e0'
+                    font: { size: 18, family: 'Orbitron, sans-serif' },
+                    color: chartColors.primary
                 },
                 legend: {
-                    labels: {
-                        color: '#e0e0e0'
-                    }
+                    display: false // No need for legend in single bar chart
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(26, 26, 26, 0.9)',
+                    titleColor: chartColors.primary,
+                    bodyColor: chartColors.lightGrey,
+                    borderColor: chartColors.primary,
+                    borderWidth: 1,
+                    cornerRadius: 8,
+                    padding: 12
                 }
             }
         }
     });
 
-    // Example: Travel Purpose Breakdown
+    // 3. Travel Purpose Breakdown
     const travelPurposeCounts = {};
     data.forEach(row => {
         const purpose = row['Travel Purpose'];
@@ -157,21 +216,9 @@ function processDataAndRenderCharts(data) {
             labels: travelPurposeLabels,
             datasets: [{
                 data: travelPurposeData,
-                backgroundColor: [
-                    'rgba(255, 159, 64, 0.8)',  // Orange
-                    'rgba(153, 102, 255, 0.8)', // Purple
-                    'rgba(255, 99, 132, 0.8)',  // Red
-                    'rgba(54, 162, 235, 0.8)',  // Blue
-                    'rgba(201, 203, 207, 0.8)'  // Grey
-                ],
-                borderColor: [
-                    'rgba(255, 159, 64, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(201, 203, 207, 1)'
-                ],
-                borderWidth: 1
+                backgroundColor: generateChartBackgrounds(travelPurposeLabels.length),
+                borderColor: generateChartBorders(travelPurposeLabels.length),
+                hoverOffset: 10
             }]
         },
         options: {
@@ -180,12 +227,24 @@ function processDataAndRenderCharts(data) {
                 title: {
                     display: true,
                     text: 'Travel Purpose Breakdown',
-                    color: '#e0e0e0'
+                    font: { size: 18, family: 'Orbitron, sans-serif' },
+                    color: chartColors.primary
                 },
                 legend: {
+                    position: 'right', // Place legend on the right
                     labels: {
-                        color: '#e0e0e0'
+                        font: { size: 12 },
+                        padding: 15
                     }
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(26, 26, 26, 0.9)',
+                    titleColor: chartColors.primary,
+                    bodyColor: chartColors.lightGrey,
+                    borderColor: chartColors.primary,
+                    borderWidth: 1,
+                    cornerRadius: 8,
+                    padding: 12
                 }
             }
         }
