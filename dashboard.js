@@ -1,99 +1,161 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const logoutBtn = document.getElementById("logoutBtn");
-  logoutBtn.addEventListener("click", () => {
-    sessionStorage.removeItem("loggedIn");
-    window.location.href = "login.html";
-  });
+// Check if user is logged in
+if (!localStorage.getItem('loggedIn')) {
+    window.location.href = 'login.html'; // Redirect to login if not logged in
+}
 
-  fetch("https://script.google.com/macros/s/AKfycbxIkJL8tNlrZKL2jS2zcfDL3_-XssqRGYWeZvWgbqPTK_pG2FOUSKNYAw-cpgugihdC/exec", {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
-    .then((res) => {
-      if (!res.ok) throw new Error("Network response was not ok");
-      return res.json();
-    })
-    .then((data) => {
-      if (data.status === "success") {
-        const visaData = data.data;
-        populateCharts(visaData);
-        populateTable(visaData);
-      } else {
-        console.error("Data fetch error:", data.message);
-      }
-    })
-    .catch((err) => {
-      console.error("Error fetching data:", err);
-    });
+async function fetchDashboardData() {
+    // Replace with your deployed Google Apps Script Web App URL
+    const gasUrl = 'https://script.google.com/macros/s/AKfycbxIkJL8tNlrZKL2jS2zcfDL3_-XssqRGYWeZvWgbqPTK_pG2FOUSKNYAw-cpgugihdC/exec'; // This GAS URL also handles doGet for data
 
-  function populateCharts(data) {
+    try {
+        const response = await fetch(gasUrl, { method: 'GET' });
+        const result = await response.json();
+
+        if (result.success) {
+            processDataAndRenderCharts(result.data);
+        } else {
+            console.error('Failed to fetch dashboard data:', result.message);
+            alert('Could not load dashboard data.');
+        }
+    } catch (error) {
+        console.error('Error fetching dashboard data:', error);
+        alert('An error occurred while fetching dashboard data.');
+    }
+}
+
+function processDataAndRenderCharts(data) {
+    // Example: Count Visa Types
     const visaTypeCounts = {};
+    data.forEach(row => {
+        const visaType = row['Visa Type']; // Use the exact column name from your sheet
+        visaTypeCounts[visaType] = (visaTypeCounts[visaType] || 0) + 1;
+    });
+
+    const visaTypeLabels = Object.keys(visaTypeCounts);
+    const visaTypeData = Object.values(visaTypeCounts);
+
+    // Render Visa Type Chart
+    new Chart(document.getElementById('visaTypeChart'), {
+        type: 'pie',
+        data: {
+            labels: visaTypeLabels,
+            datasets: [{
+                data: visaTypeData,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.8)',
+                    'rgba(54, 162, 235, 0.8)',
+                    'rgba(255, 206, 86, 0.8)',
+                    'rgba(75, 192, 192, 0.8)',
+                    'rgba(153, 102, 255, 0.8)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Visa Type Distribution'
+                }
+            }
+        }
+    });
+
+    // Example: Applications by Location
+    const locationCounts = {};
+    data.forEach(row => {
+        const location = row['Location'];
+        locationCounts[location] = (locationCounts[location] || 0) + 1;
+    });
+
+    const locationLabels = Object.keys(locationCounts);
+    const locationData = Object.values(locationCounts);
+
+    new Chart(document.getElementById('locationChart'), {
+        type: 'bar',
+        data: {
+            labels: locationLabels,
+            datasets: [{
+                label: 'Number of Applications',
+                data: locationData,
+                backgroundColor: 'rgba(75, 192, 192, 0.8)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Applications by Location'
+                }
+            }
+        }
+    });
+
+    // Example: Travel Purpose Breakdown
     const travelPurposeCounts = {};
-    const travelDates = {};
-
-    data.forEach(item => {
-      visaTypeCounts[item.visaType] = (visaTypeCounts[item.visaType] || 0) + 1;
-      travelPurposeCounts[item.travelPurpose] = (travelPurposeCounts[item.travelPurpose] || 0) + 1;
-      if (item.dateOfTravel) {
-        travelDates[item.dateOfTravel] = (travelDates[item.dateOfTravel] || 0) + 1;
-      }
+    data.forEach(row => {
+        const purpose = row['Travel Purpose'];
+        travelPurposeCounts[purpose] = (travelPurposeCounts[purpose] || 0) + 1;
     });
 
-    new Chart(document.getElementById("visaTypeChart"), {
-      type: "pie",
-      data: {
-        labels: Object.keys(visaTypeCounts),
-        datasets: [{
-          data: Object.values(visaTypeCounts),
-          backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0"]
-        }]
-      }
-    });
+    const travelPurposeLabels = Object.keys(travelPurposeCounts);
+    const travelPurposeData = Object.values(travelPurposeCounts);
 
-    new Chart(document.getElementById("travelPurposeChart"), {
-      type: "bar",
-      data: {
-        labels: Object.keys(travelPurposeCounts),
-        datasets: [{
-          label: "Count",
-          data: Object.values(travelPurposeCounts),
-          backgroundColor: "#36A2EB"
-        }]
-      }
+    new Chart(document.getElementById('travelPurposeChart'), {
+        type: 'doughnut',
+        data: {
+            labels: travelPurposeLabels,
+            datasets: [{
+                data: travelPurposeData,
+                backgroundColor: [
+                    'rgba(255, 159, 64, 0.8)',
+                    'rgba(153, 102, 255, 0.8)',
+                    'rgba(255, 99, 132, 0.8)',
+                    'rgba(54, 162, 235, 0.8)',
+                    'rgba(201, 203, 207, 0.8)'
+                ],
+                borderColor: [
+                    'rgba(255, 159, 64, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(201, 203, 207, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Travel Purpose Breakdown'
+                }
+            }
+        }
     });
+}
 
-    new Chart(document.getElementById("travelDateChart"), {
-      type: "line",
-      data: {
-        labels: Object.keys(travelDates),
-        datasets: [{
-          label: "Applications",
-          data: Object.values(travelDates),
-          borderColor: "#FF6384",
-          fill: false
-        }]
-      }
-    });
-  }
+function logout() {
+    localStorage.removeItem('loggedIn');
+    window.location.href = 'login.html';
+}
 
-  function populateTable(data) {
-    const tbody = document.querySelector("#visaDataTable tbody");
-    tbody.innerHTML = "";
-    data.forEach(item => {
-      const row = document.createElement("tr");
-      row.innerHTML = `
-        <td>${item.fullName || ""}</td>
-        <td>${item.passportNumber || ""}</td>
-        <td>${item.email || ""}</td>
-        <td>${item.location || ""}</td>
-        <td>${item.travelPurpose || ""}</td>
-        <td>${item.visaType || ""}</td>
-        <td>${item.dateOfTravel || ""}</td>
-        <td>${item.additionalNotes || ""}</td>
-      `;
-      tbody.appendChild(row);
-    });
-  }
-});
+// Call fetchDashboardData when the page loads
+document.addEventListener('DOMContentLoaded', fetchDashboardData);
