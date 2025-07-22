@@ -1,103 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Visa Elite Dashboard</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Arial', sans-serif;
-      background-color: #1a1a2e;
-      color: #e0e0e0;
-      padding: 20px;
-    }
-    h2 {
-      color: #4a90e2;
-      text-align: center;
-    }
-    .dashboard-container {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .chart-container {
-      margin-bottom: 20px;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background: #2e2e48;
-    }
-    th, td {
-      padding: 10px;
-      text-align: left;
-      border-bottom: 1px solid #4a90e2;
-    }
-    th {
-      background: #4a90e2;
-      color: white;
-    }
-  </style>
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h2>Visa Applications Dashboard</h2>
-  <div class="dashboard-container">
-    <div class="chart-container">
-      <canvas id="visaChart"></canvas>
-    </div>
-    <table id="visaTable">
-      <thead>
-        <tr><th>Full Name</th><th>Passport Number</th><th>Email</th><th>Location</th><th>Travel Purpose</th><th>Visa Type</th><th>Date of Travel</th><th>Notes</th></tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-  </div>
+  <h1>Welcome to Admin Dashboard</h1>
+  <div id="dashboard-content">Loading...</div>
+  <button onclick="logout()">Logout</button>
+
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      if (!sessionStorage.getItem('loggedIn')) window.location.href = 'login.html';
+    const email = localStorage.getItem("adminEmail");
 
-      fetch('https://script.google.com/macros/s/AKfycbxIkJL8tNlrZKL2jS2zcfDL3_-XssqRGYWeZvWgbqPTK_pG2FOUSKNYAw-cpgugihdC/exec', {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
-      })
-        .then(res => {
-          if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
-          return res.json();
-        })
-        .then(data => {
-          if (data.status === 'success') {
-            const applications = data.data;
-            const tableBody = document.querySelector('#visaTable tbody');
-            applications.forEach(app => {
-              const row = document.createElement('tr');
-              row.innerHTML = `<td>${app.fullName}</td><td>${app.passportNumber}</td><td>${app.email}</td><td>${app.location}</td><td>${app.travelPurpose}</td><td>${app.visaType}</td><td>${app.dateOfTravel}</td><td>${app.additionalNotes}</td>`;
-              tableBody.appendChild(row);
-            });
+    if (!email) {
+      window.location.href = "login.html";
+    } else {
+      document.getElementById("dashboard-content").innerText = `Logged in as ${email}`;
+    }
 
-            // Chart
-            const ctx = document.getElementById('visaChart').getContext('2d');
-            new Chart(ctx, {
-              type: 'bar',
-              data: {
-                labels: applications.map(app => app.visaType),
-                datasets: [{
-                  label: 'Visa Applications',
-                  data: applications.map(() => 1), // Count per type
-                  backgroundColor: '#4a90e2',
-                }]
-              },
-              options: {
-                scales: { y: { beginAtZero: true } },
-                plugins: { legend: { labels: { color: '#e0e0e0' } } },
-              }
-            });
-          } else {
-            console.error('Data fetch failed:', data.message);
-          }
-        })
-        .catch(err => console.error('Dashboard error:', err));
-    });
+    function logout() {
+      localStorage.removeItem("adminEmail");
+      window.location.href = "login.html";
+    }
   </script>
 </body>
 </html>
