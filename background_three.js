@@ -3,9 +3,8 @@ const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerH
 const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
-document.body.style.backgroundColor = '#1a1a2e'; // Dark mode background
+document.body.style.backgroundColor = '#1a1a2e'; // Dark mode
 
-// Camera position
 camera.position.z = 5;
 
 // Stars
@@ -13,11 +12,7 @@ const starGeometry = new THREE.BufferGeometry();
 const starMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 0.1 });
 const starVertices = [];
 for (let i = 0; i < 200; i++) {
-  starVertices.push(
-    (Math.random() - 0.5) * 100,
-    (Math.random() - 0.5) * 100,
-    (Math.random() - 0.5) * 100
-  );
+  starVertices.push((Math.random() - 0.5) * 100, (Math.random() - 0.5) * 100, (Math.random() - 0.5) * 100);
 }
 starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
 const stars = new THREE.Points(starGeometry, starMaterial);
