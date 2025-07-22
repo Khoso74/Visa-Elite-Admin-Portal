@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Visa Application Dashboard</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
@@ -12,7 +13,16 @@
         <h1>Visa Applications Dashboard</h1>
         <button onclick="logout()">Logout</button>
     </div>
+
     <div class="dashboard-content">
+        <div class="card summary-metrics">
+            <h2>Overall Statistics</h2>
+            <p>Total Applications: <span id="totalEntries">0</span></p>
+            <p>Unique Locations: <span id="uniqueLocationsCount">0</span></p>
+            <p>Unique Visa Types: <span id="uniqueVisaTypesCount">0</span></p>
+            <p>Unique Travel Purposes: <span id="uniqueTravelPurposesCount">0</span></p>
+        </div>
+
         <div class="chart-card">
             <h2>Visa Type Distribution</h2>
             <canvas id="visaTypeChart"></canvas>
@@ -25,7 +35,59 @@
             <h2>Travel Purpose Breakdown</h2>
             <canvas id="travelPurposeChart"></canvas>
         </div>
+
+        <div class="card data-lists">
+            <h2>Key Data Overviews</h2>
+            <div class="list-section">
+                <h3>All Locations</h3>
+                <ul id="allLocationsList">
+                    <li>Loading...</li>
+                </ul>
+            </div>
+            <div class="list-section">
+                <h3>All Visa Types</h3>
+                <ul id="allVisaTypesList">
+                    <li>Loading...</li>
+                </ul>
+            </div>
+            <div class="list-section">
+                <h3>All Travel Purposes</h3>
+                <ul id="allTravelPurposesList">
+                    <li>Loading...</li>
+                </ul>
+            </div>
         </div>
+
+        <div class="card full-width">
+            <h2>Recent Applications</h2>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search by Name or Email..." onkeyup="filterTable()">
+            </div>
+            <table id="recentApplicationsTable">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Visa Type</th>
+                        <th>Location</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td colspan="7">Loading data...</td></tr>
+                </tbody>
+            </table>
+            <div class="pagination">
+                <button id="prevPage" onclick="changePage(-1)" disabled>Previous</button>
+                <span id="pageInfo">Page 1 of 1</span>
+                <button id="nextPage" onclick="changePage(1)" disabled>Next</button>
+            </div>
+        </div>
+
+    </div>
+
     <script src="dashboard.js"></script>
 </body>
 </html>
