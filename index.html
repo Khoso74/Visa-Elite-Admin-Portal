@@ -1,40 +1,16 @@
-<form id="visaForm">
-  <input type="text" name="name" placeholder="Name" required />
-  <input type="email" name="email" placeholder="Email" required />
-  <input type="text" name="passport" placeholder="Passport No." required />
-  <input type="text" name="visa_type" placeholder="Visa Type" required />
-  <input type="text" name="status" placeholder="Status" />
-  <button type="submit">Submit</button>
-</form>
-
-<script>
-  document.getElementById("visaForm").addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const form = e.target;
-    const formData = new FormData(form);
-    const jsonData = {};
-
-    formData.forEach((value, key) => {
-      jsonData[key] = value;
-    });
-
-    try {
-      const response = await fetch("visa-elite-admin-portal-pykl0uwg3-khoso74s-projects.vercel.app", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(jsonData)
-      });
-
-      const result = await response.json();
-      if (result.success) {
-        alert("Submitted successfully!");
-        form.reset();
-      } else {
-        alert("Submission failed: " + result.message);
-      }
-    } catch (error) {
-      alert("Error: " + error.message);
-    }
-  });
-</script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="intro-container">
+        <h1>Welcome to Visa Application Dashboard!</h1>
+        <p>Explore insightful data and manage applications efficiently.</p>
+        <button onclick="location.href='login.html'">Proceed to Login</button>
+    </div>
+</body>
+</html>
