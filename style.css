@@ -15,7 +15,7 @@ body {
     opacity: 1;
 }
 
-/* Intro Page Styling - Blur Fix and Refined Neon */
+/* Intro Page Styling - Sharper Text and Better Centering */
 .intro-container {
     display: flex;
     flex-direction: column;
@@ -25,47 +25,53 @@ body {
     background-color: #0d0d0d;
     color: white;
     text-align: center;
+    width: 90%; /* Allow content to use more width */
+    max-width: 980px; /* Constrain max width for better readability on very wide screens */
+    margin: 0 auto; /* Ensures the container itself is centered */
+    box-sizing: border-box; /* Include padding in width */
+    padding: 20px; /* Add some padding */
 }
 .intro-container h1 {
     font-family: 'Orbitron', sans-serif;
-    font-size: 4em;
+    font-size: 3.8em; /* Slightly adjusted font size for better wrapping on some screens */
     margin-bottom: 25px;
-    color: #99FFFF; /* Lighter base color for less blur */
+    color: #E0FFFF; /* Lighter base color for crispness (LightCyan) */
     text-shadow:
-        0 0 5px #00e6e6, /* Softer, focused glow */
-        0 0 15px #00e6e6,
-        0 0 30px rgba(0, 230, 230, 0.7); /* Reduced spread for sharpness */
-    animation: pulseGlow 2s infinite alternate ease-in-out;
-    letter-spacing: 2px; /* Slight letter spacing for readability */
+        0 0 5px rgba(224, 255, 255, 0.7), /* Focused, subtle glow 1 */
+        0 0 12px rgba(224, 255, 255, 0.5), /* Subtle glow 2 */
+        0 0 25px rgba(224, 255, 255, 0.3); /* Even more subtle spread, no blur */
+    animation: pulseGlow 2.8s infinite alternate ease-in-out; /* Slower, smoother pulse */
+    letter-spacing: 1.8px; /* Slightly less spacing for compactness */
+    line-height: 1.25; /* Adjusted line height for better multi-line display */
 }
 
 @keyframes pulseGlow {
-    from { text-shadow: 0 0 5px #00e6e6, 0 0 15px #00e6e6; }
-    to { text-shadow: 0 0 8px #00e6e6, 0 0 25px #00e6e6, 0 0 40px rgba(0, 230, 230, 0.9); }
+    from { text-shadow: 0 0 5px rgba(224, 255, 255, 0.7), 0 0 12px rgba(224, 255, 255, 0.5); }
+    to { text-shadow: 0 0 8px rgba(224, 255, 255, 0.9), 0 0 20px rgba(224, 255, 255, 0.7), 0 0 35px rgba(224, 255, 255, 0.5); }
 }
 
 .intro-container p {
     font-family: 'Lato', sans-serif;
-    font-size: 1.5em;
+    font-size: 1.45em; /* Slightly smaller for balance */
     margin-bottom: 40px;
-    color: #CCFFFF; /* Lighter base color */
-    text-shadow: 0 0 4px #80ffff; /* Softer shadow */
+    color: #E6F0F5; /* Lighter off-white */
+    text-shadow: 0 0 2px rgba(230, 240, 245, 0.4); /* Very subtle shadow */
 }
 .intro-container button {
     padding: 18px 35px;
     font-size: 1.2em;
-    background-color: #00aaff;
-    color: #0a0a0a;
+    background-color: #0088CC; /* Slightly deeper blue for professionalism */
+    color: #EEF8FF; /* Very light text for contrast */
     border: none;
-    border-radius: 8px;
+    border-radius: 10px; /* Slightly more rounded */
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-    box-shadow: 0 0 15px #00aaff;
+    box-shadow: 0 0 15px rgba(0, 136, 204, 0.8), 0 0 30px rgba(0, 136, 204, 0.4); /* Enhanced shadow */
 }
 .intro-container button:hover {
-    background-color: #0088cc;
-    transform: translateY(-3px);
-    box-shadow: 0 0 25px #00aaff;
+    background-color: #006699; /* Even deeper blue on hover */
+    transform: translateY(-4px); /* Slightly more pronounced lift */
+    box-shadow: 0 0 25px rgba(0, 136, 204, 1), 0 0 45px rgba(0, 136, 204, 0.6); /* More intense shadow on hover */
 }
 
 /* Login Page Background Canvas - Three.js handles the dark background */
@@ -85,101 +91,101 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: rgba(10, 10, 20, 0.9); /* Slightly more opaque, very dark */
-    backdrop-filter: blur(20px);
-    border-radius: 25px;
-    padding: 50px;
-    box-shadow: 0 15px 50px 0 rgba(0, 0, 0, 0.7); /* Deeper shadow */
-    border: 3px solid transparent;
+    background: rgba(10, 10, 20, 0.95); /* Slightly more opaque, very dark */
+    backdrop-filter: blur(22px); /* Stronger blur */
+    border-radius: 20px; /* Slightly less rounded for a sleek look */
+    padding: 45px; /* Slightly less padding */
+    box-shadow: 0 12px 45px 0 rgba(0, 0, 0, 0.85); /* Deeper and wider shadow */
+    border: 2px solid transparent; /* Thinner border for subtlety */
     border-image: linear-gradient(
         45deg,
-        #ff33ff, /* Brighter Magenta */
-        #33ffff, /* Brighter Cyan */
-        #66ff66, /* Softer Green */
-        #ffcc33, /* Warm Yellow-Orange */
-        #ff33ff  /* Back to Magenta */
-    ) 1; /* More vibrant and professional multi-color neon gradient */
-    width: 400px;
+        #FF33EE, /* Brighter Magenta, more consistent */
+        #33EEFF, /* Brighter Cyan, more consistent */
+        #66FF99, /* Softer Green, more consistent */
+        #FFCC66, /* Warm Yellow-Orange, more consistent */
+        #FF33EE  /* Back to Magenta */
+    ) 1; /* Refined vibrant and professional multi-color neon gradient */
+    width: 380px; /* Slightly narrower */
     text-align: center;
     color: #e0e0e0;
     z-index: 1;
     overflow: hidden;
-    animation: neonBorderPulse 5s infinite alternate ease-in-out; /* Slower, smoother pulse */
+    animation: neonBorderPulse 4s infinite alternate ease-in-out; /* Slower, smoother pulse for elegance */
 }
 
 /* Enhanced Professional Neon Border Pulse Animation */
 @keyframes neonBorderPulse {
     0% {
-        box-shadow: 0 0 15px #ff33ff, 0 0 30px #33ffff;
-        border-image: linear-gradient(45deg, #ff33ff, #33ffff, #66ff66, #ffcc33, #ff33ff) 1;
+        box-shadow: 0 0 10px rgba(255, 51, 238, 0.7), 0 0 25px rgba(51, 238, 255, 0.5); /* Softer initial glow */
+        border-image: linear-gradient(45deg, #FF33EE, #33EEFF, #66FF99, #FFCC66, #FF33EE) 1;
     }
     50% {
-        box-shadow: 0 0 25px #33ffff, 0 0 50px #ff33ff;
-        border-image: linear-gradient(45deg, #33ffff, #66ff66, #ffcc33, #ff33ff, #33ffff) 1;
+        box-shadow: 0 0 18px rgba(51, 238, 255, 0.9), 0 0 40px rgba(255, 51, 238, 0.7); /* More intense mid-point glow */
+        border-image: linear-gradient(45deg, #33EEFF, #66FF99, #FFCC66, #FF33EE, #33EEFF) 1;
     }
     100% {
-        box-shadow: 0 0 15px #ff33ff, 0 0 30px #33ffff;
-        border-image: linear-gradient(45deg, #ff33ff, #33ffff, #66ff66, #ffcc33, #ff33ff) 1;
+        box-shadow: 0 0 10px rgba(255, 51, 238, 0.7), 0 0 25px rgba(51, 238, 255, 0.5); /* Back to softer glow */
+        border-image: linear-gradient(45deg, #FF33EE, #33EEFF, #66FF99, #FFCC66, #FF33EE) 1;
     }
 }
 
 .login-container h2 {
     font-family: 'Orbitron', sans-serif;
-    margin-bottom: 40px;
-    font-size: 2.8em;
-    color: #33ffff; /* Brighter Cyan Neon */
+    margin-bottom: 35px; /* Slightly reduced margin */
+    font-size: 2.6em; /* Slightly smaller for better fit */
+    color: #33EEFF; /* Brighter Cyan Neon, more consistent */
     text-shadow:
-        0 0 8px #33ffff,
-        0 0 20px #33ffff;
+        0 0 8px #33EEFF,
+        0 0 20px rgba(51, 238, 255, 0.7); /* Refined shadow */
 }
 .form-group {
-    margin-bottom: 30px;
+    margin-bottom: 25px; /* Slightly reduced margin */
     text-align: left;
 }
 .form-group label {
     display: block;
-    margin-bottom: 12px;
+    margin-bottom: 10px; /* Slightly reduced margin */
     font-weight: bold;
-    color: #99ffff; /* Lighter cyan */
+    color: #CCEEFF; /* Lighter cyan for labels */
     font-family: 'Lato', sans-serif;
-    font-size: 1.1em;
+    font-size: 1.05em; /* Slightly smaller */
 }
 .form-group input {
-    width: calc(100% - 28px);
-    padding: 14px;
-    border: 2px solid rgba(51, 255, 255, 0.6); /* Brighter border for inputs */
-    border-radius: 12px;
-    background: rgba(25, 25, 50, 0.7); /* Slightly more opaque input background */
-    color: #e0e0e0;
-    font-size: 1.1em;
+    width: calc(100% - 24px); /* Adjusted width for consistent padding */
+    padding: 12px; /* Slightly less padding */
+    border: 2px solid rgba(51, 238, 255, 0.5); /* Softer border for inputs */
+    border-radius: 10px; /* Slightly less rounded */
+    background: rgba(25, 25, 50, 0.75); /* Slightly more opaque input background */
+    color: #E0E0E0;
+    font-size: 1em; /* Standard font size */
     outline: none;
     transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
 }
 .form-group input::placeholder {
-    color: rgba(224, 224, 224, 0.6);
+    color: rgba(224, 224, 224, 0.5); /* Softer placeholder color */
 }
 .form-group input:focus {
-    border-color: #33ffff;
-    box-shadow: 0 0 10px #33ffff, 0 0 20px rgba(51,255,255,0.5);
-    background-color: rgba(35, 35, 65, 0.8);
+    border-color: #33EEFF;
+    box-shadow: 0 0 8px #33EEFF, 0 0 18px rgba(51,238,255,0.4); /* Refined focus shadow */
+    background-color: rgba(35, 35, 65, 0.85); /* Slightly darker on focus */
 }
 .login-container button {
     width: 100%;
-    padding: 18px;
-    background-color: #00aaff;
-    color: #0a0a0a;
+    padding: 16px; /* Slightly less padding */
+    background-color: #0088CC; /* Consistent blue button */
+    color: #EEF8FF; /* Light text */
     border: none;
-    border-radius: 12px;
-    font-size: 1.3em;
+    border-radius: 10px; /* Consistent border radius */
+    font-size: 1.2em; /* Slightly smaller font */
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-    box-shadow: 0 0 18px #00aaff, 0 0 30px rgba(0,170,255,0.4);
+    box-shadow: 0 0 15px rgba(0, 136, 204, 0.8), 0 0 25px rgba(0, 136, 204, 0.4); /* Consistent shadow */
 }
 .login-container button:hover {
-    background-color: #0088cc;
-    transform: translateY(-4px);
-    box-shadow: 0 0 28px #00aaff, 0 0 50px rgba(0,170,255,0.6);
+    background-color: #006699;
+    transform: translateY(-3px); /* Slightly less pronounced lift */
+    box-shadow: 0 0 25px rgba(0, 136, 204, 1), 0 0 40px rgba(0, 136, 204, 0.6); /* Consistent hover shadow */
 }
 
 /* Dashboard Page - Adjusting colors for dark theme and professionalism */
@@ -196,59 +202,59 @@ body {
 .dashboard-header h1 {
     font-family: 'Orbitron', sans-serif;
     margin: 0;
-    color: #33ffff; /* Brighter Cyan Neon for dashboard title */
-    text-shadow: 0 0 8px #33ffff;
-    font-size: 2.2em;
+    color: #33EEFF; /* Brighter Cyan Neon for dashboard title */
+    text-shadow: 0 0 8px #33EEFF;
+    font-size: 2.1em; /* Slightly smaller font */
 }
 .dashboard-header button {
-    padding: 12px 25px;
-    background-color: #ff33ff; /* Brighter Neon Pink for logout */
+    padding: 11px 22px; /* Slightly less padding */
+    background-color: #FF33EE; /* Brighter Neon Pink for logout */
     color: white;
     border: none;
     border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
-    box-shadow: 0 0 12px #ff33ff;
-    font-size: 1.1em;
+    box-shadow: 0 0 10px rgba(255, 51, 238, 0.7), 0 0 20px rgba(255, 51, 238, 0.4); /* Refined shadow */
+    font-size: 1.05em; /* Slightly smaller font */
 }
 .dashboard-header button:hover {
-    background-color: #cc00bb;
-    box-shadow: 0 0 25px #ff33ff;
+    background-color: #CC00BB;
+    box-shadow: 0 0 20px rgba(255, 51, 238, 1), 0 0 35px rgba(255, 51, 238, 0.6); /* More intense hover shadow */
     transform: translateY(-2px);
 }
 .dashboard-content {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 30px;
-    padding: 30px;
-    max-width: 1600px;
-    margin: 30px auto;
+    gap: 25px; /* Slightly less gap */
+    padding: 25px; /* Slightly less padding */
+    max-width: 1500px; /* Slightly narrower max-width */
+    margin: 25px auto;
 }
 .chart-card {
-    background: rgba(30, 30, 50, 0.85); /* Slightly more opaque card background */
-    backdrop-filter: blur(10px);
-    border-radius: 15px;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.5);
-    padding: 30px;
+    background: rgba(25, 25, 45, 0.9); /* Slightly more opaque card background */
+    backdrop-filter: blur(12px); /* Stronger blur */
+    border-radius: 12px; /* Slightly less rounded */
+    box-shadow: 0 10px 35px rgba(0,0,0,0.6); /* Deeper shadow */
+    padding: 25px; /* Slightly less padding */
     text-align: center;
-    border: 1px solid rgba(51, 255, 255, 0.3); /* Brighter, subtle neon border for cards */
+    border: 1px solid rgba(51, 238, 255, 0.25); /* More subtle neon border for cards */
     color: #e0e0e0;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 .chart-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 40px rgba(0,0,0,0.6), 0 0 20px rgba(51,255,255,0.5); /* Enhanced shadow and glow */
+    transform: translateY(-6px); /* Slightly more pronounced lift */
+    box-shadow: 0 15px 45px rgba(0,0,0,0.7), 0 0 18px rgba(51,238,255,0.4); /* Enhanced shadow and glow */
 }
 .chart-card h2 {
     font-family: 'Orbitron', sans-serif;
     margin-top: 0;
-    margin-bottom: 25px;
-    color: #33ffff; /* Brighter Cyan Neon for chart titles */
-    text-shadow: 0 0 6px #33ffff;
-    font-size: 1.8em;
+    margin-bottom: 20px; /* Slightly less margin */
+    color: #33EEFF; /* Brighter Cyan Neon for chart titles */
+    text-shadow: 0 0 6px #33EEFF;
+    font-size: 1.7em; /* Slightly smaller font */
 }
 .chart-card canvas {
-    background-color: rgba(0,0,0,0.2); /* Slightly darker background for charts */
+    background-color: rgba(0,0,0,0.15); /* Slightly lighter background for charts */
     border-radius: 8px;
     padding: 10px;
 }
