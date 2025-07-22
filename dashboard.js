@@ -51,13 +51,28 @@ const chartColors = {
 };
 
 // Set Chart.js defaults for a dark theme and consistent fonts
-Chart.defaults.color = chartColors.lightText;
-Chart.defaults.font.family = 'Lato', 'sans-serif';
-Chart.defaults.font.size = 13; // Base font size for all text
+Chart.defaults.color = chartColors.lightText; // Global default text color
+Chart.defaults.font.family = 'Lato, sans-serif'; // Global default font family
+Chart.defaults.font.size = 13; // Global default font size
+
+// --- FIX FOR TypeError: Cannot set properties of undefined (setting 'size') ---
+// Ensure the 'font' objects are initialized for plugins before setting their properties
+// For Chart Titles
+Chart.defaults.plugins.title.font = { // Initialize font object for title
+    family: 'Orbitron, sans-serif',
+    size: 22, // Default size for titles
+    weight: 'bold' // Optional: default weight for titles
+};
 Chart.defaults.plugins.title.color = chartColors.vibrant1; // Chart titles in bright cyan
-Chart.defaults.plugins.title.font.family = 'Orbitron', 'sans-serif'; // Techy font for titles
-Chart.defaults.plugins.legend.labels.color = chartColors.lightText;
-Chart.defaults.plugins.legend.labels.font.size = 13;
+
+// For Legend Labels
+Chart.defaults.plugins.legend.labels.font = { // Initialize font object for legend labels
+    size: 14 // Default size for legend labels
+};
+Chart.defaults.plugins.legend.labels.color = chartColors.lightText; // Legend labels text color
+// --- END FIX ---
+
+
 Chart.defaults.elements.arc.borderColor = chartColors.darkBg; // Border for pie/doughnut slices
 Chart.defaults.elements.arc.borderWidth = 3; // Slightly thicker border for slices
 
@@ -132,13 +147,13 @@ function processDataAndRenderCharts(data) {
                 title: {
                     display: true,
                     text: 'Visa Type Distribution',
-                    font: { size: 22 }, // Larger title font
+                    font: { size: 22 }, // Using explicit font object from defaults now
                     color: chartColors.vibrant1
                 },
                 legend: {
                     position: 'right',
                     labels: {
-                        font: { size: 14 }, // Larger legend labels
+                        font: { size: 14 }, // Using explicit font object from defaults now
                         padding: 25 // More padding
                     }
                 },
@@ -211,7 +226,7 @@ function processDataAndRenderCharts(data) {
                 title: {
                     display: true,
                     text: 'Applications by Location',
-                    font: { size: 22 },
+                    font: { size: 22 }, // Using explicit font object from defaults now
                     color: chartColors.vibrant1
                 },
                 legend: {
@@ -261,13 +276,13 @@ function processDataAndRenderCharts(data) {
                 title: {
                     display: true,
                     text: 'Travel Purpose Breakdown',
-                    font: { size: 22 },
+                    font: { size: 22 }, // Using explicit font object from defaults now
                     color: chartColors.vibrant1
                 },
                 legend: {
                     position: 'right',
                     labels: {
-                        font: { size: 14 },
+                        font: { size: 14 }, // Using explicit font object from defaults now
                         padding: 25
                     }
                 },
