@@ -5,7 +5,7 @@ if (!localStorage.getItem('loggedIn')) {
 
 async function fetchDashboardData() {
     // !!! IMPORTANT: Replace with your deployed Google Apps Script Web App URL !!!
-    const gasUrl = 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE'; // This GAS URL also handles doGet for data
+    const gasUrl = 'https://script.google.com/macros/s/AKfycbxIkJL8tNlrZKL2jS2zcfDL3_-XssqRGYWeZvWgbqPTK_pG2FOUSKNYAw-cpgugihdC/exec'; // This GAS URL also handles doGet for data
 
     try {
         const response = await fetch(gasUrl, { method: 'GET' });
