@@ -23,62 +23,69 @@ async function fetchDashboardData() {
     }
 }
 
-// Define a professional and vibrant color palette
+// Define a professional and vibrant color palette with more emphasis on blues/purples/cyans
 const chartColors = {
-    primary: '#00e6e6', // Cyan Neon
-    secondary: '#ff00ff', // Magenta Neon
-    tertiary: '#00ff00', // Green Neon
-    quaternary: '#ffff00', // Yellow Neon
-    quinary: '#ff6600', // Orange Neon
-    senary: '#6600ff', // Purple Neon
-    lightGrey: '#cccccc',
-    darkGrey: '#444444'
+    // Main vibrant colors
+    vibrant1: '#33FFFF', // Bright Cyan
+    vibrant2: '#FF33FF', // Bright Magenta
+    vibrant3: '#66FF66', // Green
+    vibrant4: '#FFCC33', // Orange-Yellow
+    vibrant5: '#9966FF', // Medium Purple
+
+    // Backgrounds and accents
+    darkBg: '#1a1a1a',
+    lightText: '#E0E0E0',
+    gridLine: 'rgba(255, 255, 255, 0.15)', // Slightly brighter grid lines
+    tooltipBg: 'rgba(20, 20, 40, 0.95)', // Darker, more opaque tooltip
+    tooltipBorder: '#33FFFF' // Cyan border for tooltips
 };
 
-// Set Chart.js defaults for a dark theme
-Chart.defaults.color = chartColors.lightGrey;
+// Set Chart.js defaults for a dark theme and consistent fonts
+Chart.defaults.color = chartColors.lightText;
 Chart.defaults.font.family = 'Lato, sans-serif';
-Chart.defaults.plugins.title.color = chartColors.primary;
-Chart.defaults.plugins.legend.labels.color = chartColors.lightGrey;
-Chart.defaults.elements.arc.borderColor = '#1a1a1a'; // Border for pie/doughnut slices
-Chart.defaults.elements.arc.borderWidth = 2;
+Chart.defaults.plugins.title.color = chartColors.vibrant1; // Chart titles in bright cyan
+Chart.defaults.plugins.legend.labels.color = chartColors.lightText;
+Chart.defaults.elements.arc.borderColor = chartColors.darkBg; // Border for pie/doughnut slices
+Chart.defaults.elements.arc.borderWidth = 3; // Slightly thicker border for slices
+
+// Helper function to generate dynamic background colors for charts
+const generateChartBackgrounds = (numColors) => {
+    const colors = [
+        chartColors.vibrant1, // Cyan
+        chartColors.vibrant2, // Magenta
+        chartColors.vibrant3, // Green
+        chartColors.vibrant4, // Orange-Yellow
+        chartColors.vibrant5, // Purple
+        'rgba(0, 150, 255, 0.8)', // Royal Blue
+        'rgba(255, 50, 50, 0.8)'  // Red
+    ];
+    const selectedColors = [];
+    for (let i = 0; i < numColors; i++) {
+        selectedColors.push(colors[i % colors.length]);
+    }
+    return selectedColors;
+};
+
+const generateChartBorders = (numColors) => {
+    const borders = [
+        chartColors.vibrant1,
+        chartColors.vibrant2,
+        chartColors.vibrant3,
+        chartColors.vibrant4,
+        chartColors.vibrant5,
+        'rgba(0, 150, 255, 1)',
+        'rgba(255, 50, 50, 1)'
+    ];
+    const selectedBorders = [];
+    for (let i = 0; i < numColors; i++) {
+        selectedBorders.push(borders[i % borders.length]);
+    }
+    return selectedBorders;
+};
+
 
 function processDataAndRenderCharts(data) {
-    // Helper function to generate dynamic background colors for charts
-    const generateChartBackgrounds = (numColors) => {
-        const colors = [
-            'rgba(0, 230, 230, 0.8)', // Cyan
-            'rgba(255, 0, 255, 0.8)', // Magenta
-            'rgba(0, 255, 0, 0.8)',   // Green
-            'rgba(255, 255, 0, 0.8)', // Yellow
-            'rgba(255, 102, 0, 0.8)', // Orange
-            'rgba(102, 0, 255, 0.8)'  // Purple
-        ];
-        const selectedColors = [];
-        for (let i = 0; i < numColors; i++) {
-            selectedColors.push(colors[i % colors.length]);
-        }
-        return selectedColors;
-    };
-
-    const generateChartBorders = (numColors) => {
-        const borders = [
-            'rgba(0, 230, 230, 1)',
-            'rgba(255, 0, 255, 1)',
-            'rgba(0, 255, 0, 1)',
-            'rgba(255, 255, 0, 1)',
-            'rgba(255, 102, 0, 1)',
-            'rgba(102, 0, 255, 1)'
-        ];
-        const selectedBorders = [];
-        for (let i = 0; i < numColors; i++) {
-            selectedBorders.push(borders[i % borders.length]);
-        }
-        return selectedBorders;
-    };
-
-
-    // 1. Visa Type Distribution
+    // 1. Visa Type Distribution (Pie Chart)
     const visaTypeCounts = {};
     data.forEach(row => {
         const visaType = row['Visa Type'];
@@ -96,9 +103,9 @@ function processDataAndRenderCharts(data) {
             labels: visaTypeLabels,
             datasets: [{
                 data: visaTypeData,
-                backgroundColor: generateChartBackgrounds(visaTypeLabels.length),
+                backgroundColor: generateChartBackgrounds(visaTypeLabels.length).map(color => color.replace('0.8', '0.9')), // Slightly more opaque
                 borderColor: generateChartBorders(visaTypeLabels.length),
-                hoverOffset: 10
+                hoverOffset: 12 // Increased hover offset
             }]
         },
         options: {
@@ -107,30 +114,31 @@ function processDataAndRenderCharts(data) {
                 title: {
                     display: true,
                     text: 'Visa Type Distribution',
-                    font: { size: 18, family: 'Orbitron, sans-serif' },
-                    color: chartColors.primary
+                    font: { size: 20, family: 'Orbitron, sans-serif' }, // Larger title font
+                    color: chartColors.vibrant1
                 },
                 legend: {
-                    position: 'right', // Place legend on the right for better use of space
+                    position: 'right',
                     labels: {
-                        font: { size: 12 },
-                        padding: 15
+                        font: { size: 14 }, // Larger legend labels
+                        padding: 20 // More padding
                     }
                 },
                 tooltip: {
-                    backgroundColor: 'rgba(26, 26, 26, 0.9)', // Darker tooltip background
-                    titleColor: chartColors.primary,
-                    bodyColor: chartColors.lightGrey,
-                    borderColor: chartColors.primary,
-                    borderWidth: 1,
-                    cornerRadius: 8,
-                    padding: 12
+                    backgroundColor: chartColors.tooltipBg,
+                    titleColor: chartColors.vibrant1,
+                    bodyColor: chartColors.lightText,
+                    borderColor: chartColors.tooltipBorder,
+                    borderWidth: 2, // Thicker border
+                    cornerRadius: 10, // More rounded
+                    padding: 15, // More padding
+                    bodyFont: { size: 14 }
                 }
             }
         }
     });
 
-    // 2. Applications by Location
+    // 2. Applications by Location (Bar Chart)
     const locationCounts = {};
     data.forEach(row => {
         const location = row['Location'];
@@ -149,9 +157,10 @@ function processDataAndRenderCharts(data) {
             datasets: [{
                 label: 'Number of Applications',
                 data: locationData,
-                backgroundColor: generateChartBackgrounds(locationLabels.length),
+                backgroundColor: generateChartBackgrounds(locationLabels.length).map(color => color.replace('0.8', '0.9')),
                 borderColor: generateChartBorders(locationLabels.length),
-                borderWidth: 1
+                borderWidth: 1.5, // Slightly thicker bar border
+                borderRadius: 5 // Rounded bars
             }]
         },
         options: {
@@ -159,19 +168,21 @@ function processDataAndRenderCharts(data) {
             scales: {
                 x: {
                     ticks: {
-                        color: chartColors.lightGrey // X-axis label color
+                        color: chartColors.lightText, // X-axis label color
+                        font: { size: 12 }
                     },
                     grid: {
-                        color: 'rgba(255, 255, 255, 0.1)' // Grid line color
+                        color: chartColors.gridLine // Grid line color
                     }
                 },
                 y: {
                     beginAtZero: true,
                     ticks: {
-                        color: chartColors.lightGrey // Y-axis label color
+                        color: chartColors.lightText, // Y-axis label color
+                        font: { size: 12 }
                     },
                     grid: {
-                        color: 'rgba(255, 255, 255, 0.1)' // Grid line color
+                        color: chartColors.gridLine // Grid line color
                     }
                 }
             },
@@ -179,26 +190,27 @@ function processDataAndRenderCharts(data) {
                 title: {
                     display: true,
                     text: 'Applications by Location',
-                    font: { size: 18, family: 'Orbitron, sans-serif' },
-                    color: chartColors.primary
+                    font: { size: 20, family: 'Orbitron, sans-serif' },
+                    color: chartColors.vibrant1
                 },
                 legend: {
-                    display: false // No need for legend in single bar chart
+                    display: false
                 },
                 tooltip: {
-                    backgroundColor: 'rgba(26, 26, 26, 0.9)',
-                    titleColor: chartColors.primary,
-                    bodyColor: chartColors.lightGrey,
-                    borderColor: chartColors.primary,
-                    borderWidth: 1,
-                    cornerRadius: 8,
-                    padding: 12
+                    backgroundColor: chartColors.tooltipBg,
+                    titleColor: chartColors.vibrant1,
+                    bodyColor: chartColors.lightText,
+                    borderColor: chartColors.tooltipBorder,
+                    borderWidth: 2,
+                    cornerRadius: 10,
+                    padding: 15,
+                    bodyFont: { size: 14 }
                 }
             }
         }
     });
 
-    // 3. Travel Purpose Breakdown
+    // 3. Travel Purpose Breakdown (Doughnut Chart)
     const travelPurposeCounts = {};
     data.forEach(row => {
         const purpose = row['Travel Purpose'];
@@ -216,9 +228,9 @@ function processDataAndRenderCharts(data) {
             labels: travelPurposeLabels,
             datasets: [{
                 data: travelPurposeData,
-                backgroundColor: generateChartBackgrounds(travelPurposeLabels.length),
+                backgroundColor: generateChartBackgrounds(travelPurposeLabels.length).map(color => color.replace('0.8', '0.9')),
                 borderColor: generateChartBorders(travelPurposeLabels.length),
-                hoverOffset: 10
+                hoverOffset: 12
             }]
         },
         options: {
@@ -227,24 +239,25 @@ function processDataAndRenderCharts(data) {
                 title: {
                     display: true,
                     text: 'Travel Purpose Breakdown',
-                    font: { size: 18, family: 'Orbitron, sans-serif' },
-                    color: chartColors.primary
+                    font: { size: 20, family: 'Orbitron, sans-serif' },
+                    color: chartColors.vibrant1
                 },
                 legend: {
-                    position: 'right', // Place legend on the right
+                    position: 'right',
                     labels: {
-                        font: { size: 12 },
-                        padding: 15
+                        font: { size: 14 },
+                        padding: 20
                     }
                 },
                 tooltip: {
-                    backgroundColor: 'rgba(26, 26, 26, 0.9)',
-                    titleColor: chartColors.primary,
-                    bodyColor: chartColors.lightGrey,
-                    borderColor: chartColors.primary,
-                    borderWidth: 1,
-                    cornerRadius: 8,
-                    padding: 12
+                    backgroundColor: chartColors.tooltipBg,
+                    titleColor: chartColors.vibrant1,
+                    bodyColor: chartColors.lightText,
+                    borderColor: chartColors.tooltipBorder,
+                    borderWidth: 2,
+                    cornerRadius: 10,
+                    padding: 15,
+                    bodyFont: { size: 14 }
                 }
             }
         }
