@@ -1,260 +1,282 @@
-body {
-    margin: 0;
-    font-family: 'Lato', Arial, sans-serif;
-    background-color: #0d0d0d;
-    color: #e0e0e0;
-    overflow: hidden;
-}
+/* Add these styles to your existing style.css */
 
-/* Intro Page Fade-in Animation */
-.fade-in-body {
-    opacity: 0;
-    transition: opacity 2s ease-in-out;
-}
-.fade-in-body.fade-in {
-    opacity: 1;
-}
-
-/* Intro Page Styling - Sharper Text and Better Centering */
-.intro-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #0d0d0d;
-    color: white;
-    text-align: center;
-    width: 90%; /* Allow content to use more width */
-    max-width: 980px; /* Constrain max width for better readability on very wide screens */
-    margin: 0 auto; /* Ensures the container itself is centered */
-    box-sizing: border-box; /* Include padding in width */
-    padding: 20px; /* Add some padding */
-}
-.intro-container h1 {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 3.8em; /* Slightly adjusted font size for better wrapping on some screens */
-    margin-bottom: 25px;
-    color: #E0FFFF; /* Lighter base color for crispness (LightCyan) */
-    text-shadow:
-        0 0 5px rgba(224, 255, 255, 0.7), /* Focused, subtle glow 1 */
-        0 0 12px rgba(224, 255, 255, 0.5), /* Subtle glow 2 */
-        0 0 25px rgba(224, 255, 255, 0.3); /* Even more subtle spread, no blur */
-    animation: pulseGlow 2.8s infinite alternate ease-in-out; /* Slower, smoother pulse */
-    letter-spacing: 1.8px; /* Slightly less spacing for compactness */
-    line-height: 1.25; /* Adjusted line height for better multi-line display */
-}
-
-@keyframes pulseGlow {
-    from { text-shadow: 0 0 5px rgba(224, 255, 255, 0.7), 0 0 12px rgba(224, 255, 255, 0.5); }
-    to { text-shadow: 0 0 8px rgba(224, 255, 255, 0.9), 0 0 20px rgba(224, 255, 255, 0.7), 0 0 35px rgba(224, 255, 255, 0.5); }
-}
-
-.intro-container p {
-    font-family: 'Lato', sans-serif;
-    font-size: 1.45em; /* Slightly smaller for balance */
-    margin-bottom: 40px;
-    color: #E6F0F5; /* Lighter off-white */
-    text-shadow: 0 0 2px rgba(230, 240, 245, 0.4); /* Very subtle shadow */
-}
-.intro-container button {
-    padding: 18px 35px;
-    font-size: 1.2em;
-    background-color: #0088CC; /* Slightly deeper blue for professionalism */
-    color: #EEF8FF; /* Very light text for contrast */
-    border: none;
-    border-radius: 10px; /* Slightly more rounded */
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-    box-shadow: 0 0 15px rgba(0, 136, 204, 0.8), 0 0 30px rgba(0, 136, 204, 0.4); /* Enhanced shadow */
-}
-.intro-container button:hover {
-    background-color: #006699; /* Even deeper blue on hover */
-    transform: translateY(-4px); /* Slightly more pronounced lift */
-    box-shadow: 0 0 25px rgba(0, 136, 204, 1), 0 0 45px rgba(0, 136, 204, 0.6); /* More intense shadow on hover */
-}
-
-/* Login Page Background Canvas - Three.js handles the dark background */
-#background-canvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    background-color: #000000;
-}
-
-/* Login Container - Dark Glossy with Professional Neon Borders */
-.login-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: rgba(10, 10, 20, 0.95); /* Slightly more opaque, very dark */
-    backdrop-filter: blur(22px); /* Stronger blur */
-    border-radius: 20px; /* Slightly less rounded for a sleek look */
-    padding: 45px; /* Slightly less padding */
-    box-shadow: 0 12px 45px 0 rgba(0, 0, 0, 0.85); /* Deeper and wider shadow */
-    border: 2px solid transparent; /* Thinner border for subtlety */
-    border-image: linear-gradient(
-        45deg,
-        #FF33EE, /* Brighter Magenta, more consistent */
-        #33EEFF, /* Brighter Cyan, more consistent */
-        #66FF99, /* Softer Green, more consistent */
-        #FFCC66, /* Warm Yellow-Orange, more consistent */
-        #FF33EE  /* Back to Magenta */
-    ) 1; /* Refined vibrant and professional multi-color neon gradient */
-    width: 380px; /* Slightly narrower */
-    text-align: center;
-    color: #e0e0e0;
-    z-index: 1;
-    overflow: hidden;
-    animation: neonBorderPulse 4s infinite alternate ease-in-out; /* Slower, smoother pulse for elegance */
-}
-
-/* Enhanced Professional Neon Border Pulse Animation */
-@keyframes neonBorderPulse {
-    0% {
-        box-shadow: 0 0 10px rgba(255, 51, 238, 0.7), 0 0 25px rgba(51, 238, 255, 0.5); /* Softer initial glow */
-        border-image: linear-gradient(45deg, #FF33EE, #33EEFF, #66FF99, #FFCC66, #FF33EE) 1;
-    }
-    50% {
-        box-shadow: 0 0 18px rgba(51, 238, 255, 0.9), 0 0 40px rgba(255, 51, 238, 0.7); /* More intense mid-point glow */
-        border-image: linear-gradient(45deg, #33EEFF, #66FF99, #FFCC66, #FF33EE, #33EEFF) 1;
-    }
-    100% {
-        box-shadow: 0 0 10px rgba(255, 51, 238, 0.7), 0 0 25px rgba(51, 238, 255, 0.5); /* Back to softer glow */
-        border-image: linear-gradient(45deg, #FF33EE, #33EEFF, #66FF99, #FFCC66, #FF33EE) 1;
-    }
-}
-
-.login-container h2 {
-    font-family: 'Orbitron', sans-serif;
-    margin-bottom: 35px; /* Slightly reduced margin */
-    font-size: 2.6em; /* Slightly smaller for better fit */
-    color: #33EEFF; /* Brighter Cyan Neon, more consistent */
-    text-shadow:
-        0 0 8px #33EEFF,
-        0 0 20px rgba(51, 238, 255, 0.7); /* Refined shadow */
-}
-.form-group {
-    margin-bottom: 25px; /* Slightly reduced margin */
-    text-align: left;
-}
-.form-group label {
-    display: block;
-    margin-bottom: 10px; /* Slightly reduced margin */
-    font-weight: bold;
-    color: #CCEEFF; /* Lighter cyan for labels */
-    font-family: 'Lato', sans-serif;
-    font-size: 1.05em; /* Slightly smaller */
-}
-.form-group input {
-    width: calc(100% - 24px); /* Adjusted width for consistent padding */
-    padding: 12px; /* Slightly less padding */
-    border: 2px solid rgba(51, 238, 255, 0.5); /* Softer border for inputs */
-    border-radius: 10px; /* Slightly less rounded */
-    background: rgba(25, 25, 50, 0.75); /* Slightly more opaque input background */
-    color: #E0E0E0;
-    font-size: 1em; /* Standard font size */
-    outline: none;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
-}
-.form-group input::placeholder {
-    color: rgba(224, 224, 224, 0.5); /* Softer placeholder color */
-}
-.form-group input:focus {
-    border-color: #33EEFF;
-    box-shadow: 0 0 8px #33EEFF, 0 0 18px rgba(51,238,255,0.4); /* Refined focus shadow */
-    background-color: rgba(35, 35, 65, 0.85); /* Slightly darker on focus */
-}
-.login-container button {
-    width: 100%;
-    padding: 16px; /* Slightly less padding */
-    background-color: #0088CC; /* Consistent blue button */
-    color: #EEF8FF; /* Light text */
-    border: none;
-    border-radius: 10px; /* Consistent border radius */
-    font-size: 1.2em; /* Slightly smaller font */
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-    box-shadow: 0 0 15px rgba(0, 136, 204, 0.8), 0 0 25px rgba(0, 136, 204, 0.4); /* Consistent shadow */
-}
-.login-container button:hover {
-    background-color: #006699;
-    transform: translateY(-3px); /* Slightly less pronounced lift */
-    box-shadow: 0 0 25px rgba(0, 136, 204, 1), 0 0 40px rgba(0, 136, 204, 0.6); /* Consistent hover shadow */
-}
-
-/* Dashboard Page - Adjusting colors for dark theme and professionalism */
-.dashboard-header {
-    background-color: #1a1a1a;
-    color: #e0e0e0;
-    padding: 20px;
-    text-align: center;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
-}
-.dashboard-header h1 {
-    font-family: 'Orbitron', sans-serif;
-    margin: 0;
-    color: #33EEFF; /* Brighter Cyan Neon for dashboard title */
-    text-shadow: 0 0 8px #33EEFF;
-    font-size: 2.1em; /* Slightly smaller font */
-}
-.dashboard-header button {
-    padding: 11px 22px; /* Slightly less padding */
-    background-color: #FF33EE; /* Brighter Neon Pink for logout */
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
-    box-shadow: 0 0 10px rgba(255, 51, 238, 0.7), 0 0 20px rgba(255, 51, 238, 0.4); /* Refined shadow */
-    font-size: 1.05em; /* Slightly smaller font */
-}
-.dashboard-header button:hover {
-    background-color: #CC00BB;
-    box-shadow: 0 0 20px rgba(255, 51, 238, 1), 0 0 35px rgba(255, 51, 238, 0.6); /* More intense hover shadow */
-    transform: translateY(-2px);
-}
 .dashboard-content {
-    display: grid;
+    /* Ensure flex-wrap is enabled for responsiveness */
+    display: grid; /* Keep grid for general layout */
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 25px; /* Slightly less gap */
     padding: 25px; /* Slightly less padding */
     max-width: 1500px; /* Slightly narrower max-width */
     margin: 25px auto;
 }
-.chart-card {
-    background: rgba(25, 25, 45, 0.9); /* Slightly more opaque card background */
-    backdrop-filter: blur(12px); /* Stronger blur */
-    border-radius: 12px; /* Slightly less rounded */
-    box-shadow: 0 10px 35px rgba(0,0,0,0.6); /* Deeper shadow */
-    padding: 25px; /* Slightly less padding */
+
+/* Card base style for new sections */
+.card {
+    background: rgba(25, 25, 45, 0.9); /* Consistent with chart-card */
+    backdrop-filter: blur(12px);
+    border-radius: 12px;
+    box-shadow: 0 10px 35px rgba(0,0,0,0.6);
+    padding: 25px;
     text-align: center;
-    border: 1px solid rgba(51, 238, 255, 0.25); /* More subtle neon border for cards */
+    border: 1px solid rgba(51, 238, 255, 0.25);
     color: #e0e0e0;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-.chart-card:hover {
-    transform: translateY(-6px); /* Slightly more pronounced lift */
-    box-shadow: 0 15px 45px rgba(0,0,0,0.7), 0 0 18px rgba(51,238,255,0.4); /* Enhanced shadow and glow */
+.card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 15px 45px rgba(0,0,0,0.7), 0 0 18px rgba(51,238,255,0.4);
 }
-.chart-card h2 {
+.card h2 {
     font-family: 'Orbitron', sans-serif;
     margin-top: 0;
-    margin-bottom: 20px; /* Slightly less margin */
-    color: #33EEFF; /* Brighter Cyan Neon for chart titles */
+    margin-bottom: 20px;
+    color: #33EEFF;
     text-shadow: 0 0 6px #33EEFF;
-    font-size: 1.7em; /* Slightly smaller font */
+    font-size: 1.7em;
 }
+
+/* Specific styles for summary metrics */
+.summary-metrics p {
+    font-size: 1.1em;
+    margin: 10px 0;
+    text-align: left;
+    color: #CCEEFF;
+}
+.summary-metrics span {
+    font-weight: bold;
+    color: #00E6E6; /* Bright Cyan for values */
+    font-size: 1.2em;
+}
+
+/* Data Lists styles */
+.data-lists {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: flex-start; /* Align items to the top */
+    gap: 15px; /* Gap between list sections */
+}
+.data-lists h2 {
+    width: 100%; /* Make title span full width */
+    margin-bottom: 25px;
+}
+.list-section {
+    flex: 1; /* Allow sections to grow */
+    min-width: 180px; /* Minimum width for each list */
+    max-width: 30%; /* Max width to fit 3 in a row */
+    text-align: left;
+    background: rgba(40, 40, 60, 0.6); /* Slightly darker background for lists */
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid rgba(51, 238, 255, 0.15);
+}
+.list-section h3 {
+    font-family: 'Lato', sans-serif;
+    font-size: 1.3em;
+    color: #FF66AA; /* Soft Pink for list titles */
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+.list-section ul {
+    list-style: none;
+    padding: 0;
+    max-height: 200px; /* Limit height for long lists */
+    overflow-y: auto; /* Enable scrolling */
+    margin: 0;
+}
+.list-section li {
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05); /* Very subtle separator */
+    color: #B0B0B0;
+    font-size: 0.95em;
+}
+.list-section li:last-child {
+    border-bottom: none;
+}
+
+/* Full width card for table */
+.full-width {
+    grid-column: 1 / -1; /* Spans across all columns in grid */
+    text-align: left; /* Align content to left */
+}
+
+/* Search bar styling */
+.search-bar {
+    margin-bottom: 20px;
+    text-align: center;
+}
+.search-bar input {
+    width: 80%; /* Wider search input */
+    max-width: 500px;
+    padding: 12px 18px;
+    border: 2px solid rgba(0, 230, 230, 0.4); /* Cyan border */
+    border-radius: 8px;
+    background: rgba(30, 30, 50, 0.7);
+    color: #E0E0E0;
+    font-size: 1.1em;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.search-bar input::placeholder {
+    color: rgba(224, 224, 224, 0.6);
+}
+.search-bar input:focus {
+    border-color: #00E6E6;
+    box-shadow: 0 0 10px #00E6E6, 0 0 20px rgba(0,230,230,0.3);
+}
+
+/* Table styling */
+#recentApplicationsTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: rgba(30, 30, 50, 0.6); /* Slightly lighter table background */
+    border-radius: 8px;
+    overflow: hidden; /* Ensures rounded corners on table */
+}
+#recentApplicationsTable th,
+#recentApplicationsTable td {
+    padding: 12px 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08); /* Subtle separator */
+    text-align: left;
+    color: #D0D0D0;
+}
+#recentApplicationsTable th {
+    background-color: rgba(0, 100, 150, 0.4); /* Dark blue header */
+    color: #33EEFF; /* Cyan header text */
+    font-family: 'Orbitron', sans-serif;
+    font-weight: normal;
+    font-size: 0.95em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+#recentApplicationsTable tbody tr:hover {
+    background-color: rgba(40, 40, 70, 0.7); /* Darker row on hover */
+}
+#recentApplicationsTable td {
+    font-size: 0.9em;
+}
+
+/* Action buttons in table */
+#recentApplicationsTable td button {
+    padding: 6px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.85em;
+    margin-right: 5px;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+#recentApplicationsTable td .edit-btn {
+    background-color: #0088CC; /* Blue */
+    color: white;
+}
+#recentApplicationsTable td .edit-btn:hover {
+    background-color: #006699;
+    transform: translateY(-1px);
+}
+#recentApplicationsTable td .delete-btn {
+    background-color: #FF66AA; /* Pink */
+    color: white;
+}
+#recentApplicationsTable td .delete-btn:hover {
+    background-color: #CC3377;
+    transform: translateY(-1px);
+}
+
+
+/* Pagination styling */
+.pagination {
+    margin-top: 20px;
+    text-align: center;
+    color: #B0B0B0;
+}
+.pagination button {
+    padding: 8px 15px;
+    background-color: #A066FF; /* Purple for pagination */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    margin: 0 8px;
+    transition: background-color 0.2s ease;
+}
+.pagination button:hover:not(:disabled) {
+    background-color: #8044CC;
+}
+.pagination button:disabled {
+    background-color: rgba(160, 102, 255, 0.3); /* Faded purple for disabled */
+    cursor: not-allowed;
+}
+.pagination #pageInfo {
+    font-weight: bold;
+    color: #00E6E6; /* Cyan for page info */
+}
+
+
+/* Adjust chart card canvas if needed (already in your original style.css) */
 .chart-card canvas {
     background-color: rgba(0,0,0,0.15); /* Slightly lighter background for charts */
     border-radius: 8px;
     padding: 10px;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+    .dashboard-header h1 {
+        font-size: 1.8em;
+    }
+    .dashboard-header button {
+        padding: 10px 18px;
+        font-size: 0.9em;
+    }
+    .dashboard-content {
+        padding: 15px;
+        gap: 15px;
+    }
+    .card, .chart-card {
+        padding: 20px;
+    }
+    .card h2, .chart-card h2 {
+        font-size: 1.5em;
+    }
+    .summary-metrics p {
+        font-size: 1em;
+    }
+    .summary-metrics span {
+        font-size: 1.1em;
+    }
+    .data-lists {
+        flex-direction: column; /* Stack lists on small screens */
+    }
+    .list-section {
+        max-width: 100%; /* Full width for lists */
+        min-width: unset;
+    }
+    .search-bar input {
+        width: 95%;
+    }
+    #recentApplicationsTable th,
+    #recentApplicationsTable td {
+        padding: 8px 10px;
+        font-size: 0.8em;
+    }
+}
+
+@media (max-width: 480px) {
+    .dashboard-header {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .dashboard-header h1 {
+        font-size: 1.5em;
+    }
+    .dashboard-header button {
+        width: 100%;
+        max-width: 150px;
+    }
+    .search-bar input {
+        font-size: 0.9em;
+    }
 }
