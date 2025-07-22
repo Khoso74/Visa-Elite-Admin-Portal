@@ -1,21 +1,4 @@
-body {
-    margin: 0;
-    font-family: 'Lato', Arial, sans-serif;
-    background-color: #0d0d0d;
-    color: #e0e0e0;
-    overflow: hidden;
-}
-
-/* Intro Page Fade-in Animation */
-.fade-in-body {
-    opacity: 0;
-    transition: opacity 2s ease-in-out;
-}
-.fade-in-body.fade-in {
-    opacity: 1;
-}
-
-/* Intro Page Styling - Blur Fix and Refined Neon */
+/* Intro Page Styling - Blur Fix and Centering */
 .intro-container {
     display: flex;
     flex-direction: column;
@@ -24,102 +7,81 @@ body {
     height: 100vh;
     background-color: #0d0d0d;
     color: white;
-    text-align: center;
+    text-align: center; /* Ensures content inside is centered */
+    width: 100%; /* Ensure container takes full width for centering to work */
+    max-width: 1200px; /* Optional: constrain overall width for a more focused look */
+    margin: 0 auto; /* Centers the container itself */
+    box-sizing: border-box; /* Include padding in width */
+    padding: 20px; /* Add some padding */
 }
 .intro-container h1 {
     font-family: 'Orbitron', sans-serif;
     font-size: 4em;
     margin-bottom: 25px;
-    color: #99FFFF; /* Lighter base color for less blur */
+    color: #E0F7FA; /* Very light cyan/white for crispness */
     text-shadow:
-        0 0 5px #00e6e6, /* Softer, focused glow */
-        0 0 15px #00e6e6,
-        0 0 30px rgba(0, 230, 230, 0.7); /* Reduced spread for sharpness */
+        0 0 5px rgba(224, 247, 250, 0.6), /* Subtle glow */
+        0 0 10px rgba(224, 247, 250, 0.4),
+        0 0 15px rgba(224, 247, 250, 0.2); /* Reduced spread for sharpness */
     animation: pulseGlow 2s infinite alternate ease-in-out;
-    letter-spacing: 2px; /* Slight letter spacing for readability */
+    letter-spacing: 2px;
+    line-height: 1.2; /* Better line spacing for large text */
 }
 
 @keyframes pulseGlow {
-    from { text-shadow: 0 0 5px #00e6e6, 0 0 15px #00e6e6; }
-    to { text-shadow: 0 0 8px #00e6e6, 0 0 25px #00e6e6, 0 0 40px rgba(0, 230, 230, 0.9); }
+    from { text-shadow: 0 0 5px rgba(224, 247, 250, 0.6), 0 0 10px rgba(224, 247, 250, 0.4); }
+    to { text-shadow: 0 0 8px rgba(224, 247, 250, 0.8), 0 0 18px rgba(224, 247, 250, 0.6), 0 0 25px rgba(224, 247, 250, 0.4); }
 }
 
 .intro-container p {
     font-family: 'Lato', sans-serif;
     font-size: 1.5em;
     margin-bottom: 40px;
-    color: #CCFFFF; /* Lighter base color */
-    text-shadow: 0 0 4px #80ffff; /* Softer shadow */
-}
-.intro-container button {
-    padding: 18px 35px;
-    font-size: 1.2em;
-    background-color: #00aaff;
-    color: #0a0a0a;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-    box-shadow: 0 0 15px #00aaff;
-}
-.intro-container button:hover {
-    background-color: #0088cc;
-    transform: translateY(-3px);
-    box-shadow: 0 0 25px #00aaff;
+    color: #F0F8FF; /* Lighter off-white */
+    text-shadow: 0 0 3px rgba(240, 248, 255, 0.5); /* Very subtle shadow */
 }
 
-/* Login Page Background Canvas - Three.js handles the dark background */
-#background-canvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    background-color: #000000;
-}
-
-/* Login Container - Dark Glossy with Professional Neon Borders */
+/* Login Container - Subtle White Neon Border */
 .login-container {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: rgba(10, 10, 20, 0.9); /* Slightly more opaque, very dark */
+    background: rgba(10, 10, 20, 0.9);
     backdrop-filter: blur(20px);
     border-radius: 25px;
     padding: 50px;
-    box-shadow: 0 15px 50px 0 rgba(0, 0, 0, 0.7); /* Deeper shadow */
+    box-shadow: 0 15px 50px 0 rgba(0, 0, 0, 0.7);
     border: 3px solid transparent;
     border-image: linear-gradient(
         45deg,
-        #ff33ff, /* Brighter Magenta */
-        #33ffff, /* Brighter Cyan */
-        #66ff66, /* Softer Green */
-        #ffcc33, /* Warm Yellow-Orange */
-        #ff33ff  /* Back to Magenta */
-    ) 1; /* More vibrant and professional multi-color neon gradient */
+        #FFFFFF, /* Pure White */
+        #F0F8FF, /* Alice Blue */
+        #E0FFFF, /* Light Cyan */
+        #F8F8FF, /* Ghost White */
+        #FFFFFF  /* Pure White */
+    ) 1; /* Subtle white/light blue gradient for neon */
     width: 400px;
     text-align: center;
     color: #e0e0e0;
     z-index: 1;
     overflow: hidden;
-    animation: neonBorderPulse 5s infinite alternate ease-in-out; /* Slower, smoother pulse */
+    animation: whiteNeonPulse 4s infinite alternate ease-in-out; /* Dedicated animation for white neon */
 }
 
-/* Enhanced Professional Neon Border Pulse Animation */
-@keyframes neonBorderPulse {
+/* New Animation for Subtle White Neon Pulse */
+@keyframes whiteNeonPulse {
     0% {
-        box-shadow: 0 0 15px #ff33ff, 0 0 30px #33ffff;
-        border-image: linear-gradient(45deg, #ff33ff, #33ffff, #66ff66, #ffcc33, #ff33ff) 1;
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.3);
+        border-image: linear-gradient(45deg, #FFFFFF, #E0FFFF, #F0F8FF, #FFFFFF) 1;
     }
     50% {
-        box-shadow: 0 0 25px #33ffff, 0 0 50px #ff33ff;
-        border-image: linear-gradient(45deg, #33ffff, #66ff66, #ffcc33, #ff33ff, #33ffff) 1;
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 0 0 30px rgba(255, 255, 255, 0.6);
+        border-image: linear-gradient(45deg, #E0FFFF, #FFFFFF, #F0F8FF, #E0FFFF) 1;
     }
     100% {
-        box-shadow: 0 0 15px #ff33ff, 0 0 30px #33ffff;
-        border-image: linear-gradient(45deg, #ff33ff, #33ffff, #66ff66, #ffcc33, #ff33ff) 1;
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.3);
+        border-image: linear-gradient(45deg, #FFFFFF, #E0FFFF, #F0F8FF, #FFFFFF) 1;
     }
 }
 
@@ -127,128 +89,32 @@ body {
     font-family: 'Orbitron', sans-serif;
     margin-bottom: 40px;
     font-size: 2.8em;
-    color: #33ffff; /* Brighter Cyan Neon */
+    color: #F0F8FF; /* Off-white for title */
     text-shadow:
-        0 0 8px #33ffff,
-        0 0 20px #33ffff;
-}
-.form-group {
-    margin-bottom: 30px;
-    text-align: left;
+        0 0 6px #F0F8FF,
+        0 0 15px rgba(240, 248, 255, 0.6);
 }
 .form-group label {
     display: block;
     margin-bottom: 12px;
     font-weight: bold;
-    color: #99ffff; /* Lighter cyan */
+    color: #CCEEFF; /* Light blueish-white */
     font-family: 'Lato', sans-serif;
     font-size: 1.1em;
 }
 .form-group input {
     width: calc(100% - 28px);
     padding: 14px;
-    border: 2px solid rgba(51, 255, 255, 0.6); /* Brighter border for inputs */
+    border: 2px solid rgba(224, 247, 250, 0.6); /* Subtle border for inputs */
     border-radius: 12px;
-    background: rgba(25, 25, 50, 0.7); /* Slightly more opaque input background */
+    background: rgba(25, 25, 50, 0.7);
     color: #e0e0e0;
     font-size: 1.1em;
     outline: none;
     transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
 }
-.form-group input::placeholder {
-    color: rgba(224, 224, 224, 0.6);
-}
 .form-group input:focus {
-    border-color: #33ffff;
-    box-shadow: 0 0 10px #33ffff, 0 0 20px rgba(51,255,255,0.5);
+    border-color: #E0F7FA;
+    box-shadow: 0 0 10px #E0F7FA, 0 0 20px rgba(224,247,250,0.5);
     background-color: rgba(35, 35, 65, 0.8);
-}
-.login-container button {
-    width: 100%;
-    padding: 18px;
-    background-color: #00aaff;
-    color: #0a0a0a;
-    border: none;
-    border-radius: 12px;
-    font-size: 1.3em;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-    box-shadow: 0 0 18px #00aaff, 0 0 30px rgba(0,170,255,0.4);
-}
-.login-container button:hover {
-    background-color: #0088cc;
-    transform: translateY(-4px);
-    box-shadow: 0 0 28px #00aaff, 0 0 50px rgba(0,170,255,0.6);
-}
-
-/* Dashboard Page - Adjusting colors for dark theme and professionalism */
-.dashboard-header {
-    background-color: #1a1a1a;
-    color: #e0e0e0;
-    padding: 20px;
-    text-align: center;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
-}
-.dashboard-header h1 {
-    font-family: 'Orbitron', sans-serif;
-    margin: 0;
-    color: #33ffff; /* Brighter Cyan Neon for dashboard title */
-    text-shadow: 0 0 8px #33ffff;
-    font-size: 2.2em;
-}
-.dashboard-header button {
-    padding: 12px 25px;
-    background-color: #ff33ff; /* Brighter Neon Pink for logout */
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
-    box-shadow: 0 0 12px #ff33ff;
-    font-size: 1.1em;
-}
-.dashboard-header button:hover {
-    background-color: #cc00bb;
-    box-shadow: 0 0 25px #ff33ff;
-    transform: translateY(-2px);
-}
-.dashboard-content {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 30px;
-    padding: 30px;
-    max-width: 1600px;
-    margin: 30px auto;
-}
-.chart-card {
-    background: rgba(30, 30, 50, 0.85); /* Slightly more opaque card background */
-    backdrop-filter: blur(10px);
-    border-radius: 15px;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.5);
-    padding: 30px;
-    text-align: center;
-    border: 1px solid rgba(51, 255, 255, 0.3); /* Brighter, subtle neon border for cards */
-    color: #e0e0e0;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.chart-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 40px rgba(0,0,0,0.6), 0 0 20px rgba(51,255,255,0.5); /* Enhanced shadow and glow */
-}
-.chart-card h2 {
-    font-family: 'Orbitron', sans-serif;
-    margin-top: 0;
-    margin-bottom: 25px;
-    color: #33ffff; /* Brighter Cyan Neon for chart titles */
-    text-shadow: 0 0 6px #33ffff;
-    font-size: 1.8em;
-}
-.chart-card canvas {
-    background-color: rgba(0,0,0,0.2); /* Slightly darker background for charts */
-    border-radius: 8px;
-    padding: 10px;
 }
