@@ -51,28 +51,35 @@ const chartColors = {
 };
 
 // Set Chart.js defaults for a dark theme and consistent fonts
-Chart.defaults.color = chartColors.lightText; // Global default text color
-Chart.defaults.font.family = 'Lato, sans-serif'; // Global default font family
-Chart.defaults.font.size = 13; // Global default font size
-
-// --- FIX FOR TypeError: Cannot set properties of undefined (setting 'size') ---
-// Ensure the 'font' objects are initialized for plugins before setting their properties
-// For Chart Titles
-Chart.defaults.plugins.title.font = { // Initialize font object for title
-    family: 'Orbitron, sans-serif',
-    size: 22, // Default size for titles
-    weight: 'bold' // Optional: default weight for titles
+// 1. Global Font Defaults
+Chart.defaults.font = {
+    family: 'Lato, sans-serif',
+    size: 13, // Base font size for all text
+    color: chartColors.lightText // Global default text color
 };
-Chart.defaults.plugins.title.color = chartColors.vibrant1; // Chart titles in bright cyan
+
+// 2. Plugin-specific Font Defaults
+// For Chart Titles
+Chart.defaults.plugins.title = {
+    ...Chart.defaults.plugins.title, // Preserve other title defaults if any exist
+    font: { // Explicitly define font object for title
+        family: 'Orbitron, sans-serif',
+        size: 22, // Default size for titles
+        weight: 'bold' // Optional: default weight for titles
+    },
+    color: chartColors.vibrant1 // Chart titles in bright cyan
+};
 
 // For Legend Labels
-Chart.defaults.plugins.legend.labels.font = { // Initialize font object for legend labels
-    size: 14 // Default size for legend labels
+Chart.defaults.plugins.legend.labels = {
+    ...Chart.defaults.plugins.legend.labels, // Preserve other legend label defaults
+    font: { // Explicitly define font object for legend labels
+        size: 14 // Default size for legend labels
+    },
+    color: chartColors.lightText // Legend labels text color
 };
-Chart.defaults.plugins.legend.labels.color = chartColors.lightText; // Legend labels text color
-// --- END FIX ---
 
-
+// Other defaults
 Chart.defaults.elements.arc.borderColor = chartColors.darkBg; // Border for pie/doughnut slices
 Chart.defaults.elements.arc.borderWidth = 3; // Slightly thicker border for slices
 
@@ -147,13 +154,13 @@ function processDataAndRenderCharts(data) {
                 title: {
                     display: true,
                     text: 'Visa Type Distribution',
-                    font: { size: 22 }, // Using explicit font object from defaults now
+                    // Font properties are now set in Chart.defaults.plugins.title
                     color: chartColors.vibrant1
                 },
                 legend: {
                     position: 'right',
                     labels: {
-                        font: { size: 14 }, // Using explicit font object from defaults now
+                        // Font properties are now set in Chart.defaults.plugins.legend.labels
                         padding: 25 // More padding
                     }
                 },
@@ -226,7 +233,7 @@ function processDataAndRenderCharts(data) {
                 title: {
                     display: true,
                     text: 'Applications by Location',
-                    font: { size: 22 }, // Using explicit font object from defaults now
+                    // Font properties are now set in Chart.defaults.plugins.title
                     color: chartColors.vibrant1
                 },
                 legend: {
@@ -276,13 +283,13 @@ function processDataAndRenderCharts(data) {
                 title: {
                     display: true,
                     text: 'Travel Purpose Breakdown',
-                    font: { size: 22 }, // Using explicit font object from defaults now
+                    // Font properties are now set in Chart.defaults.plugins.title
                     color: chartColors.vibrant1
                 },
                 legend: {
                     position: 'right',
                     labels: {
-                        font: { size: 14 }, // Using explicit font object from defaults now
+                        // Font properties are now set in Chart.defaults.plugins.legend.labels
                         padding: 25
                     }
                 },
