@@ -23,41 +23,45 @@ async function fetchDashboardData() {
     }
 }
 
-// Define a professional and vibrant color palette with more emphasis on blues/purples/cyans
+// Define a professional and vibrant color palette focusing on cool, techy tones
 const chartColors = {
-    // Main vibrant colors
-    vibrant1: '#33FFFF', // Bright Cyan
-    vibrant2: '#FF33FF', // Bright Magenta
-    vibrant3: '#66FF66', // Green
-    vibrant4: '#FFCC33', // Orange-Yellow
-    vibrant5: '#9966FF', // Medium Purple
+    // Main vibrant colors (blues, purples, greens, subtle pink)
+    vibrant1: '#00E6E6', // Bright Cyan (main accent)
+    vibrant2: '#A066FF', // Medium Purple
+    vibrant3: '#33FF66', // Bright Green
+    vibrant4: '#FF66AA', // Soft Pink
+    vibrant5: '#66CCFF', // Sky Blue
 
-    // Backgrounds and accents
+    // Grayscale/Dark tones for background, text, grid
     darkBg: '#1a1a1a',
     lightText: '#E0E0E0',
-    gridLine: 'rgba(255, 255, 255, 0.15)', // Slightly brighter grid lines
-    tooltipBg: 'rgba(20, 20, 40, 0.95)', // Darker, more opaque tooltip
-    tooltipBorder: '#33FFFF' // Cyan border for tooltips
+    gridLine: 'rgba(255, 255, 255, 0.08)', // Very subtle grid lines
+    axisText: '#B0B0B0', // Slightly darker text for axis labels
+    tooltipBg: 'rgba(15, 15, 30, 0.95)', // Very dark, almost black tooltip background
+    tooltipBorder: '#00E6E6' // Cyan border for tooltips
 };
 
 // Set Chart.js defaults for a dark theme and consistent fonts
 Chart.defaults.color = chartColors.lightText;
 Chart.defaults.font.family = 'Lato, sans-serif';
+Chart.defaults.font.size = 13; // Base font size for all text
 Chart.defaults.plugins.title.color = chartColors.vibrant1; // Chart titles in bright cyan
+Chart.defaults.plugins.title.font.family = 'Orbitron, sans-serif'; // Techy font for titles
 Chart.defaults.plugins.legend.labels.color = chartColors.lightText;
+Chart.defaults.plugins.legend.labels.font.size = 13;
 Chart.defaults.elements.arc.borderColor = chartColors.darkBg; // Border for pie/doughnut slices
 Chart.defaults.elements.arc.borderWidth = 3; // Slightly thicker border for slices
 
 // Helper function to generate dynamic background colors for charts
 const generateChartBackgrounds = (numColors) => {
     const colors = [
-        chartColors.vibrant1, // Cyan
-        chartColors.vibrant2, // Magenta
-        chartColors.vibrant3, // Green
-        chartColors.vibrant4, // Orange-Yellow
-        chartColors.vibrant5, // Purple
-        'rgba(0, 150, 255, 0.8)', // Royal Blue
-        'rgba(255, 50, 50, 0.8)'  // Red
+        chartColors.vibrant1,
+        chartColors.vibrant2,
+        chartColors.vibrant3,
+        chartColors.vibrant4,
+        chartColors.vibrant5,
+        'rgba(255, 150, 0, 0.8)', // Orange fallback
+        'rgba(0, 150, 255, 0.8)'  // Deeper Blue fallback
     ];
     const selectedColors = [];
     for (let i = 0; i < numColors; i++) {
@@ -73,8 +77,8 @@ const generateChartBorders = (numColors) => {
         chartColors.vibrant3,
         chartColors.vibrant4,
         chartColors.vibrant5,
-        'rgba(0, 150, 255, 1)',
-        'rgba(255, 50, 50, 1)'
+        'rgba(255, 150, 0, 1)',
+        'rgba(0, 150, 255, 1)'
     ];
     const selectedBorders = [];
     for (let i = 0; i < numColors; i++) {
@@ -103,9 +107,9 @@ function processDataAndRenderCharts(data) {
             labels: visaTypeLabels,
             datasets: [{
                 data: visaTypeData,
-                backgroundColor: generateChartBackgrounds(visaTypeLabels.length).map(color => color.replace('0.8', '0.9')), // Slightly more opaque
+                backgroundColor: generateChartBackgrounds(visaTypeLabels.length).map(color => color.replace('0.8', '0.95')), // More opaque
                 borderColor: generateChartBorders(visaTypeLabels.length),
-                hoverOffset: 12 // Increased hover offset
+                hoverOffset: 15 // Increased hover offset for better visual feedback
             }]
         },
         options: {
@@ -114,25 +118,26 @@ function processDataAndRenderCharts(data) {
                 title: {
                     display: true,
                     text: 'Visa Type Distribution',
-                    font: { size: 20, family: 'Orbitron, sans-serif' }, // Larger title font
+                    font: { size: 22 }, // Larger title font
                     color: chartColors.vibrant1
                 },
                 legend: {
                     position: 'right',
                     labels: {
                         font: { size: 14 }, // Larger legend labels
-                        padding: 20 // More padding
+                        padding: 25 // More padding
                     }
                 },
                 tooltip: {
                     backgroundColor: chartColors.tooltipBg,
-                    titleColor: chartColors.vibrant1,
+                    titleColor: chartColors.tooltipBorder, // Use border color for title
                     bodyColor: chartColors.lightText,
                     borderColor: chartColors.tooltipBorder,
-                    borderWidth: 2, // Thicker border
-                    cornerRadius: 10, // More rounded
-                    padding: 15, // More padding
-                    bodyFont: { size: 14 }
+                    borderWidth: 2,
+                    cornerRadius: 10,
+                    padding: 15,
+                    bodyFont: { size: 14 },
+                    titleFont: { size: 15, weight: 'bold' }
                 }
             }
         }
@@ -157,10 +162,10 @@ function processDataAndRenderCharts(data) {
             datasets: [{
                 label: 'Number of Applications',
                 data: locationData,
-                backgroundColor: generateChartBackgrounds(locationLabels.length).map(color => color.replace('0.8', '0.9')),
+                backgroundColor: generateChartBackgrounds(locationLabels.length).map(color => color.replace('0.8', '0.95')),
                 borderColor: generateChartBorders(locationLabels.length),
-                borderWidth: 1.5, // Slightly thicker bar border
-                borderRadius: 5 // Rounded bars
+                borderWidth: 1.5,
+                borderRadius: 5
             }]
         },
         options: {
@@ -168,21 +173,23 @@ function processDataAndRenderCharts(data) {
             scales: {
                 x: {
                     ticks: {
-                        color: chartColors.lightText, // X-axis label color
+                        color: chartColors.axisText, // X-axis label color
                         font: { size: 12 }
                     },
                     grid: {
-                        color: chartColors.gridLine // Grid line color
+                        color: chartColors.gridLine, // Subtle grid line color
+                        drawBorder: false // Do not draw axis border
                     }
                 },
                 y: {
                     beginAtZero: true,
                     ticks: {
-                        color: chartColors.lightText, // Y-axis label color
+                        color: chartColors.axisText, // Y-axis label color
                         font: { size: 12 }
                     },
                     grid: {
-                        color: chartColors.gridLine // Grid line color
+                        color: chartColors.gridLine, // Subtle grid line color
+                        drawBorder: false
                     }
                 }
             },
@@ -190,7 +197,7 @@ function processDataAndRenderCharts(data) {
                 title: {
                     display: true,
                     text: 'Applications by Location',
-                    font: { size: 20, family: 'Orbitron, sans-serif' },
+                    font: { size: 22 },
                     color: chartColors.vibrant1
                 },
                 legend: {
@@ -198,13 +205,14 @@ function processDataAndRenderCharts(data) {
                 },
                 tooltip: {
                     backgroundColor: chartColors.tooltipBg,
-                    titleColor: chartColors.vibrant1,
+                    titleColor: chartColors.tooltipBorder,
                     bodyColor: chartColors.lightText,
                     borderColor: chartColors.tooltipBorder,
                     borderWidth: 2,
                     cornerRadius: 10,
                     padding: 15,
-                    bodyFont: { size: 14 }
+                    bodyFont: { size: 14 },
+                    titleFont: { size: 15, weight: 'bold' }
                 }
             }
         }
@@ -228,9 +236,9 @@ function processDataAndRenderCharts(data) {
             labels: travelPurposeLabels,
             datasets: [{
                 data: travelPurposeData,
-                backgroundColor: generateChartBackgrounds(travelPurposeLabels.length).map(color => color.replace('0.8', '0.9')),
+                backgroundColor: generateChartBackgrounds(travelPurposeLabels.length).map(color => color.replace('0.8', '0.95')),
                 borderColor: generateChartBorders(travelPurposeLabels.length),
-                hoverOffset: 12
+                hoverOffset: 15
             }]
         },
         options: {
@@ -239,25 +247,26 @@ function processDataAndRenderCharts(data) {
                 title: {
                     display: true,
                     text: 'Travel Purpose Breakdown',
-                    font: { size: 20, family: 'Orbitron, sans-serif' },
+                    font: { size: 22 },
                     color: chartColors.vibrant1
                 },
                 legend: {
                     position: 'right',
                     labels: {
                         font: { size: 14 },
-                        padding: 20
+                        padding: 25
                     }
                 },
                 tooltip: {
                     backgroundColor: chartColors.tooltipBg,
-                    titleColor: chartColors.vibrant1,
+                    titleColor: chartColors.tooltipBorder,
                     bodyColor: chartColors.lightText,
                     borderColor: chartColors.tooltipBorder,
                     borderWidth: 2,
                     cornerRadius: 10,
                     padding: 15,
-                    bodyFont: { size: 14 }
+                    bodyFont: { size: 14 },
+                    titleFont: { size: 15, weight: 'bold' }
                 }
             }
         }
