@@ -1,140 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Visa Elite Admin Login</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Helvetica', sans-serif;
-      background-color: #1a1a2e;
-      color: #e0e0e0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      overflow: hidden;
-      transition: all 0.3s ease;
-    }
-    #background-canvas {
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: -1;
-    }
-    .login-container {
-      background: rgba(26, 26, 46, 0.95);
-      padding: 2.5rem;
-      border-radius: 20px;
-      box-shadow: 0 0 25px rgba(80, 227, 194, 0.6);
-      border: 3px solid #50e3c2;
-      animation: neonGlow 2s ease-in-out infinite alternate, fadeIn 0.5s forwards;
-      opacity: 0;
-      transform: scale(0.9);
-    }
-    @keyframes neonGlow {
-      from { box-shadow: 0 0 10px #50e3c2; border-color: #50e3c2; }
-      to { box-shadow: 0 0 30px #50e3c2, 0 0 40px #50e3c2; border-color: #4a90e2; }
-    }
-    @keyframes fadeIn {
-      to { opacity: 1; transform: scale(1); }
-    }
-    .login-container h2 {
-      text-align: center;
-      color: #50e3c2;
-      font-size: 2.5rem;
-      margin-bottom: 2rem;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-    }
-    .login-container input {
-      width: 100%;
-      padding: 0.75rem;
-      margin: 0.75rem 0;
-      border: none;
-      border-radius: 10px;
-      background: #2e2e48;
-      color: #e0e0e0;
-      font-size: 1rem;
-      transition: box-shadow 0.3s;
-    }
-    .login-container input:focus {
-      box-shadow: 0 0 10px #4a90e2;
-      outline: none;
-    }
-    #loginBtn {
-      width: 100%;
-      padding: 0.9rem;
-      background: linear-gradient(45deg, #4a90e2, #50e3c2);
-      border: none;
-      border-radius: 10px;
-      color: white;
-      font-weight: bold;
-      font-size: 1.1rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-transform: uppercase;
-    }
-    #loginBtn:hover {
-      transform: scale(1.05) translateY(-2px);
-      box-shadow: 0 5px 15px rgba(74, 144, 226, 0.6);
-    }
-    #loginBtn:disabled {
-      background: #666;
-      cursor: not-allowed;
-      transform: none;
-      box-shadow: none;
-    }
-    #loadingSpinner {
-      display: none;
-      border: 5px solid #f3f3f3;
-      border-top: 5px solid #50e3c2;
-      border-radius: 50%;
-      width: 25px;
-      height: 25px;
-      animation: spin 1s linear infinite;
-      margin: 1rem auto;
-    }
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    #login-status {
-      text-align: center;
-      margin-top: 1.5rem;
-      display: none;
-      font-size: 1rem;
-    }
-    .error-popup {
-      display: block;
-      background: #ff4d4d;
-      padding: 0.75rem;
-      border-radius: 10px;
-      color: white;
-      animation: popUp 0.4s ease-out;
-    }
-    @keyframes popUp {
-      0% { transform: scale(0.95); opacity: 0; }
-      50% { transform: scale(1.05); opacity: 1; }
-      100% { transform: scale(1); }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
-  <canvas id="background-canvas"></canvas>
-  <div class="login-container">
-    <h2>Visa Elite Admin</h2>
-    <form id="loginForm">
-      <input type="email" id="email" placeholder="Enter Email" required>
-      <input type="password" id="password" placeholder="Enter Password" required>
-      <button type="submit" id="loginBtn">Login</button>
-      <div id="loadingSpinner" class="hidden"></div>
-      <div id="login-status"></div>
-    </form>
-  </div>
-  <script src="background.js"></script>
-  <script src="login.js"></script>
+    <canvas id="background-canvas"></canvas>
+    <div class="login-container">
+        <h2>Admin Login</h2>
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="email">Email ID:</label>
+                <input type="email" id="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" required>
+            </div>
+            <button type="submit">Login</button>
+            <p id="errorMessage" style="color: red; margin-top: 10px;"></p>
+        </form>
+    </div>
+    <script src="login.js"></script>
 </body>
 </html>
