@@ -3,6 +3,11 @@ if (!localStorage.getItem('loggedIn')) {
     window.location.href = 'login.html'; // Redirect to login if not logged in
 }
 
+// Global variable to store all fetched data and pagination state
+let allApplicationsData = [];
+let currentPage = 1;
+const rowsPerPage = 10; // Number of rows to show per page in the table
+
 async function fetchDashboardData() {
     // !!! IMPORTANT: Replace with your deployed Google Apps Script Web App URL !!!
     const gasUrl = 'https://script.google.com/macros/s/AKfycbxIkJL8tNlrZKL2jS2zcfDL3_-XssqRGYWeZvWgbqPTK_pG2FOUSKNYAw-cpgugihdC/exec'; // This GAS URL also handles doGet for data
@@ -12,7 +17,11 @@ async function fetchDashboardData() {
         const result = await response.json();
 
         if (result.success) {
-            processDataAndRenderCharts(result.data);
+            allApplicationsData = result.data; // Store all fetched data globally
+            processDataAndRenderCharts(allApplicationsData);
+            displaySummaryMetrics(allApplicationsData);
+            displayKeyDataLists(allApplicationsData);
+            renderTable(allApplicationsData); // Render the initial table
         } else {
             console.error('Failed to fetch dashboard data:', result.message);
             alert('Could not load dashboard data.');
@@ -43,10 +52,10 @@ const chartColors = {
 
 // Set Chart.js defaults for a dark theme and consistent fonts
 Chart.defaults.color = chartColors.lightText;
-Chart.defaults.font.family = 'Lato, sans-serif';
+Chart.defaults.font.family = 'Lato', 'sans-serif';
 Chart.defaults.font.size = 13; // Base font size for all text
 Chart.defaults.plugins.title.color = chartColors.vibrant1; // Chart titles in bright cyan
-Chart.defaults.plugins.title.font.family = 'Orbitron, sans-serif'; // Techy font for titles
+Chart.defaults.plugins.title.font.family = 'Orbitron', 'sans-serif'; // Techy font for titles
 Chart.defaults.plugins.legend.labels.color = chartColors.lightText;
 Chart.defaults.plugins.legend.labels.font.size = 13;
 Chart.defaults.elements.arc.borderColor = chartColors.darkBg; // Border for pie/doughnut slices
@@ -89,6 +98,11 @@ const generateChartBorders = (numColors) => {
 
 
 function processDataAndRenderCharts(data) {
+    // Destroy existing charts before rendering new ones to prevent conflicts
+    Chart.getChart('visaTypeChart')?.destroy();
+    Chart.getChart('locationChart')?.destroy();
+    Chart.getChart('travelPurposeChart')?.destroy();
+
     // 1. Visa Type Distribution (Pie Chart)
     const visaTypeCounts = {};
     data.forEach(row => {
@@ -272,6 +286,141 @@ function processDataAndRenderCharts(data) {
         }
     });
 }
+
+// --- New Functions for Additional Data Display and Features ---
+
+function displaySummaryMetrics(data) {
+    document.getElementById('totalEntries').textContent = data.length;
+
+    const uniqueLocations = new Set(data.map(row => row['Location']).filter(Boolean));
+    document.getElementById('uniqueLocationsCount').textContent = uniqueLocations.size;
+
+    const uniqueVisaTypes = new Set(data.map(row => row['Visa Type']).filter(Boolean));
+    document.getElementById('uniqueVisaTypesCount').textContent = uniqueVisaTypes.size;
+
+    const uniqueTravelPurposes = new Set(data.map(row => row['Travel Purpose']).filter(Boolean));
+    document.getElementById('uniqueTravelPurposesCount').textContent = uniqueTravelPurposes.size;
+
+    // Assuming 'Category' is a column name in your data if you want to display it
+    // const uniqueCategories = new Set(data.map(row => row['Category']).filter(Boolean));
+    // document.getElementById('uniqueCategoriesCount').textContent = uniqueCategories.size;
+}
+
+function displayKeyDataLists(data) {
+    const allLocations = [...new Set(data.map(row => row['Location']).filter(Boolean))].sort();
+    const allVisaTypes = [...new Set(data.map(row => row['Visa Type']).filter(Boolean))].sort();
+    const allTravelPurposes = [...new Set(data.map(row => row['Travel Purpose']).filter(Boolean))].sort();
+
+    const populateList = (elementId, items) => {
+        const ul = document.getElementById(elementId);
+        ul.innerHTML = ''; // Clear previous items
+        if (items.length === 0) {
+            ul.innerHTML = '<li>N/A</li>';
+            return;
+        }
+        items.forEach(item => {
+            const li = document.createElement('li');
+            li.textContent = item;
+            ul.appendChild(li);
+        });
+    };
+
+    populateList('allLocationsList', allLocations);
+    populateList('allVisaTypesList', allVisaTypes);
+    populateList('allTravelPurposesList', allTravelPurposes);
+}
+
+function renderTable(dataToRender) {
+    const tableBody = document.querySelector('#recentApplicationsTable tbody');
+    tableBody.innerHTML = ''; // Clear existing rows
+
+    const startIndex = (currentPage - 1) * rowsPerPage;
+    const endIndex = startIndex + rowsPerPage;
+    const paginatedData = dataToRender.slice(startIndex, endIndex);
+
+    if (paginatedData.length === 0) {
+        tableBody.innerHTML = '<tr><td colspan="7">No data available.</td></tr>';
+        updatePaginationControls(dataToRender.length);
+        return;
+    }
+
+    paginatedData.forEach((row, index) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${row['Timestamp'] ? new Date(row['Timestamp']).toLocaleDateString() : 'N/A'}</td>
+            <td>${row['Full Name'] || 'N/A'}</td>
+            <td>${row['Email Address'] || 'N/A'}</td>
+            <td>${row['Visa Type'] || 'N/A'}</td>
+            <td>${row['Location'] || 'N/A'}</td>
+            <td>${row['Application Status'] || 'Pending'}</td>
+            <td>
+                <button class="edit-btn" onclick="editEntry(${startIndex + index})">Edit</button>
+                <button class="delete-btn" onclick="deleteEntry(${startIndex + index})">Delete</button>
+            </td>
+        `;
+        tableBody.appendChild(tr);
+    });
+
+    updatePaginationControls(dataToRender.length);
+}
+
+function updatePaginationControls(totalRows) {
+    const totalPages = Math.ceil(totalRows / rowsPerPage);
+    document.getElementById('pageInfo').textContent = `Page ${currentPage} of ${totalPages || 1}`;
+    document.getElementById('prevPage').disabled = currentPage === 1;
+    document.getElementById('nextPage').disabled = currentPage === totalPages || totalPages === 0;
+}
+
+function changePage(direction) {
+    const totalPages = Math.ceil(allApplicationsData.length / rowsPerPage);
+    currentPage += direction;
+
+    if (currentPage < 1) currentPage = 1;
+    if (currentPage > totalPages && totalPages > 0) currentPage = totalPages;
+
+    filterTable(); // Re-render table with current search/filters and new page
+}
+
+// Search functionality for the table
+function filterTable() {
+    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+    const filteredData = allApplicationsData.filter(row => {
+        const name = (row['Full Name'] || '').toLowerCase();
+        const email = (row['Email Address'] || '').toLowerCase();
+        return name.includes(searchTerm) || email.includes(searchTerm);
+    });
+    currentPage = 1; // Reset to first page on new search
+    renderTable(filteredData);
+}
+
+// Placeholder for Edit and Delete functionality (Requires Backend Implementation)
+function editEntry(rowIndex) {
+    // In a real application, you would:
+    // 1. Get the data for the specific row (using allApplicationsData[rowIndex])
+    // 2. Open a modal/form pre-filled with this data
+    // 3. Allow user to edit and save changes back to Google Sheet via GAS
+    const entry = allApplicationsData[rowIndex];
+    alert(`Edit functionality for row index ${rowIndex} (Name: ${entry['Full Name']}) would go here.\nThis requires Google Apps Script (GAS) backend to update data.`);
+    console.log("Edit entry:", entry);
+}
+
+function deleteEntry(rowIndex) {
+    if (confirm(`Are you sure you want to delete the entry for ${allApplicationsData[rowIndex]['Full Name']}?`)) {
+        // In a real application, you would:
+        // 1. Send a request to Google Apps Script (GAS) to delete this row
+        // 2. On success, re-fetch dashboard data or remove the row from allApplicationsData and re-render the table
+        const entryToDelete = allApplicationsData[rowIndex];
+        alert(`Delete functionality for row index ${rowIndex} (Name: ${entryToDelete['Full Name']}) would go here.\nThis requires Google Apps Script (GAS) backend to delete data.`);
+        console.log("Delete entry:", entryToDelete);
+        // Example: If deletion was successful on backend:
+        // allApplicationsData.splice(rowIndex, 1);
+        // renderTable(allApplicationsData);
+        // processDataAndRenderCharts(allApplicationsData); // Re-render charts with updated data
+        // displaySummaryMetrics(allApplicationsData);
+        // displayKeyDataLists(allApplicationsData);
+    }
+}
+
 
 function logout() {
     localStorage.removeItem('loggedIn');
