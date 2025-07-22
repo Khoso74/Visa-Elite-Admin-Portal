@@ -1,6 +1,7 @@
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
+    /* Use Lato as general font, with a fallback to Arial, sans-serif */
+    font-family: 'Lato', Arial, sans-serif;
     background-color: #0d0d0d; /* Dark background for the whole app */
     color: #e0e0e0; /* Light text for dark background */
     overflow: hidden; /* Hide scrollbars, especially for 3D animation */
@@ -9,13 +10,13 @@ body {
 /* Intro Page Fade-in Animation */
 .fade-in-body {
     opacity: 0;
-    transition: opacity 1.5s ease-in-out; /* Slower fade-in for professional look */
+    transition: opacity 2s ease-in-out; /* Slower fade-in for more professional look */
 }
 .fade-in-body.fade-in {
     opacity: 1;
 }
 
-/* Intro Page Styling - Now with Neon-like text */
+/* Intro Page Styling - Now with enhanced Neon-like text and professional fonts */
 .intro-container {
     display: flex;
     flex-direction: column;
@@ -27,20 +28,29 @@ body {
     text-align: center;
 }
 .intro-container h1 {
-    font-size: 3.5em; /* Slightly larger */
+    font-family: 'Orbitron', sans-serif; /* Professional techy font */
+    font-size: 4em; /* Larger and impactful */
     margin-bottom: 25px;
-    color: #00f0ff; /* Neon Blue */
+    color: #00e6e6; /* Cyan Neon */
     text-shadow:
-        0 0 5px #00f0ff,
-        0 0 10px #00f0ff,
-        0 0 20px #00f0ff,
-        0 0 40px #00f0ff; /* Neon glow effect */
+        0 0 8px #00e6e6,
+        0 0 20px #00e6e6,
+        0 0 40px #00e6e6,
+        0 0 80px #00e6e6; /* Intense neon glow */
+    animation: pulseGlow 2s infinite alternate; /* Subtle pulsating glow */
 }
+
+@keyframes pulseGlow {
+    from { text-shadow: 0 0 8px #00e6e6, 0 0 20px #00e6e6; }
+    to { text-shadow: 0 0 12px #00e6e6, 0 0 30px #00e6e6, 0 0 50px #00e6e6; }
+}
+
 .intro-container p {
-    font-size: 1.3em; /* Slightly larger */
+    font-family: 'Lato', sans-serif; /* Clean, professional font */
+    font-size: 1.5em; /* Larger and readable */
     margin-bottom: 40px;
-    color: #99ffff; /* Lighter neon blue for paragraph */
-    text-shadow: 0 0 3px #99ffff;
+    color: #80ffff; /* Lighter cyan for paragraph */
+    text-shadow: 0 0 5px #80ffff;
 }
 .intro-container button {
     padding: 18px 35px; /* Larger button */
@@ -67,102 +77,113 @@ body {
     width: 100%;
     height: 100%;
     z-index: -1; /* Send to background */
-    /* Three.js setup in login.js will ensure a dark, space-like background */
+    background-color: #000000; /* Ensure black background for space */
 }
 
-/* Login Container - Dark Glossy with Neon Borders */
+/* Login Container - Dark Glossy with Enhanced Neon Borders */
 .login-container {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: rgba(10, 10, 20, 0.7); /* Darker semi-transparent background */
-    backdrop-filter: blur(15px); /* Stronger blur for more glossiness */
-    border-radius: 20px; /* More rounded corners */
-    padding: 45px;
-    box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.5); /* Stronger shadow */
-    border: 2px solid; /* For neon border */
-    border-image: linear-gradient(45deg, #ff00ea, #00ffff, #ff00ea) 1; /* Neon gradient border */
-    width: 380px; /* Slightly wider */
+    background: rgba(10, 10, 20, 0.85); /* Slightly less transparent, darker */
+    backdrop-filter: blur(20px); /* Stronger blur for more glossiness */
+    border-radius: 25px; /* More rounded corners */
+    padding: 50px; /* More padding */
+    box-shadow: 0 15px 50px 0 rgba(0, 0, 0, 0.6); /* Stronger, deeper shadow */
+    border: 3px solid transparent; /* Prepare for border-image */
+    border-image: linear-gradient(
+        45deg,
+        #ff00ff, /* Magenta */
+        #00ffff, /* Cyan */
+        #00ff00, /* Green */
+        #ffff00, /* Yellow */
+        #ff00ff  /* Back to Magenta */
+    ) 1; /* Vibrant multi-color neon gradient */
+    width: 400px; /* Slightly wider */
     text-align: center;
     color: #e0e0e0; /* Light text */
     z-index: 1;
-    overflow: hidden; /* To keep border-image within bounds */
-    animation: neonBorderPulse 3s infinite alternate; /* Neon pulse animation */
+    overflow: hidden;
+    animation: neonBorderPulse 4s infinite alternate ease-in-out; /* Smoother, longer pulse */
 }
 
-/* Neon Border Pulse Animation */
+/* Enhanced Neon Border Pulse Animation */
 @keyframes neonBorderPulse {
     0% {
-        box-shadow: 0 0 10px #ff00ea, 0 0 20px #00ffff;
-        border-image: linear-gradient(45deg, #ff00ea, #00ffff, #ff00ea) 1;
+        box-shadow: 0 0 15px #ff00ff, 0 0 30px #00ffff;
+        border-image: linear-gradient(45deg, #ff00ff, #00ffff, #00ff00, #ffff00, #ff00ff) 1;
     }
     50% {
-        box-shadow: 0 0 20px #00ffff, 0 0 40px #ff00ea;
-        border-image: linear-gradient(45deg, #00ffff, #ff00ea, #00ffff) 1;
+        box-shadow: 0 0 25px #00ffff, 0 0 50px #ff00ff;
+        border-image: linear-gradient(45deg, #00ffff, #00ff00, #ffff00, #ff00ff, #00ffff) 1;
     }
     100% {
-        box-shadow: 0 0 10px #ff00ea, 0 0 20px #00ffff;
-        border-image: linear-gradient(45deg, #ff00ea, #00ffff, #ff00ea) 1;
+        box-shadow: 0 0 15px #ff00ff, 0 0 30px #00ffff;
+        border-image: linear-gradient(45deg, #ff00ff, #00ffff, #00ff00, #ffff00, #ff00ff) 1;
     }
 }
 
-
 .login-container h2 {
-    margin-bottom: 35px;
-    font-size: 2.5em; /* Larger title */
-    color: #00f0ff; /* Neon blue */
+    font-family: 'Orbitron', sans-serif;
+    margin-bottom: 40px;
+    font-size: 2.8em; /* Larger title */
+    color: #00e6e6; /* Neon Cyan */
     text-shadow:
-        0 0 5px #00f0ff,
-        0 0 10px #00f0ff; /* Subtle neon glow for title */
+        0 0 6px #00e6e6,
+        0 0 15px #00e6e6; /* Subtle neon glow for title */
 }
 .form-group {
-    margin-bottom: 25px; /* More spacing */
+    margin-bottom: 30px; /* More spacing */
     text-align: left;
 }
 .form-group label {
     display: block;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
     font-weight: bold;
-    color: #99ffff; /* Lighter neon blue */
+    color: #a0ffff; /* Lighter neon cyan */
+    font-family: 'Lato', sans-serif;
+    font-size: 1.1em;
 }
 .form-group input {
-    width: calc(100% - 24px); /* Account for padding and border */
-    padding: 12px;
-    border: 1px solid rgba(0, 240, 255, 0.5); /* Neon border for inputs */
-    border-radius: 10px; /* More rounded inputs */
-    background: rgba(20, 20, 40, 0.5); /* Darker input background */
+    width: calc(100% - 28px); /* Account for padding and border */
+    padding: 14px; /* More padding */
+    border: 2px solid rgba(0, 230, 230, 0.6); /* Neon border for inputs */
+    border-radius: 12px; /* More rounded inputs */
+    background: rgba(25, 25, 50, 0.6); /* Darker input background */
     color: #e0e0e0;
     font-size: 1.1em;
     outline: none;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
 }
 .form-group input::placeholder {
-    color: rgba(224, 224, 224, 0.7);
+    color: rgba(224, 224, 224, 0.6);
 }
 .form-group input:focus {
-    border-color: #00f0ff; /* Brighter neon on focus */
-    box-shadow: 0 0 8px #00f0ff; /* Neon glow on focus */
+    border-color: #00e6e6; /* Brighter neon on focus */
+    box-shadow: 0 0 10px #00e6e6, 0 0 20px rgba(0,230,230,0.5); /* Stronger neon glow on focus */
+    background-color: rgba(35, 35, 65, 0.7); /* Slightly lighter on focus */
 }
 .login-container button {
     width: 100%;
-    padding: 15px; /* Larger button */
+    padding: 18px; /* Larger button */
     background-color: #00aaff;
     color: #0a0a0a;
     border: none;
-    border-radius: 10px;
-    font-size: 1.2em;
+    border-radius: 12px;
+    font-size: 1.3em;
+    font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-    box-shadow: 0 0 15px #00aaff; /* Neon shadow for button */
+    box-shadow: 0 0 18px #00aaff, 0 0 30px rgba(0,170,255,0.4); /* Enhanced neon shadow */
 }
 .login-container button:hover {
     background-color: #0088cc;
-    transform: translateY(-3px);
-    box-shadow: 0 0 25px #00aaff;
+    transform: translateY(-4px); /* More pronounced lift */
+    box-shadow: 0 0 28px #00aaff, 0 0 50px rgba(0,170,255,0.6);
 }
 
-/* Dashboard Page - Adjusting colors for dark theme */
+/* Dashboard Page - Adjusting colors for dark theme and professionalism */
 .dashboard-header {
     background-color: #1a1a1a; /* Darker header */
     color: #e0e0e0;
@@ -174,50 +195,62 @@ body {
     box-shadow: 0 2px 10px rgba(0,0,0,0.5);
 }
 .dashboard-header h1 {
+    font-family: 'Orbitron', sans-serif;
     margin: 0;
-    color: #00f0ff; /* Neon blue for dashboard title */
-    text-shadow: 0 0 5px #00f0ff;
+    color: #00e6e6; /* Neon Cyan for dashboard title */
+    text-shadow: 0 0 8px #00e6e6;
+    font-size: 2.2em;
 }
 .dashboard-header button {
-    padding: 10px 20px;
-    background-color: #ff00ea; /* Neon pink for logout */
+    padding: 12px 25px; /* Larger button */
+    background-color: #ff00e6; /* Neon Pink for logout */
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px; /* More rounded */
     cursor: pointer;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 0 10px #ff00ea;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 0 12px #ff00e6;
+    font-size: 1.1em;
 }
 .dashboard-header button:hover {
     background-color: #cc00bb;
-    box-shadow: 0 0 20px #ff00ea;
+    box-shadow: 0 0 25px #ff00e6;
+    transform: translateY(-2px);
 }
 .dashboard-content {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 25px; /* More gap */
-    padding: 25px;
-    max-width: 1400px; /* Wider dashboard */
-    margin: 25px auto;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Slightly larger min-width */
+    gap: 30px; /* More gap for better spacing */
+    padding: 30px;
+    max-width: 1600px; /* Even wider dashboard */
+    margin: 30px auto;
 }
 .chart-card {
-    background: rgba(30, 30, 50, 0.7); /* Darker semi-transparent card background */
-    backdrop-filter: blur(8px); /* Blur for card */
-    border-radius: 12px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.4); /* Stronger shadow */
-    padding: 25px;
+    background: rgba(30, 30, 50, 0.8); /* Darker semi-transparent card background */
+    backdrop-filter: blur(10px); /* Stronger blur for card */
+    border-radius: 15px; /* More rounded */
+    box-shadow: 0 8px 30px rgba(0,0,0,0.5); /* Stronger, deeper shadow */
+    padding: 30px;
     text-align: center;
-    border: 1px solid rgba(0, 240, 255, 0.2); /* Subtle neon border for cards */
+    border: 1px solid rgba(0, 230, 230, 0.3); /* Subtle neon border for cards */
     color: #e0e0e0;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Hover effect */
+}
+.chart-card:hover {
+    transform: translateY(-5px); /* Lift on hover */
+    box-shadow: 0 12px 40px rgba(0,0,0,0.6), 0 0 20px rgba(0,230,230,0.5); /* Enhanced shadow and glow */
 }
 .chart-card h2 {
+    font-family: 'Orbitron', sans-serif;
     margin-top: 0;
-    margin-bottom: 20px;
-    color: #00f0ff; /* Neon blue for chart titles */
-    text-shadow: 0 0 3px #00f0ff;
+    margin-bottom: 25px;
+    color: #00e6e6; /* Neon Cyan for chart titles */
+    text-shadow: 0 0 6px #00e6e6;
+    font-size: 1.8em;
 }
 /* Chart.js specific styling for dark mode */
 .chart-card canvas {
-    background-color: rgba(0,0,0,0.1); /* Slightly visible background for charts */
-    border-radius: 5px;
+    background-color: rgba(0,0,0,0.15); /* Slightly visible background for charts */
+    border-radius: 8px;
+    padding: 10px; /* Padding inside canvas */
 }
