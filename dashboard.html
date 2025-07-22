@@ -1,184 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Visa Elite Dashboard</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Helvetica', sans-serif;
-      background-color: #1a1a2e;
-      color: #e0e0e0;
-      padding: 20px;
-      transition: all 0.3s ease;
-    }
-    h2 {
-      color: #50e3c2;
-      text-align: center;
-      font-size: 2.5rem;
-      margin-bottom: 2rem;
-      text-transform: uppercase;
-    }
-    .dashboard-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      animation: fadeIn 0.5s ease-out;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    .chart-container {
-      margin-bottom: 30px;
-      background: rgba(46, 46, 72, 0.9);
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 0 15px rgba(74, 144, 226, 0.3);
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background: #2e2e48;
-      border-radius: 10px;
-      overflow: hidden;
-    }
-    th, td {
-      padding: 12px;
-      text-align: left;
-      border-bottom: 1px solid #4a90e2;
-    }
-    th {
-      background: #4a90e2;
-      color: white;
-      text-transform: uppercase;
-    }
-    td {
-      transition: background 0.3s;
-    }
-    td:hover {
-      background: #3a3a58;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-  <h2>Visa Applications Dashboard</h2>
-  <div class="dashboard-container">
-    <div class="chart-container">
-      <canvas id="visaChart"></canvas>
+    <div class="dashboard-header">
+        <h1>Visa Applications Dashboard</h1>
+        <button onclick="logout()">Logout</button>
     </div>
-    <table id="visaTable">
-      <thead>
-        <tr><th>Full Name</th><th>Passport No.</th><th>Email</th><th>Location</th><th>Purpose</th><th>Visa Type</th><th>Travel Date</th><th>Notes</th></tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-  </div>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      console.log('Dashboard DOM Loaded');
-      if (!sessionStorage.getItem('loggedIn')) {
-        console.log('No session, redirecting to login');
-        window.location.href = 'login.html';
-        return;
-      }
-
-      const baseUrl = 'https://script.google.com/macros/s/AKfycbxIkJL8tNlrZKL2jS2zcfDL3_-XssqRGYWeZvWgbqPTK_pG2FOUSKNYAw-cpgugihdC/exec'; // Update if new
-      const proxyUrl = 'https://cors-anywhere.herokuapp.com/' + baseUrl;
-      fetch(baseUrl, { method: 'GET', headers: { 'Content-Type': 'application/json' } })
-        .then(res => {
-          console.log('Fetch Status:', res.status, 'OK:', res.ok);
-          if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
-          return res.json();
-        })
-        .then(data => {
-          console.log('Data Received:', data);
-          if (data.status === 'success') {
-            const applications = data.data;
-            const tableBody = document.querySelector('#visaTable tbody');
-            if (!tableBody) console.error('Table body not found');
-            tableBody.innerHTML = '';
-            applications.forEach(app => {
-              const row = document.createElement('tr');
-              row.innerHTML = `<td>${app.fullName || 'N/A'}</td><td>${app.passportNumber || 'N/A'}</td><td>${app.email || 'N/A'}</td><td>${app.location || 'N/A'}</td><td>${app.travelPurpose || 'N/A'}</td><td>${app.visaType || 'N/A'}</td><td>${app.dateOfTravel || 'N/A'}</td><td>${app.additionalNotes || 'N/A'}</td>`;
-              tableBody.appendChild(row);
-            });
-
-            const visaTypes = [...new Set(applications.map(app => app.visaType))];
-            const typeCounts = visaTypes.map(type => applications.filter(app => app.visaType === type).length);
-            const ctx = document.getElementById('visaChart').getContext('2d');
-            if (!ctx) console.error('Chart canvas not found');
-            new Chart(ctx, {
-              type: 'bar',
-              data: {
-                labels: visaTypes,
-                datasets: [{
-                  label: 'Visa Applications by Type',
-                  data: typeCounts,
-                  backgroundColor: 'rgba(80, 227, 194, 0.8)',
-                  borderColor: 'rgba(80, 227, 194, 1)',
-                  borderWidth: 1
-                }]
-              },
-              options: {
-                scales: { y: { beginAtZero: true, ticks: { color: '#e0e0e0' } } },
-                plugins: { legend: { labels: { color: '#e0e0e0' } } },
-                responsive: true,
-                maintainAspectRatio: false
-              }
-            });
-          } else {
-            console.error('Data fetch failed:', data.message);
-          }
-        })
-        .catch(err => {
-          console.error('Fetch Error:', err.name, err.message, err.stack);
-          fetch(proxyUrl, { method: 'GET', headers: { 'Content-Type': 'application/json' } })
-            .then(res => {
-              console.log('Proxy Fetch Status:', res.status, 'OK:', res.ok);
-              if (!res.ok) throw err;
-              return res.json();
-            })
-            .then(data => {
-              console.log('Proxy Data:', data);
-              if (data.status === 'success') {
-                const applications = data.data;
-                const tableBody = document.querySelector('#visaTable tbody');
-                tableBody.innerHTML = '';
-                applications.forEach(app => {
-                  const row = document.createElement('tr');
-                  row.innerHTML = `<td>${app.fullName || 'N/A'}</td><td>${app.passportNumber || 'N/A'}</td><td>${app.email || 'N/A'}</td><td>${app.location || 'N/A'}</td><td>${app.travelPurpose || 'N/A'}</td><td>${app.visaType || 'N/A'}</td><td>${app.dateOfTravel || 'N/A'}</td><td>${app.additionalNotes || 'N/A'}</td>`;
-                  tableBody.appendChild(row);
-                });
-
-                const visaTypes = [...new Set(applications.map(app => app.visaType))];
-                const typeCounts = visaTypes.map(type => applications.filter(app => app.visaType === type).length);
-                const ctx = document.getElementById('visaChart').getContext('2d');
-                new Chart(ctx, {
-                  type: 'bar',
-                  data: {
-                    labels: visaTypes,
-                    datasets: [{
-                      label: 'Visa Applications by Type',
-                      data: typeCounts,
-                      backgroundColor: 'rgba(80, 227, 194, 0.8)',
-                      borderColor: 'rgba(80, 227, 194, 1)',
-                      borderWidth: 1
-                    }]
-                  },
-                  options: {
-                    scales: { y: { beginAtZero: true, ticks: { color: '#e0e0e0' } } },
-                    plugins: { legend: { labels: { color: '#e0e0e0' } } },
-                    responsive: true,
-                    maintainAspectRatio: false
-                  }
-                });
-              }
-            })
-            .catch(err => console.error('Proxy Error:', err.name, err.message, err.stack));
-        });
-    });
-  </script>
+    <div class="dashboard-content">
+        <div class="chart-card">
+            <h2>Visa Type Distribution</h2>
+            <canvas id="visaTypeChart"></canvas>
+        </div>
+        <div class="chart-card">
+            <h2>Applications by Location</h2>
+            <canvas id="locationChart"></canvas>
+        </div>
+        <div class="chart-card">
+            <h2>Travel Purpose Breakdown</h2>
+            <canvas id="travelPurposeChart"></canvas>
+        </div>
+        </div>
+    <script src="dashboard.js"></script>
 </body>
 </html>
