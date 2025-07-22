@@ -6,11 +6,17 @@
     <title>Welcome</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="fade-in-body">
     <div class="intro-container">
         <h1>Welcome to Visa Application Dashboard!</h1>
         <p>Explore insightful data and manage applications efficiently.</p>
         <button onclick="location.href='login.html'">Proceed to Login</button>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.body.classList.add('fade-in'); // This class will trigger the animation
+        });
+    </script>
 </body>
 </html>
