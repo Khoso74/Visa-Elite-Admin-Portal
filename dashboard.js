@@ -4,8 +4,8 @@ if (!localStorage.getItem('loggedIn')) {
 }
 
 async function fetchDashboardData() {
-    // Replace with your deployed Google Apps Script Web App URL
-    const gasUrl = 'https://script.google.com/macros/s/AKfycbxIkJL8tNlrZKL2jS2zcfDL3_-XssqRGYWeZvWgbqPTK_pG2FOUSKNYAw-cpgugihdC/exec'; // This GAS URL also handles doGet for data
+    // !!! IMPORTANT: Replace with your deployed Google Apps Script Web App URL !!!
+    const gasUrl = 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE'; // This GAS URL also handles doGet for data
 
     try {
         const response = await fetch(gasUrl, { method: 'GET' });
@@ -28,7 +28,9 @@ function processDataAndRenderCharts(data) {
     const visaTypeCounts = {};
     data.forEach(row => {
         const visaType = row['Visa Type']; // Use the exact column name from your sheet
-        visaTypeCounts[visaType] = (visaTypeCounts[visaType] || 0) + 1;
+        if (visaType) { // Ensure value exists
+            visaTypeCounts[visaType] = (visaTypeCounts[visaType] || 0) + 1;
+        }
     });
 
     const visaTypeLabels = Object.keys(visaTypeCounts);
@@ -42,18 +44,20 @@ function processDataAndRenderCharts(data) {
             datasets: [{
                 data: visaTypeData,
                 backgroundColor: [
-                    'rgba(255, 99, 132, 0.8)',
-                    'rgba(54, 162, 235, 0.8)',
-                    'rgba(255, 206, 86, 0.8)',
-                    'rgba(75, 192, 192, 0.8)',
-                    'rgba(153, 102, 255, 0.8)'
+                    'rgba(255, 99, 132, 0.8)', // Red
+                    'rgba(54, 162, 235, 0.8)', // Blue
+                    'rgba(255, 206, 86, 0.8)', // Yellow
+                    'rgba(75, 192, 192, 0.8)', // Green
+                    'rgba(153, 102, 255, 0.8)', // Purple
+                    'rgba(255, 159, 64, 0.8)'  // Orange
                 ],
                 borderColor: [
                     'rgba(255, 99, 132, 1)',
                     'rgba(54, 162, 235, 1)',
                     'rgba(255, 206, 86, 1)',
                     'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)'
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
                 ],
                 borderWidth: 1
             }]
@@ -63,7 +67,13 @@ function processDataAndRenderCharts(data) {
             plugins: {
                 title: {
                     display: true,
-                    text: 'Visa Type Distribution'
+                    text: 'Visa Type Distribution',
+                    color: '#e0e0e0' // Text color for dark theme
+                },
+                legend: {
+                    labels: {
+                        color: '#e0e0e0' // Label color for dark theme
+                    }
                 }
             }
         }
@@ -73,7 +83,9 @@ function processDataAndRenderCharts(data) {
     const locationCounts = {};
     data.forEach(row => {
         const location = row['Location'];
-        locationCounts[location] = (locationCounts[location] || 0) + 1;
+        if (location) {
+            locationCounts[location] = (locationCounts[location] || 0) + 1;
+        }
     });
 
     const locationLabels = Object.keys(locationCounts);
@@ -94,14 +106,34 @@ function processDataAndRenderCharts(data) {
         options: {
             responsive: true,
             scales: {
+                x: {
+                    ticks: {
+                        color: '#e0e0e0' // X-axis label color
+                    },
+                    grid: {
+                        color: 'rgba(255, 255, 255, 0.1)' // Grid line color
+                    }
+                },
                 y: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                    ticks: {
+                        color: '#e0e0e0' // Y-axis label color
+                    },
+                    grid: {
+                        color: 'rgba(255, 255, 255, 0.1)' // Grid line color
+                    }
                 }
             },
             plugins: {
                 title: {
                     display: true,
-                    text: 'Applications by Location'
+                    text: 'Applications by Location',
+                    color: '#e0e0e0'
+                },
+                legend: {
+                    labels: {
+                        color: '#e0e0e0'
+                    }
                 }
             }
         }
@@ -111,7 +143,9 @@ function processDataAndRenderCharts(data) {
     const travelPurposeCounts = {};
     data.forEach(row => {
         const purpose = row['Travel Purpose'];
-        travelPurposeCounts[purpose] = (travelPurposeCounts[purpose] || 0) + 1;
+        if (purpose) {
+            travelPurposeCounts[purpose] = (travelPurposeCounts[purpose] || 0) + 1;
+        }
     });
 
     const travelPurposeLabels = Object.keys(travelPurposeCounts);
@@ -124,11 +158,11 @@ function processDataAndRenderCharts(data) {
             datasets: [{
                 data: travelPurposeData,
                 backgroundColor: [
-                    'rgba(255, 159, 64, 0.8)',
-                    'rgba(153, 102, 255, 0.8)',
-                    'rgba(255, 99, 132, 0.8)',
-                    'rgba(54, 162, 235, 0.8)',
-                    'rgba(201, 203, 207, 0.8)'
+                    'rgba(255, 159, 64, 0.8)',  // Orange
+                    'rgba(153, 102, 255, 0.8)', // Purple
+                    'rgba(255, 99, 132, 0.8)',  // Red
+                    'rgba(54, 162, 235, 0.8)',  // Blue
+                    'rgba(201, 203, 207, 0.8)'  // Grey
                 ],
                 borderColor: [
                     'rgba(255, 159, 64, 1)',
@@ -145,7 +179,13 @@ function processDataAndRenderCharts(data) {
             plugins: {
                 title: {
                     display: true,
-                    text: 'Travel Purpose Breakdown'
+                    text: 'Travel Purpose Breakdown',
+                    color: '#e0e0e0'
+                },
+                legend: {
+                    labels: {
+                        color: '#e0e0e0'
+                    }
                 }
             }
         }
