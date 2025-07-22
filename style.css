@@ -1,45 +1,65 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background-color: #f0f2f5;
-    color: #333;
+    background-color: #0d0d0d; /* Dark background for the whole app */
+    color: #e0e0e0; /* Light text for dark background */
     overflow: hidden; /* Hide scrollbars, especially for 3D animation */
 }
 
-/* Intro Page */
+/* Intro Page Fade-in Animation */
+.fade-in-body {
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out; /* Slower fade-in for professional look */
+}
+.fade-in-body.fade-in {
+    opacity: 1;
+}
+
+/* Intro Page Styling - Now with Neon-like text */
 .intro-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #282c34;
+    background-color: #0d0d0d; /* Keep it dark */
     color: white;
     text-align: center;
 }
 .intro-container h1 {
-    font-size: 3em;
-    margin-bottom: 20px;
+    font-size: 3.5em; /* Slightly larger */
+    margin-bottom: 25px;
+    color: #00f0ff; /* Neon Blue */
+    text-shadow:
+        0 0 5px #00f0ff,
+        0 0 10px #00f0ff,
+        0 0 20px #00f0ff,
+        0 0 40px #00f0ff; /* Neon glow effect */
 }
 .intro-container p {
-    font-size: 1.2em;
-    margin-bottom: 30px;
+    font-size: 1.3em; /* Slightly larger */
+    margin-bottom: 40px;
+    color: #99ffff; /* Lighter neon blue for paragraph */
+    text-shadow: 0 0 3px #99ffff;
 }
 .intro-container button {
-    padding: 15px 30px;
-    font-size: 1.1em;
-    background-color: #61dafb;
-    color: #282c34;
+    padding: 18px 35px; /* Larger button */
+    font-size: 1.2em; /* Larger font */
+    background-color: #00aaff; /* Brighter blue for button */
+    color: #0a0a0a;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px; /* More rounded */
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 0 15px #00aaff; /* Neon shadow for button */
 }
 .intro-container button:hover {
-    background-color: #21a1f1;
+    background-color: #0088cc;
+    transform: translateY(-3px);
+    box-shadow: 0 0 25px #00aaff;
 }
 
-/* Login Page */
+/* Login Page Background Canvas - Three.js handles the dark background */
 #background-canvas {
     position: fixed;
     top: 0;
@@ -47,114 +67,157 @@ body {
     width: 100%;
     height: 100%;
     z-index: -1; /* Send to background */
+    /* Three.js setup in login.js will ensure a dark, space-like background */
 }
 
+/* Login Container - Dark Glossy with Neon Borders */
 .login-container {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: rgba(255, 255, 255, 0.15); /* Semi-transparent for glossy effect */
-    backdrop-filter: blur(10px); /* Glassmorphism blur */
-    border-radius: 15px;
-    padding: 40px;
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    width: 350px;
+    background: rgba(10, 10, 20, 0.7); /* Darker semi-transparent background */
+    backdrop-filter: blur(15px); /* Stronger blur for more glossiness */
+    border-radius: 20px; /* More rounded corners */
+    padding: 45px;
+    box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.5); /* Stronger shadow */
+    border: 2px solid; /* For neon border */
+    border-image: linear-gradient(45deg, #ff00ea, #00ffff, #ff00ea) 1; /* Neon gradient border */
+    width: 380px; /* Slightly wider */
     text-align: center;
-    color: white;
-    z-index: 1; /* Bring to front */
+    color: #e0e0e0; /* Light text */
+    z-index: 1;
+    overflow: hidden; /* To keep border-image within bounds */
+    animation: neonBorderPulse 3s infinite alternate; /* Neon pulse animation */
 }
+
+/* Neon Border Pulse Animation */
+@keyframes neonBorderPulse {
+    0% {
+        box-shadow: 0 0 10px #ff00ea, 0 0 20px #00ffff;
+        border-image: linear-gradient(45deg, #ff00ea, #00ffff, #ff00ea) 1;
+    }
+    50% {
+        box-shadow: 0 0 20px #00ffff, 0 0 40px #ff00ea;
+        border-image: linear-gradient(45deg, #00ffff, #ff00ea, #00ffff) 1;
+    }
+    100% {
+        box-shadow: 0 0 10px #ff00ea, 0 0 20px #00ffff;
+        border-image: linear-gradient(45deg, #ff00ea, #00ffff, #ff00ea) 1;
+    }
+}
+
+
 .login-container h2 {
-    margin-bottom: 30px;
-    font-size: 2em;
-    color: white;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    margin-bottom: 35px;
+    font-size: 2.5em; /* Larger title */
+    color: #00f0ff; /* Neon blue */
+    text-shadow:
+        0 0 5px #00f0ff,
+        0 0 10px #00f0ff; /* Subtle neon glow for title */
 }
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 25px; /* More spacing */
     text-align: left;
 }
 .form-group label {
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     font-weight: bold;
+    color: #99ffff; /* Lighter neon blue */
 }
 .form-group input {
-    width: calc(100% - 20px);
-    padding: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    border-radius: 8px;
-    background: rgba(255, 255, 255, 0.2);
-    color: white;
-    font-size: 1em;
+    width: calc(100% - 24px); /* Account for padding and border */
+    padding: 12px;
+    border: 1px solid rgba(0, 240, 255, 0.5); /* Neon border for inputs */
+    border-radius: 10px; /* More rounded inputs */
+    background: rgba(20, 20, 40, 0.5); /* Darker input background */
+    color: #e0e0e0;
+    font-size: 1.1em;
     outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 .form-group input::placeholder {
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(224, 224, 224, 0.7);
 }
 .form-group input:focus {
-    border-color: #61dafb;
-    box-shadow: 0 0 0 3px rgba(97, 218, 251, 0.5);
+    border-color: #00f0ff; /* Brighter neon on focus */
+    box-shadow: 0 0 8px #00f0ff; /* Neon glow on focus */
 }
 .login-container button {
     width: 100%;
-    padding: 12px;
-    background-color: #61dafb;
-    color: #282c34;
+    padding: 15px; /* Larger button */
+    background-color: #00aaff;
+    color: #0a0a0a;
     border: none;
-    border-radius: 8px;
-    font-size: 1.1em;
+    border-radius: 10px;
+    font-size: 1.2em;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 0 15px #00aaff; /* Neon shadow for button */
 }
 .login-container button:hover {
-    background-color: #21a1f1;
-    transform: translateY(-2px);
+    background-color: #0088cc;
+    transform: translateY(-3px);
+    box-shadow: 0 0 25px #00aaff;
 }
 
-/* Dashboard Page */
+/* Dashboard Page - Adjusting colors for dark theme */
 .dashboard-header {
-    background-color: #333;
-    color: white;
+    background-color: #1a1a1a; /* Darker header */
+    color: #e0e0e0;
     padding: 20px;
     text-align: center;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
 }
 .dashboard-header h1 {
     margin: 0;
+    color: #00f0ff; /* Neon blue for dashboard title */
+    text-shadow: 0 0 5px #00f0ff;
 }
 .dashboard-header button {
     padding: 10px 20px;
-    background-color: #dc3545;
+    background-color: #ff00ea; /* Neon pink for logout */
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 0 10px #ff00ea;
 }
 .dashboard-header button:hover {
-    background-color: #c82333;
+    background-color: #cc00bb;
+    box-shadow: 0 0 20px #ff00ea;
 }
 .dashboard-content {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
-    padding: 20px;
-    max-width: 1200px;
-    margin: 20px auto;
+    gap: 25px; /* More gap */
+    padding: 25px;
+    max-width: 1400px; /* Wider dashboard */
+    margin: 25px auto;
 }
 .chart-card {
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    padding: 20px;
+    background: rgba(30, 30, 50, 0.7); /* Darker semi-transparent card background */
+    backdrop-filter: blur(8px); /* Blur for card */
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.4); /* Stronger shadow */
+    padding: 25px;
     text-align: center;
+    border: 1px solid rgba(0, 240, 255, 0.2); /* Subtle neon border for cards */
+    color: #e0e0e0;
 }
 .chart-card h2 {
     margin-top: 0;
-    margin-bottom: 15px;
-    color: #333;
+    margin-bottom: 20px;
+    color: #00f0ff; /* Neon blue for chart titles */
+    text-shadow: 0 0 3px #00f0ff;
+}
+/* Chart.js specific styling for dark mode */
+.chart-card canvas {
+    background-color: rgba(0,0,0,0.1); /* Slightly visible background for charts */
+    border-radius: 5px;
 }
