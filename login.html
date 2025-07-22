@@ -1,120 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Visa Elite Admin Login</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Arial', sans-serif;
-      background-color: #1a1a2e;
-      color: #e0e0e0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      overflow: hidden;
-    }
-    #background-canvas {
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: -1;
-    }
-    .login-container {
-      background: rgba(26, 26, 46, 0.9);
-      padding: 2rem;
-      border-radius: 15px;
-      box-shadow: 0 0 20px rgba(74, 144, 226, 0.5);
-      border: 2px solid #4a90e2;
-      animation: glow 1.5s ease-in-out infinite alternate;
-    }
-    @keyframes glow {
-      from { box-shadow: 0 0 5px #4a90e2; }
-      to { box-shadow: 0 0 20px #4a90e2, 0 0 30px #4a90e2; }
-    }
-    .login-container h2 {
-      text-align: center;
-      color: #4a90e2;
-      font-size: 2rem;
-      margin-bottom: 1.5rem;
-    }
-    .login-container input {
-      width: 100%;
-      padding: 0.5rem;
-      margin: 0.5rem 0;
-      border: none;
-      border-radius: 5px;
-      background: #2e2e48;
-      color: #e0e0e0;
-    }
-    #loginBtn {
-      width: 100%;
-      padding: 0.75rem;
-      background: linear-gradient(45deg, #4a90e2, #50e3c2);
-      border: none;
-      border-radius: 5px;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-      transition: transform 0.2s;
-    }
-    #loginBtn:hover {
-      transform: scale(1.05);
-    }
-    #loginBtn:disabled {
-      background: #888;
-      cursor: not-allowed;
-    }
-    #loadingSpinner {
-      display: none;
-      border: 4px solid #f3f3f3;
-      border-top: 4px solid #4a90e2;
-      border-radius: 50%;
-      width: 20px;
-      height: 20px;
-      animation: spin 1s linear infinite;
-      margin: 0 auto;
-    }
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    #login-status {
-      text-align: center;
-      margin-top: 1rem;
-      display: none;
-    }
-    .error-popup {
-      display: block;
-      background: #ff4d4d;
-      padding: 0.5rem;
-      border-radius: 5px;
-      color: white;
-      animation: pop 0.3s ease-out;
-    }
-    @keyframes pop {
-      0% { transform: scale(0.9); }
-      50% { transform: scale(1.1); }
-      100% { transform: scale(1); }
-    }
-  </style>
+  <title>Admin Login</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <canvas id="background-canvas"></canvas>
-  <div class="login-container">
-    <h2>Visa Elite Admin Login</h2>
-    <form id="loginForm">
-      <input type="email" id="email" placeholder="Email" required>
-      <input type="password" id="password" placeholder="Password" required>
-      <button type="submit" id="loginBtn">Login</button>
-      <div id="loadingSpinner" class="hidden"></div>
-      <div id="login-status"></div>
-    </form>
+  <div class="login-box">
+    <h2>Admin Login</h2>
+    <input type="email" id="email" placeholder="Enter Gmail" />
+    <button onclick="login()">Login</button>
+    <p id="login-error" style="color:red;"></p>
   </div>
-  <script src="background.js"></script>
-  <script src="login.js"></script>
+
+  <script>
+    async function login() {
+      const email = document.getElementById('email').value.trim();
+
+      const response = await fetch('/api/proxy', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'checkLogin',
+          email: email
+        })
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        localStorage.setItem("adminEmail", email);
+        window.location.href = "dashboard.html";
+      } else {
+        document.getElementById("login-error").innerText = "Unauthorized Admin!";
+      }
+    }
+  </script>
 </body>
 </html>
