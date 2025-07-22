@@ -1,74 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard | Visa Elite</title>
-  <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visa Elite Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background-color: #1a1a2e;
+      color: #e0e0e0;
+      padding: 20px;
+    }
+    h2 {
+      color: #4a90e2;
+      text-align: center;
+    }
+    .dashboard-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .chart-container {
+      margin-bottom: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #2e2e48;
+    }
+    th, td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #4a90e2;
+    }
+    th {
+      background: #4a90e2;
+      color: white;
+    }
+  </style>
 </head>
-<body class="dashboard-body">
-  <div class="sidebar">
-    <h2 class="sidebar-title">Visa Elite</h2>
-    <ul class="sidebar-menu">
-      <li class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</li>
-      <li><i class="fas fa-users"></i> Clients</li>
-      <li><i class="fas fa-user-shield"></i> Admins</li>
-      <li><i class="fas fa-cogs"></i> Settings</li>
-    </ul>
+<body>
+  <h2>Visa Applications Dashboard</h2>
+  <div class="dashboard-container">
+    <div class="chart-container">
+      <canvas id="visaChart"></canvas>
+    </div>
+    <table id="visaTable">
+      <thead>
+        <tr><th>Full Name</th><th>Passport Number</th><th>Email</th><th>Location</th><th>Travel Purpose</th><th>Visa Type</th><th>Date of Travel</th><th>Notes</th></tr>
+      </thead>
+      <tbody></tbody>
+    </table>
   </div>
-  <div class="main-content">
-    <header class="dashboard-header glassmorphic">
-      <h1>Visa Elite Admin Panel</h1>
-      <button id="logoutBtn" class="logout-button">Logout</button>
-    </header>
-    <main class="dashboard-main">
-      <section class="welcome-box glassmorphic">
-        <h2>Welcome, Admin!</h2>
-        <p>Explore visa application data with interactive charts and detailed insights.</p>
-      </section>
-      <section class="charts-section glassmorphic">
-        <h2>Visa Applications Analytics</h2>
-        <div class="charts-grid">
-          <div class="chart-container">
-            <h3>Visa Type Distribution</h3>
-            <canvas id="visaTypeChart"></canvas>
-          </div>
-          <div class="chart-container">
-            <h3>Travel Purpose Distribution</h3>
-            <canvas id="travelPurposeChart"></canvas>
-          </div>
-          <div class="chart-container">
-            <h3>Travel Date Trends</h3>
-            <canvas id="travelDateChart"></canvas>
-          </div>
-        </div>
-      </section>
-      <section class="data-table-section glassmorphic">
-        <h2>Visa Applications Data</h2>
-        <table id="visaDataTable" class="data-table">
-          <thead>
-            <tr>
-              <th>Full Name</th>
-              <th>Passport Number</th>
-              <th>Email</th>
-              <th>Location</th>
-              <th>Travel Purpose</th>
-              <th>Visa Type</th>
-              <th>Date of Travel</th>
-              <th>Additional Notes</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </section>
-    </main>
-    <footer class="dashboard-footer">
-      <p>© 2025 Visa Elite | All rights reserved</p>
-    </footer>
-  </div>
-  <script src="dashboard.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (!sessionStorage.getItem('loggedIn')) window.location.href = 'login.html';
+
+      fetch('https://script.google.com/macros/s/AKfycbxIkJL8tNlrZKL2jS2zcfDL3_-XssqRGYWeZvWgbqPTK_pG2FOUSKNYAw-cpgugihdC/exec', {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+      })
+        .then(res => {
+          if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
+          return res.json();
+        })
+        .then(data => {
+          if (data.status === 'success') {
+            const applications = data.data;
+            const tableBody = document.querySelector('#visaTable tbody');
+            applications.forEach(app => {
+              const row = document.createElement('tr');
+              row.innerHTML = `<td>${app.fullName}</td><td>${app.passportNumber}</td><td>${app.email}</td><td>${app.location}</td><td>${app.travelPurpose}</td><td>${app.visaType}</td><td>${app.dateOfTravel}</td><td>${app.additionalNotes}</td>`;
+              tableBody.appendChild(row);
+            });
+
+            // Chart
+            const ctx = document.getElementById('visaChart').getContext('2d');
+            new Chart(ctx, {
+              type: 'bar',
+              data: {
+                labels: applications.map(app => app.visaType),
+                datasets: [{
+                  label: 'Visa Applications',
+                  data: applications.map(() => 1), // Count per type
+                  backgroundColor: '#4a90e2',
+                }]
+              },
+              options: {
+                scales: { y: { beginAtZero: true } },
+                plugins: { legend: { labels: { color: '#e0e0e0' } } },
+              }
+            });
+          } else {
+            console.error('Data fetch failed:', data.message);
+          }
+        })
+        .catch(err => console.error('Dashboard error:', err));
+    });
+  </script>
 </body>
 </html>
