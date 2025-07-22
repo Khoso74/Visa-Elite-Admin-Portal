@@ -1,40 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Visa Elite - Intro</title>
-  <link rel="stylesheet" href="style.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
-</head>
-<body>
-  <div id="intro-page">
-    <div id="particles-js"></div>
-    <div class="intro-content">
-      <h1 class="intro-title">Welcome to Visa Elite Dashboard</h1>
-      <p class="intro-subtitle">Empowering Seamless Visa Management</p>
-    </div>
-  </div>
-  <script>
-    particlesJS("particles-js", {
-      particles: {
-        number: { value: 120, density: { enable: true, value_area: 800 } },
-        color: { value: "#00d4ff" },
-        shape: { type: "circle" },
-        opacity: { value: 0.6, random: true },
-        size: { value: 3, random: true },
-        line_linked: { enable: false },
-        move: { enable: true, speed: 3, direction: "none", random: true }
-      },
-      interactivity: {
-        detect_on: "canvas",
-        events: { onhover: { enable: true, mode: "repulse" }, onclick: { enable: true, mode: "push" } },
-        modes: { repulse: { distance: 100, duration: 0.4 }, push: { particles_nb: 4 } }
-      }
+<form id="visaForm">
+  <input type="text" name="name" placeholder="Name" required />
+  <input type="email" name="email" placeholder="Email" required />
+  <input type="text" name="passport" placeholder="Passport No." required />
+  <input type="text" name="visa_type" placeholder="Visa Type" required />
+  <input type="text" name="status" placeholder="Status" />
+  <button type="submit">Submit</button>
+</form>
+
+<script>
+  document.getElementById("visaForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const form = e.target;
+    const formData = new FormData(form);
+    const jsonData = {};
+
+    formData.forEach((value, key) => {
+      jsonData[key] = value;
     });
-    setTimeout(() => {
-      window.location.href = 'login.html';
-    }, 3000);
-  </script>
-</body>
-</html>
+
+    try {
+      const response = await fetch("https://YOUR-VERCEL-APP.vercel.app/api/proxy", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(jsonData)
+      });
+
+      const result = await response.json();
+      if (result.success) {
+        alert("Submitted successfully!");
+        form.reset();
+      } else {
+        alert("Submission failed: " + result.message);
+      }
+    } catch (error) {
+      alert("Error: " + error.message);
+    }
+  });
+</script>
