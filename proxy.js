@@ -1,31 +1,26 @@
-// proxy.js (Node.js/Express server)
-const express = require('express');
-const cors = require('cors');
-const bodyParser = require('body-parser');
-const axios = require('axios');
+const fetch = require('node-fetch');
 
-const app = express();
-const PORT = 3000; // ya koi aur port
-
-app.use(cors());
-app.use(bodyParser.json());
-
-app.post('/proxy', async (req, res) => {
-  const { url, data } = req.body;
-
-  try {
-    const response = await axios.post(url, data, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    res.json(response.data);
-  } catch (error) {
-    console.error('Proxy Error:', error.message);
-    res.status(500).json({ error: 'Proxy request failed' });
+module.exports = async (req, res) => {
+  if (req.method === 'OPTIONS') {
+    res.setHeader('Access-Control-Allow-Origin', 'https://khoso74.github.io');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    res.status(204).end(); // No content for OPTIONS
+    return;
   }
-});
 
-app.listen(PORT, () => {
-  console.log(`Proxy server running on http://localhost:${PORT}`);
-});
+  const url = 'https://script.google.com/macros/s/AKfycbxIkJL8tNlrZKL2jS2zcfDL3_-XssqRGYWeZvWgbqPTK_pG2FOUSKNYAw-cpgugihdC/exec';
+  
+  const response = await fetch(url, {
+    method: req.method,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: req.method !== 'GET' ? JSON.stringify(req.body) : null,
+  });
+
+  const data = await response.text();
+
+  res.setHeader('Access-Control-Allow-Origin', 'https://khoso74.github.io');
+  res.status(response.status).send(data);
+};
